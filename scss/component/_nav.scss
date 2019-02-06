@@ -1,0 +1,90 @@
+#navigation{
+    background: transparent;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    header,main{
+        background: $nav-background;
+    }
+    
+    header{
+        line-height: 38px;
+        box-sizing: border-box;
+        text-align: center;
+        padding: 4px;
+        margin-bottom: 4px;
+        span:not(:empty){
+            &::before{
+               content: ">"; 
+            }
+            &:first-child::before{
+                content:"";
+            }
+        }
+        #end{
+            color: $text-nav-head;
+            font-weight: bold;
+        }
+        #category,#part{
+            color: $text-nav-head;
+        }
+    }
+
+    main{
+        padding: 10px 40px;
+        >ul{
+            padding-left: 0;
+            color: $text-gray;
+            list-style-type: none;
+            .category{
+                border-bottom: 1px solid $text-nav-head;
+                &:last-child{
+                    border-bottom: none;
+                }
+            }
+            >li{
+                color:$text-black;
+                padding: 5px 0;
+
+                .category-name{
+                    color: $text-nav-head;
+                    font-size: 1.2rem;
+                }
+                ul{
+                    padding: 0;
+                    list-style: none;
+                    li{
+                        line-height: 30px;
+                        padding-left: 24px;
+                        margin-left: 24px;
+                        a,a:visited{
+                            font-size: 1rem;
+                            color: $text-black;
+                            text-decoration: none;
+                            font-weight: 600;
+                        }
+                    }
+                    >li:hover{
+                        background: $nav-background-active;
+                    }
+                }
+
+            }
+            .icon{
+                width: 1.4rem;
+                height: 1.4rem;
+            }
+        }
+        //a:hover{
+        //    color: $blue1;
+        //}
+        //a.active,a:active{
+        //    outline: none;
+        //    color: $blue2;
+        //}
+    }
+
+    #nav-bottom{
+        width: 100%;
+    }
+}

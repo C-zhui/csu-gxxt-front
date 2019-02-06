@@ -1,0 +1,40 @@
+$nav-tab-paddingy:10px;
+$nav-tab-paddingx:0px;
+
+.nav-tabs{
+    background: white;
+    padding: $nav-tab-paddingy $nav-tab-paddingx;
+    &::after{
+        width: 100%;
+        height: 100%;
+        content: "";
+        border-bottom: 4px solid $blue2;
+    }
+    .nav-item{
+        margin-left: 15px;
+    }
+    a{
+        color: inherit;
+        position: relative;
+        border: none;
+        &.active{
+            color: $blue2 !important;
+            border:none;
+            &::after{
+                left: 0;
+                top: 0;
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                content: " ";
+                border-radius: 5px 5px 0 0;   
+                border-left: 4px solid $blue2 !important;
+                border-right: 4px solid $blue2 !important;
+                border-top: 4px solid $blue2 !important;
+            }
+        }
+    }
+    .nav-link{
+        font-weight: bolder;
+    }
+}

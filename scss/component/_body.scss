@@ -1,0 +1,28 @@
+#body{
+    background: $body-background;
+}
+#container_body{
+    width: 1200px;
+    margin: 0 auto;
+    margin-top: 16px;
+    display: flex;
+    .row{
+        margin-right: 0;
+        margin-left: 0;
+    }
+    #navigation{
+        width: 290px;
+        float: left;
+        margin-right: 10px;
+        box-shadow: 0 10px 10px #919191;
+        margin-bottom: 40px;
+    }
+    #content_body{
+        float: left;
+        width: 900px;
+        height: 1800px;
+        box-shadow: 0 10px 10px #919191;
+        margin-bottom: 40px;
+        background: $body-background;
+    }
+}

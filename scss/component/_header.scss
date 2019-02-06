@@ -1,0 +1,38 @@
+#header-wrap{
+    padding: 10px 0;
+    height: 100px;
+    width: 100%;
+    padding-left: 120px;
+    box-sizing: border-box;
+    #header {
+        height: 100%;
+        display: flex;
+        display: -webkit-flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-end;
+        * {
+            flex: 0 0 auto;
+        }
+        #logo{
+            height: 100%;
+            //margin: 13px 0;
+        }
+        #logout_tip{
+            margin-right: 40px;
+            #out-icon{
+                width: 16px;
+                height: 16px;
+                padding: 4px;
+                box-sizing: content-box;
+            }
+        }
+        .text-needed{
+            color: #053863;
+            font-weight: 600;
+        }
+    }
+}
+
+
+

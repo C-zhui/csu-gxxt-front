@@ -1,0 +1,41 @@
+
+// // 主题颜色，基本都会有些蓝色，按照由浅到深排序，颜色可能不是很合适需要调整
+$blue0:rgb(233, 245, 255);
+$blue1:rgb(191, 211, 247);
+$blue2:rgb(113, 111, 238);
+$blue3:rgb(71, 71, 240);
+$blue4:rgb(32, 56, 177);
+
+$gray:rgb(173, 173, 173);
+
+// 字色
+$text-white:#eee;
+$text-gray:#555;
+$text-black:#111;
+$text-nav-head:#575757;
+$text-card-title:#112d4e;
+$text-card-item:#4d4d4d;
+
+// 右容器背景
+$body-background:#f6f6f6;
+
+// 导航背景
+$nav-background:#edf0f5;
+$nav-background-active:#b9ddf5;
+
+
+// 表格
+$table-head: #5b8fb4; // 表头
+$table-odd: #e5f0f6 ; // 奇数行
+$table-even:inherit; // 偶数行
+
+
+// 卡片
+$card-head:#bbdaee;
+$card-head-title-border:#3f8bc7;
+
+
+// button
+$button-outline-color: #3f8bc7;
+$button-outline-hover:#e5f0f6;
+$button-default-back:#56a3d7;

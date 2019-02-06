@@ -1,0 +1,22 @@
+.btn-outline{
+    border-color: $button-outline-color;
+    color: $button-outline-color;
+    border-radius: 4px;
+    &:hover{
+        //border-color: transparent;
+        //color: $text-white;
+        background-color: $button-outline-hover;
+
+    }
+}
+
+.btn-default{
+    background: $button-default-back;
+    color:$text-white;
+    border-radius: 4px;
+    &:hover{
+        background: inherit;
+        color:$button-default-back;
+        border-color: $button-default-back;
+    }
+}

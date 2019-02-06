@@ -1,0 +1,31 @@
+$card-paddingx:30px;
+$card-paddingy:10px;
+
+.content-card{
+    margin-bottom:1.4em;
+    
+    header,main,footer{
+        padding: $card-paddingy $card-paddingx;
+    }
+    
+    header{
+        background-color: $card-head;
+        .header-title{
+            position: relative;
+            display: inline-block;
+            padding: 0 8px;
+            &::after{
+                position: absolute;
+                display: block;
+                content: "";
+                width: 100%;
+                bottom: -$card-paddingy;
+                left:0;
+                border-bottom: 4px solid $card-head-title-border;
+            }
+        }
+    }
+    main{
+        background-color: white;
+    }
+}

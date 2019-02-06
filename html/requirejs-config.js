@@ -3,20 +3,23 @@ require.config({
     paths:{
         jquery:'lib/jquery',
         bootstrap:'lib/bootstrap',
-        "popper":'https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min'
+        popper:'https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min',
+        lodash:'lib/lodash',
+        flatpickr:'lib/flatpickr',
+        swal:'lib/sweetalert.min'
     }
 })
 
-require(['api/apiobj','api/student','api/material'],function(apiobj){
-    console.log(apiobj)
-})
-
-require(['jquery','bootstrap'],function($){
+// 加载全局库
+require(['jquery','bootstrap','lodash','flatpickr','swal'],function($){
     $(function(){
         console.log('加载jquery及bootstrap')
     })
 })
 
-require(['test2.js'],function(t){
-    console.log('test2.js执行结果',t)
-})
+
+
+// api 到具体的子页面加载
+// require(['api/apiobj','api/student','api/material'],function(apiobj){
+    // console.log(apiobj)
+// })

@@ -1,9 +1,9 @@
 {
     "用户管理":{
-        "学生管理":"./sub-page/student-manager",
-        "教师管理":"./sub-page/teacher-manager"
+        "学生管理":"./sub-page/student-manager.html",
+        "教师管理":"./sub-page/teacher-manager.html"
     },
     "实习排课":{
-
+        
     }
 }
