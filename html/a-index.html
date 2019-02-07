@@ -4,32 +4,14 @@
 <head>
     <meta charset="utf-8">
     <title>管理员界面</title>
-    <link rel="stylesheet" href="../css/bootstrap.css">
-    <link rel="stylesheet" href="../css/lib/flatpickr.css" >
+    <link rel="stylesheet" href="../css/lib/bootstrap.css">
+    <link rel="stylesheet" href="../css/lib/flatpickr.css">
     <link rel="stylesheet" href="../css/font/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../css/global.css">
 
-    <!-- <link rel="shortcut icon" href="../img/fav.png" /> -->
-    <!-- jquery 以及 bootstrap -->
-    <!-- <script src="../js/jquery.min.js"></script> -->
-    <!-- <script src="../js/bootstrap.js"></script> -->
-    <!-- 日期选择工具 -->
-    <!-- <script src="https://cdn.bootcss.com/flatpickr/4.5.0/flatpickr.min.js"></script> -->
-    <!-- sweetalert2 -->
-    <!-- <link rel="stylesheet" href="../js/lib//sweetalert.min.js"> -->
-
-    <!-- sweetalert2结束 -->
-    <!-- lodash工具库 -->
-    <!-- <script src="../js/lodash.min.js"></script> -->
-    <!-- 项目相关 -->
-    <!-- <link rel="stylesheet" type="text/css" href="./css/aside.css">
-	<link rel="stylesheet" type="text/css" href="./css/header.css"> -->
-    <!-- <script src="../config/common_config.js"></script> -->
-    <!-- <script type="text/javascript" src="../js/md5.js"></script> -->
-    <!-- <script type="text/javascript" src="../js/logout.js"></script> -->
-
     <!-- index.html的基本配置 -->
-    <script src="../js/lib/require.js" data-main="./requirejs-config.js"></script>
+    <script src="../js/lib/require.js" data-main="./index-config.js"></script>
+
     <style>
         #header-wrap {
             background: url("../img/header-background.jpg") no-repeat;
@@ -50,12 +32,12 @@
     <div id="header-wrap">
         <header id="header">
             <img src="../img/logo.png" id="logo" alt="logo">
-            <a id="logout_tip" class="btn get-out text-needed" onclick="logout()"><img src="../icon/logout.svg" id="out-icon">退
+            <a id="logout_tip" class="btn get-out text-needed" onclick="logout()"><img src="../icon/logout.svg"
+                    id="out-icon">退
                 出</a>
         </header>
     </div>
 
-    <!--<div class="h-23">&emsp;</div>-->
 
     <div id="container_body">
         <div>
@@ -67,37 +49,43 @@
                 </header>
 
                 <main>
-                    <ul>
-                        <li class="category"><img class="icon" src="./icon/user-manage.svg"> <span class="category-name">用户管理</span>
+                    <ul id="navigation-container">
+                        <li class="category"><img class="icon" src="../icon/user-manage.svg"> <span
+                                class="category-name">用户管理</span>
                             <ul>
                                 <li><a href="./rewrite-student-manage.html">学生管理</a></li>
                                 <li><a href="./rewrite-teacher-manage.html">教师管理</a></li>
                             </ul>
                         </li>
-                        <li class="category"><img class="icon" src="./icon/class-distribute.svg"> <span class="category-name">实习排课</span>
+                        <li class="category"><img class="icon" src="../icon/class-distribute.svg"> <span
+                                class="category-name">实习排课</span>
                             <ul>
                                 <li><a href="./rewrite-course-schedul.html">排课模版</a></li>
                                 <li><a href="./rewrite-divide-group.html">学生分组</a></li>
                             </ul>
                         </li>
-                        <li class="category"><img class="icon" src="./icon/score.svg"> <span class="category-name">成绩管理</span>
+                        <li class="category"><img class="icon" src="../icon/score.svg"> <span
+                                class="category-name">成绩管理</span>
                             <ul>
                                 <li><a href="./rewrite-weight.html">权重设置</a></li>
                                 <li><a href="./rewrite-score.html">成绩列表</a></li>
                             </ul>
                         </li>
-                        <li class="category"><img class="icon" src="./icon/extra-work.svg"> <span class="category-name">开放情况</span>
+                        <li class="category"><img class="icon" src="../icon/extra-work.svg"> <span
+                                class="category-name">开放情况</span>
                             <ul>
                                 <li><a href="./rewrite-extra-work.html">开放记录</a></li>
                             </ul>
                         </li>
-                        <li class="category"><img class="icon" src="./icon/material-manage.svg"> <span class="category-name">物料管理</span>
+                        <li class="category"><img class="icon" src="../icon/material-manage.svg"> <span
+                                class="category-name">物料管理</span>
                             <ul>
                                 <li><a href="./rewrite-materal-record.html">物料登记</a></li>
                                 <li><a href="./rewrite-materal-buy.html">物料申购</a></li>
                             </ul>
                         </li>
-                        <li class="category"><img class="icon" src="./icon/setup.svg"> <span class="category-name">个人设置</span>
+                        <li class="category"><img class="icon" src="../icon/setup.svg"> <span
+                                class="category-name">个人设置</span>
                             <ul>
                                 <li><a href="./rewrite-setup.html">密码修改</a></li>
                             </ul>
@@ -117,7 +105,8 @@
         <!-- 主体部分 -->
     </div>
     <!-- 主体部分结束 -->
-    <!-- <script src="../js/boot-navigation.js"></script> -->
+    <!-- <script src="../js/spec/boot-navigation.js"></script> -->
+
 </body>
 
 </html>

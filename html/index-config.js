@@ -10,8 +10,8 @@ require.config({
     }
 })
 
-// 加载全局库
-require(['jquery','bootstrap','lodash','flatpickr','swal'],function($){
+// 加载全局库、启动导航
+require(['jquery','bootstrap','lodash','flatpickr','swal','spec/boot-navigation'],function($){
     $(function(){
         console.log('加载jquery及bootstrap')
     })

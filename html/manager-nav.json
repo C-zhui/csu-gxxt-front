@@ -1,9 +1,80 @@
-{
-    "用户管理":{
-        "学生管理":"./sub-page/student-manager.html",
-        "教师管理":"./sub-page/teacher-manager.html"
+[
+    {
+        "category": "用户管理",
+        "icon":"../icon/user-manage.svg",
+        "items": [
+            {
+                "name": "学生管理",
+                "url": "./sub-page/student-manager.html"
+            },
+            {
+                "name": "教师管理",
+                "url": "./sub-page/teacher-manager.html"
+            }
+        ]
     },
-    "实习排课":{
+    {
+        "category": "实习排课",
+        "icon":"../icon/class-distribute.svg",
+        "items": [
+            {
+                "name": "排课模板",
+                "url": "./sub-page/course-schedule.html"
+            },
+            {
+                "name": "学生分组",
+                "url": "./sub-page/divide-group.html"
+            }
+        ]
+    },
+    {
+        "category": "成绩管理",
+        "icon":"../icon/score.svg",
         
+        "items": [
+            {
+                "name": "权重设置",
+                "url": "./xxx"
+            },
+            {
+                "name": "成绩列表",
+                "url": "./xxx"
+            }
+        ]
+    },
+    {
+        "category": "开放情况",
+        "icon":"../icon/extra-work.svg",
+
+        "items": [
+            {
+                "name": "开放记录",
+                "url": "./xxx"
+            }
+        ]
+    },
+    {
+        "category": "物料管理",
+        "icon":"../icon/material-manage.svg",
+        "items": [
+            {
+                "name": "物料登记",
+                "url": "./xxx"
+            },
+            {
+                "name": "物料申购",
+                "url": "./xxx"
+            }
+        ]
+    },
+    {
+        "category": "个人设置",
+        "icon":"../icon/setup.svg",
+        "items": [
+            {
+                "name": "密码修改",
+                "url": "./xxx"
+            }
+        ]
     }
-}
+]
