@@ -1,0 +1,80 @@
+.card {
+	margin-bottom: 50px;
+}
+
+.download-excel a {
+	color: red;
+}
+
+.tips {
+	margin-left: 50px;
+	font-size: 14px;
+}
+
+.card-text {
+	font-size: 14px;
+}
+
+.choose-line p {
+	width: 20%;
+	font-size: 18px;
+	margin: 50px 30px;
+}
+
+.choose-line form {
+	width: 70%;
+	/*border: 1px solid cyan;*/
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.form-control-file {
+	/*border: 1px solid red;*/
+	width: 35%;
+}
+
+.query {
+	margin-left: 30px;
+}
+
+.stu-list {
+	width: 90%;
+	margin: 20px;
+}
+
+.btn-cyan {
+	margin-left: 20px;
+	background-color: #00c3f5;
+}
+
+.container {
+	margin-top: 30px;
+}
+
+thead tr th,td {
+	text-align: center;
+}
+
+.operaten {
+	margin: 50px 30px;
+}
+
+.deleten {
+	clear: both;
+	float: right;
+	margin-right: 20px;
+}
+
+.card-row {
+	margin: 2px;
+}
+
+.card-row h5 {
+	display: inline-block;
+}
+
+.card-row button {
+	float: right;
+	margin-right: 20px;
+}

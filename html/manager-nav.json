@@ -5,11 +5,11 @@
         "items": [
             {
                 "name": "学生管理",
-                "url": "./sub-page/student-manager.html"
+                "url": "./sub-page/student-manage.html"
             },
             {
                 "name": "教师管理",
-                "url": "./sub-page/teacher-manager.html"
+                "url": "./sub-page/teacher-manage.html"
             }
         ]
     },
@@ -49,7 +49,7 @@
         "items": [
             {
                 "name": "开放记录",
-                "url": "./xxx"
+                "url": "./sub-page/extra-work.html"
             }
         ]
     },
@@ -59,11 +59,11 @@
         "items": [
             {
                 "name": "物料登记",
-                "url": "./xxx"
+                "url": "./sub-page/material-record.html"
             },
             {
                 "name": "物料申购",
-                "url": "./xxx"
+                "url": "./sub-page/material-bug.html"
             }
         ]
     },
@@ -73,7 +73,7 @@
         "items": [
             {
                 "name": "密码修改",
-                "url": "./xxx"
+                "url": "./sub-page/setup.html"
             }
         ]
     }

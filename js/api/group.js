@@ -15,5 +15,4 @@ define(['api/apiobj', 'config/global'], function (api, g) {
             )
         }
     }
-
 });

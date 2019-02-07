@@ -1,5 +1,42 @@
 [
-
-
-    
+    {
+        "category": "实习课程",
+        "icon":"../icon/class-distribute.svg",
+        "items": [
+            {
+                "name": "我的课表",
+                "url": "./sub-page/course.html"
+            }
+        ]
+    },
+    {
+        "category": "我的成绩",
+        "icon":"../icon/score.svg",
+        "items": [
+            {
+                "name": "评分查询",
+                "url": "./sub-page/score-select.html"
+            }
+        ]
+    },
+    {
+        "category": "开放情况",
+        "icon":"../icon/extra-work.svg",
+        "items": [
+            {
+                "name": "我的申请",
+                "url": "./sub-page/extra-request.html"
+            }
+        ]
+    },
+    {
+        "category": "个人设置",
+        "icon":"../icon/setup.svg",
+        "items": [
+            {
+                "name": "密码修改",
+                "url": "./sub-page/setup.html"
+            }
+        ]
+    }
 ]

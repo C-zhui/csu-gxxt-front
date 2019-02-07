@@ -1,0 +1,16 @@
+.tips {
+    color: green;
+    font-size: 12px;
+    margin-left: 50px;
+  }
+
+#class-time-container .distributed {
+    background-color: greenyellow;
+}
+#class-time-container .selected{
+    background-color: rgb(136, 136, 221); 
+}
+
+#distribution-table td:hover{
+	background-color: #eeeeee;
+}

@@ -1,4 +1,4 @@
-require(['jquery', 'swal', 'api/apiobj', 'config/global', 'api/group', 'api/experiment'], function ($, swal, api, g) {
+require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/group', 'api/experiment'], function ($, _, swal, api, g) {
 
   $(document).ready(function () {
     init_data()
@@ -32,7 +32,7 @@ require(['jquery', 'swal', 'api/apiobj', 'config/global', 'api/group', 'api/expe
         }
       }).fail(g.net_err)
   }
-  
+
   function fetchAndUpdateTemplateTable() {
     // console.log('updateTemplateTable')
     var i_temp = parseInt($('#template-selector :selected').attr('i_template'))

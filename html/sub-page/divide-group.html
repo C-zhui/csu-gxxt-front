@@ -1,5 +1,5 @@
 <div id="body">
-	<link rel="stylesheet" type="text/css" href="./css/divide-group.css">
+	<link rel="stylesheet" type="text/css" href="../css/spec/divide-group.css">
 
 	<!-- Nav tabs -->
 	<div class="nav nav-tabs" role="tablist">
@@ -32,7 +32,7 @@
 							<select class="form-control custom-select" id="course_divide1_select_temp">
 							</select>
 						</div>
-						<input type="button" name="" class="btn btn-primary" value="绑定" onclick="bundleTemplate()">
+						<input type="button" name="" class="btn btn-primary" value="绑定" id="bundle-btn">
 					</div>
 					<div class="tips">
 						<span>注意：</span>
@@ -74,12 +74,12 @@
 							</select>
 						</div>
 					</div>
-					<table class="table table-bordered" id="class-time-tracer">
+					<table class="table table-bordered text-center" id="class-time-tracer">
 						<tbody id="class-time-container"></tbody>
 					</table>
 
 					<div class="row">
-						<table class="table table-bordered distribute-table" id="distribution-table">
+						<table class="table table-bordered distribute-table text-center" id="distribution-table">
 							<thead id="distribution-table-head">
 							</thead>
 							<tbody id="distribution-table-body">
@@ -276,7 +276,7 @@
 						</div>
 
 						<div class="col-2">
-							<input type="button" name="" class="btn btn-default" value="查询排课表" onclick="getStuClassTableByNum()">
+							<input type="button" name="" class="btn btn-default" value="查询排课表" id="student-class-query-btn" >
 						</div>
 
 						<input type="button" name="" class="btn btn-default" value="打印排课表" id="print-stud-class-table">
@@ -515,18 +515,6 @@
 
 
 	<!-- 主体部分结束 -->
-	<!-- <script type="text/javascript" src="../js/bootstable.js"></script>
-	<script type="text/javascript">
-		$('#mytable').SetEditable({
-			$addButton: $('#add')
-		}); -->
-	<!--// </script>-->
-	<script src="../js/sweetalert.min.js"></script>
-	<script src="./js/config/config-divide-group.js"></script>
-	<script src="./js/api/api_experiment.js"></script>
-	<script src="./js/api/api_batch.js"></script>
-	<script src="./js/api/api_proced.js"></script>
-	<script src="./js/api/api_studentGroup.js"></script>
-	<script src="./js/api/api_student.js"></script>
-	<script type="text/javascript" src="./js/divide-group.js"></script>
+ 
+	<script type="text/javascript" src="../js/spec/divide-group.js"></script>
 </div>

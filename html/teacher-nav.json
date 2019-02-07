@@ -1,5 +1,56 @@
 [
-
-
-    
+    {
+        "category": "实习课程",
+        "icon":"../icon/class-distribute.svg",
+        "items": [
+            {
+                "name": "教学安排",
+                "url": "./sub-page/teach-schedule.html"
+            }
+        ]
+    },
+    {
+        "category": "成绩管理",
+        "icon":"../icon/score.svg",
+        "items": [
+            {
+                "name": "操作评分",
+                "url": "./sub-page/operate-score.html"
+            }
+        ]
+    },
+    {
+        "category": "开放情况",
+        "icon":"../icon/extra-work.svg",
+        "items": [
+            {
+                "name": "开放记录",
+                "url": "./sub-page/extra-work.html"
+            }
+        ]
+    },
+    {
+        "category": "物料管理",
+        "icon":"../icon/material-manage.svg",
+        "items": [
+            {
+                "name": "物料登记",
+                "url": "./sub-page/material-record.html"
+            },
+            {
+                "name": "物料申购",
+                "url": "./sub-page/material-bug.html"
+            }
+        ]
+    },
+    {
+        "category": "个人设置",
+        "icon":"../icon/setup.svg",
+        "items": [
+            {
+                "name": "密码修改",
+                "url": "./sub-page/setup.html"
+            }
+        ]
+    }
 ]
