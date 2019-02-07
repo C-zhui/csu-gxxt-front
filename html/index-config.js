@@ -11,11 +11,11 @@ require.config({
 })
 
 // 加载全局库、启动导航
-require(['jquery','bootstrap','lodash','flatpickr','swal','spec/boot-navigation'],function($){
+require(['jquery','bootstrap','spec/boot-navigation','spec/logout'],function($){
     $(function(){
-        console.log('加载jquery及bootstrap')
-    })
-})
+        console.log('加载jquery及bootstrap');
+    });
+});
 
 
 

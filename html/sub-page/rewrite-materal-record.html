@@ -1,0 +1,261 @@
+<div id="body">
+	<link rel="stylesheet" type="text/css" href="../manager/css/materal.css">
+
+	<!-- 物料登记 -->
+	<div class="content-card" id="applymaterial">
+		<header>
+			<div class="header-title">
+				物料登记
+			</div>
+		</header>
+
+		<main>
+			<h3 class="text-center">库存</h3>
+			<div class="row">
+				<div class="col-md-6 col-xs-6">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>物料种类</th>
+								<th>存量</th>
+							</tr>
+						</thead>
+						<tbody id="materal_record_list">
+							<!-- <tr>
+										<td>铝棒（根x2m）</td>
+										<td>20</td>
+									</tr>
+									<tr>
+										<td>轴承23（个）</td>
+										<td>2</td>
+									</tr> -->
+						</tbody>
+					</table>
+
+					<!-- 分页功能部分 -->
+					<div id="kbarcon" class="kbarcon">
+						<div id="kbarcon1" class="kbarcon1"></div>
+						<div id="kbarcon2" class="kbarcon2">
+							<ul>
+								<li>
+									<a href="###" id="kfirstPage" class="btn btn-sm">首页</a></li>
+								<li>
+									<a href="###" id="kprePage" class="btn btn-sm">上一页</a></li>
+								<li>
+									<a href="###" id="knextPage" class="btn btn-sm">下一页</a></li>
+								<li>
+									<a href="###" id="klastPage" class="btn btn-sm">尾页</a></li>
+								<li>
+									<!-- <select id="jumpWhere"></select> -->
+									<input type="text" id="kjumpWhere">
+								</li>
+								<li><a href="###" id="kjumpPage" onclick="kjumpPage()" class="btn btn-sm btn-primary">跳转</a></li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+				<span class="col-md-1 col-xs-1"></span>
+				<div class="col-md-4 col-xs-4 materal-out-number float-right">
+					<div class="card outNumber-card">
+						<div class="card-header">
+							派出数
+						</div>
+						<div class="card-body">
+							<input type="text" class="form-control col-md-11 col-xs-11" placeholder="输入领取学生学号" id="distribute_stu_id">
+							<input type="text" class="form-control col-md-11 col-xs-11" placeholder="输入领取学生姓名" id="distribute_stu_name">
+							<select class="form-control custom-select col-md-11 col-xs-11" id='select_meterial'>
+								<!-- <option>选择物料种类</option>
+										<option>铝棒</option>
+										<option>轴承</option> -->
+							</select>
+							<input type="text" class="form-control col-md-11 col-xs-11" placeholder="输入领取数量" id="distribute_num">
+							<a href="#" class="btn btn-primary float-right" onclick="decrMaterialNum()">确定</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+	</div>
+	<!-- 物料登记结束 -->
+
+	<!-- 物料登记记录 -->
+	<div class="content-card">
+		<header>
+			<div class="header-title">
+				领取记录
+			</div>
+		</header>
+		<main>
+			<div class="row">
+				<input class="flatpickr mycalendar form-control col-xs-2 col-sm-2 left-flatpickr" name="start-time" placeholder="开始日期"
+				 id="start_time">
+				<span class="form-control col-xs-1 col-sm-1 time-last">至</span>
+				<input class="flatpickr mycalendar form-control col-xs-2 col-sm-2" name="end-time" placeholder="结束时间" id="end_time">
+				<select class="form-control custom-select col-xs-2 col-sm-2 select-person" id="record_history_selset_meterail">
+					<!-- <option>物料种类</option>
+							<option>铝棒</option>
+							<option>轴承</option> -->
+				</select>
+			</div>
+			<div class="row record-search2">
+				<input type="text" class="form-control col-xs-2 col-sm-2" placeholder="学号" id="stu_id">
+				<input type="text" class="form-control col-xs-2 col-sm-2" placeholder="姓名" id="stu_name">
+				<input type="button" class="btn btn-success float-right" onclick="getSelectedPurchase()" value="查询">
+			</div>
+
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>领取时间</th>
+						<th>领取学生</th>
+						<th>领取人学号</th>
+						<th>物料种类</th>
+						<th>物料数量</th>
+						<th>登记人</th>
+					</tr>
+				</thead>
+				<tbody id="adminTbody">
+					<tr>
+						<td>2018-10-05 12:12</td>
+						<td>张三</td>
+						<td>0906160204</td>
+						<td>铝棒(根x2m)</td>
+						<td>200</td>
+						<td>力宏</td>
+					</tr>
+					<tr>
+						<td>2018-10-08 10:23</td>
+						<td>王五</td>
+						<td>0906160211</td>
+						<td>轴承23(个)</td>
+						<td>18</td>
+						<td>刘忻</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<!-- 分页功能部分 -->
+			<div id="barcon" class="barcon clearfix">
+				<div id="barcon1" class="barcon1"></div>
+				<div id="barcon2" class="barcon2">
+					<ul>
+						<li>
+							<a href="###" id="firstPage" class="btn btn-sm">首页</a></li>
+						<li>
+							<a href="###" id="prePage" class="btn btn-sm">上一页</a></li>
+						<li>
+							<a href="###" id="nextPage" class="btn btn-sm">下一页</a></li>
+						<li>
+							<a href="###" id="lastPage" class="btn btn-sm">尾页</a></li>
+						<li>
+							<!-- <select id="jumpWhere"></select> -->
+							<input type="text" id="jumpWhere">
+						</li>
+						<li><a href="###" id="jumpPage" onclick="jumpPage()" class="btn btn-sm btn-primary">跳转</a></li>
+					</ul>
+				</div>
+			</div>
+		</main>
+	</div>
+	 <!-- 物料登记记录结束 -->
+
+	<!-- 主体部分结束 -->
+	<script type="text/javascript">
+		$(".mycalendar").flatpickr();
+
+		/**
+		* 分页函数
+		* pno--页数
+		* psize--每页显示记录数
+		* 分页部分是从真实数据行开始，因而存在加减某个常数，以确定真正的记录数
+		* 纯js分页实质是数据行全部加载，通过是否显示属性完成分页功能
+		**/
+
+		var kpageSize = 0;		//每页显示行数
+		var kcurrentPage_ = 1;	//当前页全局变量，用于跳转时判断是否在相同页，在就不跳，否则跳转。
+		var ktotalPage;		//总页数
+
+		function kgoPage(pno, psize) {
+			console.log(pno);
+			console.log(psize);
+			// ================================================= tbody 部分
+			var itable = document.getElementById("materal_record_list");
+			var num = itable.rows.length;	//未分页表格数据所有行数(所有记录数)
+
+			kpageSize = psize;				//每页显示行数
+
+			//总共分几页
+			if (num / kpageSize > parseInt(num / kpageSize)) {
+				ktotalPage = parseInt(num / kpageSize) + 1;
+			} else {
+				ktotalPage = parseInt(num / kpageSize);
+			}
+			var currentPage = pno;	//当前页数
+			currentPage_ = currentPage;
+			var startRow = (currentPage - 1) * kpageSize + 1;
+			var endRow = currentPage * kpageSize;
+			endRow = (endRow > num) ? num : endRow;
+			//遍历显示数据实现分页
+			/*for(var i=1;i<(num+1);i++){
+					var irow = itable.rows[i-1];
+					if(i>=startRow && i<=endRow){
+							irow.style.display = "";
+					}else{
+							irow.style.display = "none";
+					}
+			}*/
+
+			// ================================================= tbody 部分
+			$("#materal_record_list tr").hide();
+			for (var i = startRow - 1; i < endRow; i++) {
+				// ================================================= tbody 部分
+				$("#materal_record_list tr").eq(i).show();
+			}
+			// var tempStr = "共"+num+"条记录 | "+currentPage+"/"+ktotalPage+"页";
+			var tempStr = "第" + currentPage + "/" + ktotalPage + "页";
+			// ================================================= barcon1 部分
+			document.getElementById("kbarcon1").innerHTML = tempStr;
+
+			if (currentPage > 1) {
+				$("#kfirstPage").on("click", function () {
+					kgoPage(1, psize);
+				}).removeClass("ban");
+				$("#kprePage").on("click", function () {
+					kgoPage(currentPage - 1, psize);
+				}).removeClass("ban");
+			} else {
+				$("#kfirstPage").off("click").addClass("ban");
+				$("#kprePage").off("click").addClass("ban");
+			}
+
+			if (currentPage < ktotalPage) {
+				$("#knextPage").on("click", function () {
+					kgoPage(currentPage + 1, psize);
+				}).removeClass("ban")
+				$("#klastPage").on("click", function () {
+					kgoPage(ktotalPage, psize);
+				}).removeClass("ban")
+			} else {
+				$("#knextPage").off("click").addClass("ban");    // 添加 ban class属性，用于设置透明度，不可点击等
+				$("#klastPage").off("click").addClass("ban");
+			}
+
+			$("#kjumpWhere").val(currentPage);       // 设置“跳转”按钮的值
+		}
+
+		function kjumpPage() {
+			var num = parseInt($("#kjumpWhere").val());
+			if (num != kcurrentPage_) {
+				kgoPage(num, kpageSize);
+			}
+		}
+
+	</script>
+	<script type="text/javascript" src="./js/materal-record.js"></script>
+	<!-- 分页开始 -->
+	<script type="text/javascript" src="../js/cut_page.js"></script>
+	<link rel="stylesheet" type="text/css" href="../css/cut_page.css">
+	<!-- 分页结束 -->
+
+</div>

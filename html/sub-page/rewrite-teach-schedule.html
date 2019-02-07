@@ -1,0 +1,162 @@
+<div id="body">
+	<link rel="stylesheet" type="text/css" href="./css/teach-schedule.css">
+
+	<!-- 小组排课查询 -->
+	<div class="content-card">
+		<header>
+			<div class="header-title">
+				 小组排课查询 
+			</div>
+		</header>
+		<main>
+			<div class="row">
+				<div class="col-sm-2 col-xs-2">
+					<select class="form-control custom-select">
+						<option>工种</option>
+						<option>钳工</option>
+						<option>铣工</option>
+					</select>
+				</div>
+				<div class="col-xs-2 col-sm-2">
+					<select class="form-control custom-select">
+						<option>周数选择</option>
+						<option>1</option>
+						<option>2</option>
+						<option>15</option>
+						<option>16</option>
+					</select>
+				</div>
+				<input type="button" name="" class="btn btn-outline-successs" value="查询">
+			</div>
+
+			<br>
+			<div class="row">
+				<table class="table table-bordered distribute-table">
+					<thead>
+						<tr>
+							<th></th>
+							<th>周一</th>
+							<th>周二</th>
+							<th>周三</th>
+							<th>周四</th>
+							<th>周五</th>
+							<th>周六</th>
+							<th>周日</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>1、2</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>3、4</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>5、6</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>7、8</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>9、10</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</main>
+		<!-- 小组排课查询结束 -->
+
+		<br><br>
+		<!-- 学生分组查询 -->
+		<div class="content-card">
+			<header>
+				<div class="header-title">
+					学生分组查询
+				</div>
+			</header>
+
+			<main>
+
+				<div class="row">
+					<select class="form-control custom-select col-xs-2 col-sm-2 stu-divide-search">
+						<option>选择批次</option>
+						<option></option>
+					</select>
+					<select class="form-control custom-select col-xs-2 col-sm-2 stu-divide-search">
+						<option>选择组数</option>
+						<option></option>
+					</select>
+					<input type="text" name="" class="form-control col-sm-2 col-xs-2 stu-divide-search" placeholder="请输入学号">
+					<input type="text" name="" class="form-control col-sm-2 col-xs-2 stu-divide-search" placeholder="请输入姓名">
+					<input type="button" name="" value="查&emsp;询" class="btn btn-outline-success stu-divide-search">
+				</div>
+
+				<br>
+				<div class="row float-right input-select">
+					<input type="button" name="" value="导出excel" class="btn btn-primary">
+				</div>
+
+				<table class="table table2">
+					<thead>
+						<tr>
+							<th>学号</th>
+							<th>姓名</th>
+							<th>班级</th>
+							<th>实习批次</th>
+							<th>组数</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>123456</td>
+							<td>李华</td>
+							<td>机械1909班</td>
+							<td>2018A01</td>
+							<td>A</td>
+						</tr>
+					</tbody>
+				</table>
+		</main>
+
+		<!-- 学生分组查询结束 -->
+		<!-- 主体部分结束 -->
+		<!-- 分页开始 -->
+		<script type="text/javascript" src="../js/cut_page.js"></script>
+		<link rel="stylesheet" type="text/css" href="../css/cut_page.css">
+		<!-- 分页结束 -->
+	</div>

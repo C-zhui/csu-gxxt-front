@@ -1,0 +1,40 @@
+<div id="body">
+	<link rel="stylesheet" type="text/css" href="../css/setup.css">
+
+	<!-- 修改密码模块 -->
+	<div class="content-card">
+		<header>
+			<div class="header-title">
+				密码修改
+			</div>
+		</header>
+		<main>
+
+
+			<!-- 修改密码框 -->
+			<div class="edit_password">
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label">教师组：</label>
+					<input type="text" class="textInfo" id="teacherGroupInfo" class="form-control col-sm-8" disabled>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label">姓名：</label>
+					<input type="text" class="textInfo" id="teacherNameInfo" class="form-control col-sm-8" disabled>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label">原密码：</label>
+					<input type="text" name="old_password" id="old_password" class="form-control col-sm-8" placeholder="原密码">
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label">新密码：</label>
+					<input type="password" name="new_password" id="new_password" class="form-control col-sm-8" placeholder="新密码">
+				</div>
+				<button type="submit" class="btn btn-danger" id="change_password_submit" onclick="changePassword()">确定</button>
+			</div>
+
+		</main>
+	</div>
+	<!-- 主体部分结束 -->
+	<script type="text/javascript" src="./js/weight.js"></script>
+	<script type="text/javascript" src="../js/setup.js"></script>
+</div>
