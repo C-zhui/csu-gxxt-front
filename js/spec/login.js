@@ -12,21 +12,9 @@ define(['jquery', 'swal', 'config/global','util/md5'], function ($, swal, g) {
         'password': password
       }
     ).done(function (data) {
-      // console.log(data);
       if (data.status === 0) {
-        // console.log(data);
         basicInfo = data.data;
         window.location.href = './a-index.html?'+data.data["身份"]
-        // if (data.data["身份"] === "admin") {
-        //   // window.location.href = './manager/iindex.html';
-        //   window.location.href = 
-        // }
-        // else if (data.data["身份"] === "teacher") {
-        //   window.location.href = 
-        // }
-        // else if (data.data["身份"] === "student") {
-        //   window.location.href = 
-        // }
       }
       else {
         console.log(data);

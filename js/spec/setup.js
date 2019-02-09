@@ -17,6 +17,8 @@ require(['jquery','config/global','util/md5'], function ($,g) {
       async: false,
       url: g.base_url + '/user/changePwd2',
       datatype: 'json',
+      xhrFields: {withCredentials: true},
+      crossDomain: true,
       data: {
         'old': old_password,
         'pwd': new_password
@@ -48,6 +50,8 @@ require(['jquery','config/global','util/md5'], function ($,g) {
       type: 'post',
       datatype: 'json',
       data: {},
+      xhrFields: {withCredentials: true},
+      crossDomain: true,
       success: function (data) {
         console.log(data);
         if (data.status === 0) {

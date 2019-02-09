@@ -1,0 +1,27 @@
+.add-new {
+	display: block;
+	margin: 20px;
+}
+
+.operate {
+	width: 75%;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	margin-left: 0px;
+}
+
+/* .table {
+	max-width: 95%;
+	margin: 30px;
+} */
+
+.new-scheduleName-row {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+#template-tbody td:hover{
+	background-color: #eeeeee;
+}

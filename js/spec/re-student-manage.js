@@ -27,20 +27,26 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/batch']
 
         semesters_obj = data.data;
         // console.log(semesters_obj);
+
+        // semesters = data.data; // todo jquery 重构，将onclick放到$.fn.click
+        // _.each(semesters,function(val){
+        // 
+        // })
+
         for (let i = 0; i < semesters_obj.length; i++) {
           if (semesters_obj[i].semester_name !== null) {
             let html = '';
             // 学期名 button
             html += '<p><button class="btn btn-outline-primary" data-toggle="collapse" href="#' + semesters_obj[i].semester_name + '" type="button" aria-expanded="false" aria-controls="' + semesters_obj[i].semester_name + '">' + semesters_obj[i].semester_name + '学期</button>';
 
-            // 添加新批次图标
-            html += '<i class="btn btn-sm btn-default" onclick="add_semester_batch(this)" name="' + semesters_obj[i].semester_name + '" data-toggle="modal" data-target="#add_semester_batchModal"><img class="add-icon" src="./img/add.svg"></i>';
+            // 添加新批次图标 onclick="add_semester_batch(this)"
+            html += '<i class="add_semester_btn btn btn-sm btn-default"  name="' + semesters_obj[i].semester_name + '" data-toggle="modal" data-target="#add_semester_batchModal"><img class="add-icon" src="../icon/add-sm.svg"></i>';
 
-            // 编辑学期名图标
-            html += '<i class="btn btn-sm btn-default" onclick="editSemesterName_init(this)" name="' + semesters_obj[i].semester_name + '" data-toggle="modal" data-target="#edit_semester_nameModal"><img class="edit-icon" src="./img/edit.svg"></i>';
+            // 编辑学期名图标 onclick="editSemesterName_init(this)"
+            html += '<i class="editSemester_btn btn btn-sm btn-default"  name="' + semesters_obj[i].semester_name + '" data-toggle="modal" data-target="#edit_semester_nameModal"><img class="edit-icon" src="../icon/edit-inner.svg"></i>';
 
-            // 删除学期图标
-            html += '<i class="btn btn-sm btn-default" onclick="delSemester(this)" name="' + semesters_obj[i].semester_name + '" data-toggle="modal" data-target="#del_semesterModal"><img class="del-icon" src="./img/delete-x.svg"></i>';
+            // 删除学期图标 onclick="delSemester(this)"
+            html += '<i class="delSemester_btn btn btn-sm btn-default"  name="' + semesters_obj[i].semester_name + '" data-toggle="modal" data-target="#del_semesterModal"><img class="del-icon" src="../icon/delete-x.svg"></i>';
             html += '</p>';
 
             // 根据学期名查询批次
@@ -84,7 +90,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/batch']
             'success'
           );
           init_data();
-        }else {
+        } else {
           g.fetch_err(data);
         }
       })

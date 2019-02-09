@@ -6,7 +6,7 @@
 //     });
 // }
 
-define(['jquery', 'swal','lodash'], function ($, swal,_) {
+define(['jquery', 'swal', 'lodash'], function ($, swal, _) {
     role_to_nav = {
         'admin': 'manager-nav.json',
         'teacher': 'teacher-nav.json',
@@ -25,36 +25,6 @@ define(['jquery', 'swal','lodash'], function ($, swal,_) {
 
     if (!role_to_nav[role]) // 身份不对，回去登录
         window.location.href = './login.html'
-
-
-    $.ajaxSetup({
-        cache: false,
-        crossDomain: true
-    });
-
-    $.getJSON(role_to_nav[role], function (data) {
-        console.log(data);
-        $('#end').text(role_to_end[role]);
-        $('#category').empty();
-        $('#part').empty();
-
-
-        var $nav_container = $('#navigation-container').empty();
-        _.each(data,function(category,i){ // 每个选项组
-            var $category_li = $('<li></li>').addClass('category');
-            $("<img></img>").addClass('icon').attr('src',category.icon).appendTo($category_li);
-            $('<span></span>').addClass('category-name').text(category.category).appendTo($category_li);
-
-            var $items = $('<ul></ul>');
-            _.each(category.items,function(item){
-                var $item = $('<li></li>');
-                $('<a></a>').attr('href',item.url).text(item.name).appendTo($item)
-                $item.appendTo($items)
-            });
-            $items.appendTo($category_li);
-            $category_li.appendTo($nav_container);
-        });
-    });
 
 
     $(function () {
@@ -82,4 +52,36 @@ define(['jquery', 'swal','lodash'], function ($, swal,_) {
             // setHeight()
         })
     });
+
+    $.ajaxSetup({
+        cache: false,
+        crossDomain: true
+    });
+
+    $.getJSON(role_to_nav[role], function (data) {
+        console.log(data);
+        $('#end').text(role_to_end[role]);
+        $('#category').empty();
+        $('#part').empty();
+
+
+        var $nav_container = $('#navigation-container').empty();
+        _.each(data, function (category, i) { // 每个选项组
+            var $category_li = $('<li></li>').addClass('category');
+            $("<img></img>").addClass('icon').attr('src', category.icon).appendTo($category_li);
+            $('<span></span>').addClass('category-name').text(category.category).appendTo($category_li);
+
+            var $items = $('<ul></ul>');
+            _.each(category.items, function (item) {
+                var $item = $('<li></li>');
+                $('<a></a>').attr('href', item.url).text(item.name).appendTo($item)
+                $item.appendTo($items)
+            });
+            $items.appendTo($category_li);
+            $category_li.appendTo($nav_container);
+        });
+    });
+
+
+
 })
