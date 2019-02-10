@@ -79,6 +79,9 @@
                     >li:hover{
                         background: $nav-background-active;
                     }
+                    >li.active{
+                        background: $nav-background-active;
+                    }
                 }
 
             }

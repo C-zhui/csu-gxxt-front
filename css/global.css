@@ -113,6 +113,9 @@
 #navigation main > ul > li ul > li:hover {
   background: #b9ddf5;
 }
+#navigation main > ul > li ul > li.active {
+  background: #b9ddf5;
+}
 #navigation main > ul .icon {
   width: 24px;
   height: 24px;
