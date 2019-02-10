@@ -34,7 +34,7 @@
         "items": [
             {
                 "name": "权重设置",
-                "url": "./xxx"
+                "url": "./sub-page/weight.html"
             },
             {
                 "name": "成绩列表",
