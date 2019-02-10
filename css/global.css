@@ -176,14 +176,11 @@
   font-family: 黑体;
   font-weight: normal;
 }
-.table .table_id {
+.table .table_id, .table .table_people, .table .table_num, .table .table_status {
   width: 120px;
 }
 .table .table_time {
   width: 230px;
-}
-.table .table_people, .table .table_num, .table .table_status {
-  width: 100px;
 }
 .table .table_material {
   width: 180px;
