@@ -1,0 +1,13 @@
+// 调整左边导航栏的长度
+function setHeight() {
+    setTimeout(function()
+    {
+        var heightContent = $("#content_body").height();
+
+        if(heightContent>800){
+            heightContent=heightContent+20;
+        }
+        $("#nav_main").animate({height:heightContent-70+"px"});
+        // $("#nav_main").css("height", heightContent-70)
+    }, 1000);
+}
