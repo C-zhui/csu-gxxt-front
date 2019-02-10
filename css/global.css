@@ -1,3 +1,4 @@
+@charset "UTF-8";
 #header-wrap {
   padding: 10px 0;
   height: 100px;
@@ -38,11 +39,16 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  font-family: "Microsoft YaHei UI";
 }
 #navigation header, #navigation main {
   background: #edf0f5;
 }
 #navigation header {
+  background: url("../img/nav-header.jpg");
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: 100%;
   line-height: 38px;
   box-sizing: border-box;
   text-align: center;
@@ -64,6 +70,11 @@
 }
 #navigation main {
   padding: 10px 40px;
+  min-height: 750px;
+  background-image: url("../img/nav-top.jpg"), url("../img/nav-bottom.jpg");
+  background-repeat: no-repeat;
+  background-position: top, bottom;
+  background-size: 100%, 100%;
 }
 #navigation main > ul {
   padding-left: 0;
@@ -92,60 +103,66 @@
   line-height: 30px;
   padding-left: 24px;
   margin-left: 24px;
+  margin-right: -32px;
 }
 #navigation main > ul > li ul li a, #navigation main > ul > li ul li a:visited {
   font-size: 1rem;
   color: #111;
   text-decoration: none;
-  font-weight: 600;
 }
 #navigation main > ul > li ul > li:hover {
   background: #b9ddf5;
 }
 #navigation main > ul .icon {
-  width: 1.4rem;
-  height: 1.4rem;
+  width: 24px;
+  height: 24px;
+  margin-top: -4px;
 }
-#navigation #nav-bottom {
-  width: 100%;
+
+.nav {
+  background: #ffffff;
+  padding: 10px 24px;
+  padding-bottom: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+.nav .open > a, .nav .open > a:focus, .nav .open > a:hover {
+  background-color: #eee;
+  border-color: #337ab7;
+}
+
+.nav .nav-divider {
+  height: 2px;
+  margin: 9px 0;
+  overflow: hidden;
+  background-color: #e5e5e5;
 }
 
 .nav-tabs {
-  background: white;
-  padding: 10px 0px;
+  border-bottom: 2px solid #079fc9;
 }
-.nav-tabs::after {
-  width: 100%;
-  height: 100%;
-  content: "";
-  border-bottom: 4px solid #716fee;
+
+.nav-link {
+  padding: 0.4rem 1rem;
 }
+
 .nav-tabs .nav-item {
-  margin-left: 15px;
+  margin-bottom: -2px;
 }
-.nav-tabs a {
-  color: inherit;
-  position: relative;
-  border: none;
+
+.nav-item.nav-link {
+  border: 2px solid #dcdcdc;
+  color: #4a4a4a;
+  border-bottom: 2px solid transparent;
+  margin: 0 10px -2px 0;
+  font-family: 黑体;
 }
-.nav-tabs a.active {
-  color: #716fee !important;
-  border: none;
-}
-.nav-tabs a.active::after {
-  left: 0;
-  top: 0;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  content: " ";
-  border-radius: 5px 5px 0 0;
-  border-left: 4px solid #716fee !important;
-  border-right: 4px solid #716fee !important;
-  border-top: 4px solid #716fee !important;
-}
-.nav-tabs .nav-link {
-  font-weight: bolder;
+
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+  color: #0691b8;
+  border: 2px solid #079fc9;
+  border-bottom: 2px solid transparent;
 }
 
 .table thead tr:first-child {
@@ -155,8 +172,53 @@
 .table tbody tr:nth-child(odd) {
   background: #e5f0f6;
 }
+.table th {
+  font-family: 黑体;
+  font-weight: normal;
+}
+.table .table_id {
+  width: 120px;
+}
+.table .table_time {
+  width: 230px;
+}
+.table .table_people, .table .table_num, .table .table_status {
+  width: 100px;
+}
+.table .table_material {
+  width: 180px;
+}
+.table .table_note, .table .table_operate {
+  width: 200px;
+}
+
+table .row {
+  margin-bottom: 0;
+}
+
+input[name=btSelectAll] {
+  display: none;
+}
+
+.padding {
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+#sadminTbody .row {
+  margin-right: 0;
+}
+
+[class^=modifyInput] {
+  display: none;
+}
+
+.fixed-table-loading {
+  display: none;
+}
 
 .content-card {
+  background: #ffffff;
   margin-bottom: 1.4em;
 }
 .content-card header, .content-card main, .content-card footer {
@@ -169,6 +231,9 @@
   position: relative;
   display: inline-block;
   padding: 0 8px;
+  font-family: "Microsoft YaHei UI";
+  font-size: 1.2rem;
+  color: #112d4e;
 }
 .content-card header .header-title::after {
   position: absolute;
@@ -207,30 +272,128 @@
 #container_body #content_body {
   float: left;
   width: 900px;
-  height: 1800px;
+  min-height: 800px;
   box-shadow: 0 10px 10px #919191;
   margin-bottom: 40px;
   background: #f6f6f6;
 }
 
 .btn-outline {
-  border-color: #3f8bc7;
   color: #3f8bc7;
   border-radius: 4px;
+  border: 1px solid #0066b7;
+  font-family: "Microsoft YaHei UI";
 }
 .btn-outline:hover {
   background-color: #e5f0f6;
+  color: #3f8bc7;
 }
 
 .btn-default {
   background: #56a3d7;
   color: #eee;
   border-radius: 4px;
+  font-family: "Microsoft YaHei UI";
 }
 .btn-default:hover {
   background: inherit;
   color: #56a3d7;
   border-color: #56a3d7;
+}
+
+.btn-group {
+  margin: 26px 0;
+  line-height: 46px;
+}
+.btn-group.right .btn {
+  margin-left: -1px;
+}
+
+.btn-select {
+  width: 80px;
+  color: #3f8bc7;
+}
+
+.select-top.row div[class^=col-] {
+  padding-left: 0;
+}
+
+.select-top > div[class^=col-] {
+  padding-right: 30px;
+}
+.select-top > div[class^=col-].last {
+  padding-right: 0;
+}
+.select-top > div[class^=col-].no-padding {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.select-top.title {
+  margin-bottom: 2px;
+  font-family: "Microsoft YaHei UI";
+  color: #4d4d4d;
+}
+
+.no-background {
+  background-color: #eee;
+}
+
+.row {
+  margin-bottom: 10px;
+}
+
+.barcon {
+  margin: 0 auto;
+  text-align: center;
+}
+.barcon .barcon2 {
+  float: left;
+}
+.barcon .barcon2 > ul {
+  margin: 20px 0;
+  padding-left: 0;
+  list-style: none;
+  text-align: center;
+}
+.barcon .barcon2 > ul > li {
+  display: inline;
+  line-height: 46px;
+  box-sizing: border-box;
+}
+.barcon .barcon2 > ul > li:first-child {
+  width: 50px;
+}
+.barcon .barcon2 > ul > li:nth-child(2) {
+  width: 68px;
+}
+.barcon .barcon2 > ul > li:nth-child(3) {
+  width: 68px;
+}
+.barcon .barcon2 > ul > li:nth-child(4) {
+  width: 50px;
+}
+.barcon .barcon2 > ul .jumpWhere {
+  width: 50px;
+  padding: 0 5px;
+  border: 1px solid #3f8bc7;
+  height: 32px;
+}
+.barcon .barcon2 a {
+  margin: 0 3px;
+  margin-top: -3px;
+}
+
+.barcon1 {
+  color: #505050;
+}
+
+.ban {
+  opacity: 0.4;
+}
+
+.text-page {
+  color: #266997;
 }
 
 /*# sourceMappingURL=global.css.map */

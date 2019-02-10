@@ -15,6 +15,8 @@ $text-black:#111;
 $text-nav-head:#575757;
 $text-card-title:#112d4e;
 $text-card-item:#4d4d4d;
+$text-pagination:#505050;
+$text-page:#266997;
 
 // 右容器背景
 $body-background:#f6f6f6;
@@ -22,9 +24,11 @@ $body-background:#f6f6f6;
 // 导航背景
 $nav-background:#edf0f5;
 $nav-background-active:#b9ddf5;
+$tab-text:#4a4a4a;
+$tab-active:#079fc9;
+$tab-active-text:#0691b8;
 
-
-// 表格
+  // 表格
 $table-head: #5b8fb4; // 表头
 $table-odd: #e5f0f6 ; // 奇数行
 $table-even:inherit; // 偶数行
@@ -37,5 +41,6 @@ $card-head-title-border:#3f8bc7;
 
 // button
 $button-outline-color: #3f8bc7;
+$button-outline-border:#0066b7;
 $button-outline-hover:#e5f0f6;
 $button-default-back:#56a3d7;

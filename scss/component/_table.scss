@@ -10,4 +10,42 @@
             background: $table-odd;
         }
     }
+    th{
+        font-family: 黑体;
+        font-weight: normal;
+    }
+    .table_id{
+        width: 120px;
+    }
+    .table_time{
+        width: 230px;
+    }
+    .table_people,.table_num,.table_status{
+        width: 100px;
+    }
+    .table_material{
+        width: 180px;
+    }
+    .table_note,.table_operate{
+        width: 200px;
+    }
+}
+table .row{
+    margin-bottom: 0;
+}
+input[name="btSelectAll"]{
+    display: none;
+}
+.padding{
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+#sadminTbody .row{
+    margin-right: 0;
+}
+[class^="modifyInput"]{
+    display: none;
+}
+.fixed-table-loading{
+    display: none;
 }
