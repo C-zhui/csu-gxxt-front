@@ -6,7 +6,8 @@ require.config({
         popper:'lib/popper.min',
         lodash:'lib/lodash',
         flatpickr:'lib/flatpickr',
-        swal:'lib/sweetalert.min'
+        swal:'lib/sweetalert.min',
+        moment:'lib/moment'
     }
 })
 

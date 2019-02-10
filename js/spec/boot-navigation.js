@@ -6,7 +6,7 @@
 //     });
 // }
 
-define(['jquery', 'swal', 'lodash'], function ($, swal, _) {
+define(['jquery', 'swal', 'lodash', 'spec/set-height'], function ($, swal, _, setHeight) {
     role_to_nav = {
         'admin': 'manager-nav.json',
         'teacher': 'teacher-nav.json',
@@ -21,7 +21,7 @@ define(['jquery', 'swal', 'lodash'], function ($, swal, _) {
 
     var role = window.location.search || '';
     role = role.slice(1);
-    console.log(role)
+    // console.log(role)
 
     if (!role_to_nav[role]) // 身份不对，回去登录
         window.location.href = './login.html'
@@ -49,7 +49,7 @@ define(['jquery', 'swal', 'lodash'], function ($, swal, _) {
                 $('#category', navi).text(category);
                 $('#part', navi).text(part)
             });
-            // setHeight()
+            setHeight()
         })
     });
 
@@ -59,7 +59,7 @@ define(['jquery', 'swal', 'lodash'], function ($, swal, _) {
     });
 
     $.getJSON(role_to_nav[role], function (data) {
-        console.log(data);
+        // console.log(data);
         $('#end').text(role_to_end[role]);
         $('#category').empty();
         $('#part').empty();
