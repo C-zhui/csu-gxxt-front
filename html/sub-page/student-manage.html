@@ -11,9 +11,9 @@
 		</header>
 
 		<main>
-			<button class="btn btn-success" data-toggle="modal" data-target="#add_new_batchModal">添加新学期</button>
+			<button class="btn btn-success" data-toggle="modal" data-target="#add_semester_batchModal">添加新批次</button>
 			<!-- 添加新学期 Modal -->
-			<div class="modal fade" id="add_new_batchModal" tabindex="-1" role="dialog" aria-labelledby="sadd_new_batchModalTitle"
+			<!-- <div class="modal fade" id="add_new_batchModal" tabindex="-1" role="dialog" aria-labelledby="sadd_new_batchModalTitle"
 			 aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered" role="document">
 					<div class="modal-content">
@@ -43,8 +43,14 @@
 										<input type="text" class="form-control" placeholder="学分" id="new_semester_credit">
 									</div>
 								</div>
+								<div class="form-group row">
+									<label class="col-sm-2 col-form-label" for="new_semester_beginDate">起始时间</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" placeholder="" id="new_semester_beginDate">
+									</div>
+								</div>
 								<small style="color: red;">注意：</small>
-								<small style="color: green;">批次名请使用数字及英文大写字母的组合形式，具体为 年份+季节缩写+学分+序号，如 2018S101 代表 2018年 秋季学期 1学分培养方案 批次1</small>
+								<small style="color: green;">批次名请使用数字及英文大写字母的组合形式，具体为 年份+季节缩写+学分+序号，如 2018S101 代表 2018年 秋季学期 1学分培养方案 批次1。起始时间请设置为第一周的星期一</small>
 							</form>
 						</div>
 						<div class="modal-footer">
@@ -53,11 +59,17 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> -->
+			
 			<!-- /.modal -->
 			<span class="clearfix"></span>
 			<!-- 学期与批次列表 -->
-			<div class="allBatchManage">
+			<div id="template-batch" class="d-none">
+				<span class="batch-name"></span>
+				<button class="btn btn-sm edit-btn"><img  style="height:1em;" src="../icon/edit.svg" alt=""></button>
+				<button class="btn btn-sm delete-btn"><img  style="height:1em;" src="../icon/delete.svg" alt=""></button>
+			</div>
+			<div id="batch-list">
 				<!-- <p>
 	    	 		<button class="btn btn-outline-primary" data-toggle="collapse" href="#fall" type="button" aria-expanded="false" aria-controls="fall">2019年秋季学期</button>
 	    	 		<a class="btn btn-sm btn-default" href="#"><img class="add-icon" src="./img/add.svg"></a>
@@ -100,7 +112,7 @@
 							<div class="form-group row">
 								<label class="col-sm-2 col-form-label" for="addNewBatch_semester">学期名</label>
 								<div class="col-sm-10">
-									<input type="text" disabled class="form-control" id="addNewBatch_semester">
+									<input type="text"  class="form-control" id="addNewBatch_semester" placeholder="学期名">
 								</div>
 							</div>
 							<div class="form-group row">
@@ -113,6 +125,12 @@
 								<label class="col-sm-2 col-form-label" for="addNewBatch_credit">学分</label>
 								<div class="col-sm-10">
 									<input type="text" class="form-control" placeholder="学分" id="addNewBatch_credit">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-2 col-form-label" for="addNewBatch_beginDate">起始时间</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control date-plugin" placeholder="" id="addNewBatch_beginDate">
 								</div>
 							</div>
 							<small style="color: red;">注意：</small>
@@ -159,13 +177,19 @@
 									<input type="text" class="form-control" id="editOneBatchCredit">
 								</div>
 							</div>
+							<div class="form-group row">
+								<label class="col-sm-2 col-form-label" for="editOneBatchBeginDate">起始时间</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control date-plugin" placeholder="" id="editOneBatchBeginDate">
+								</div>
+							</div>
 							<!-- <small style="color: red;">注意：</small>
 									<small style="color: green;">批次名请使用数字及英文大写字母的组合形式，具体为 年份+季节缩写+学分+序号，如 2018S101 代表 2018年 秋季学期 1学分培养方案 批次1</small> -->
 						</form>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-						<button type="button" class="btn btn-primary" onclick="editOneBatch()" data-dismiss="modal">确定</button>
+						<button type="button" class="btn btn-primary" id="editOneBatchCommit"  data-dismiss="modal">确定</button>
 					</div>
 				</div>
 			</div>
@@ -407,7 +431,7 @@
 
 	<!-- 学生列表结束 -->
 	<!-- 主体部分结束 -->
-	<script src="../js/spec/student-manage.js"></script>
+	<script src="../js/spec/re-student-manage.js"></script>
 	<!-- 分页开始 -->
 	<script src="../js/util/cut_page.js"></script>
 	<!-- <link rel="stylesheet" type="text/css" href="../css/cut_page.css"> -->
