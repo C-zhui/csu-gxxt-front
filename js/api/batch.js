@@ -22,23 +22,42 @@ define(['api/apiobj', 'config/global'], function (api, g) {
                 {});
         },
         // 获取学期信息
-        getBatchBySemesterName:function(semester_name){
+        getBatchBySemesterName: function (semester_name) {
             return g.post_query('/batch/getBatchBySemesterName',
-            {
-                semester_name:semester_name
-            });
+                {
+                    semester_name: semester_name
+                });
         },
         // 添加批次或学期，如果批次名为空，则为学期
-        addBatch:function(batch_name,credit,semester_name){
+        addBatch: function (batch_name, credit, semester_name, beginDate) {
             return g.post_query(
                 '/batch/addBatch',
                 {
                     'batch_name': batch_name,
                     'credit': credit,
-                    'semester_name': semester_name
+                    'semester_name': semester_name,
+                    'beginDate': beginDate
                 }
             );
+        },
+        // 更新 批次信息
+        updateBatch: function (semester_name, batch_name, credit, beginDate, bat_describe) {
+            return g.post_query(
+                '/batch/updateBatch',
+                {
+                    'semester_name': semester_name,
+                    'batch_name': batch_name,
+                    'credit': credit,
+                    'beginDate': beginDate,
+                    'bat_describe': bat_describe
+                });
+        },
+        // deleteBatch
+        deleteBatch:function(batch_name){
+            return  g.post_query(
+                '/batch/deleteBatch/' + batch_name,
+                {}
+            )
         }
-
     }
 });

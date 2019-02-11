@@ -1,11 +1,14 @@
-require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/experiment', 'api/batch', 'api/proced', 'api/studentGroup', 'api/student', 'api/specialScore'], function ($, _, swal, api, g) {
-
+require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'moment', 'api/experiment', 'api/batch', 'api/proced', 'api/studentGroup', 'api/student', 'api/specialScore'], function ($, _, swal, api, g, moment) {
+  // console.log(moment().format('YYYY/MM/DD'))
   var weekRange = _.range(1, 21, 1);
   var dayRange = [null, '周一', '周二', '周三', '周四', '周五', '周六', '周日'];
   var timeRangeStep = 2;
   var timeRange = _.range(1, 10, timeRangeStep);
   var class_time_container_line_size = 8;
 
+  // var m = moment('2019-02-25')
+
+  // console.log(m)
 
   $(document).ready(function () {
     init_data()
@@ -33,9 +36,9 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/experim
           var data_arr = data.data;
           // var $templateSelector = $('#course_divide1_select_temp')
           $('<option>').text('排课模版选择').appendTo($templateSelector)
-          for (var i = 0; i < data_arr.length; i++) {
-            $('<option>').text(data_arr[i]).appendTo($templateSelector)
-          }
+          _.each(data_arr, function (d) {
+            $('<option>').text(d).appendTo($templateSelector)
+          })
         } else {
           g.fetch_err(data)
         }
@@ -43,23 +46,24 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/experim
   }
 
   // 填充批次
+  var batches = []
   function fillBatchSelectorOptions($batch_selector) {
     api.batch.getAllBatch()
       .done(function (data) {
         if (data.status === 0) {
-          var data_arr = data.data;
+          batches = data.data;
+          // console.log('批次')
+          // console.log(batches)
           var temp = $('<span><option>实习批次选择</option></span>')
-
-          for (var i = 0; i < data_arr.length; i++) {
-            $('<option>').text(data_arr[i].batch_name).appendTo(temp)
-          }
+          _.each(batches, function (batch, index) {
+            $('<option></option>').text(batch.batch_name).attr('batch-index', index).appendTo(temp)
+          })
           $batch_selector.html(temp.html())
         } else {
           g.fetch_err(data)
         }
       }).fail(g.net_err);
   }
-
 
   // 绑定模板(或者再次绑定)
   $('#bundle-btn').click(bundleTemplate);
@@ -99,10 +103,14 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/experim
     })
   }
 
+  var dateToWeek = null;
+  var weekDaytoDate = null;
   var $course_divide1_select_batch2 = $('#course_divide1_select_batch2')
   $course_divide1_select_batch2.change(function () {
-    // console.log("$course_divide1_select_batch2.change")
-    batch_name = $course_divide1_select_batch2.val()
+    var batch_index = $course_divide1_select_batch2.find('option:selected').attr('batch-index');
+    var batch_name = batches[batch_index].batch_name;
+    dateToWeek = dateToWeekDayObjFactory(batches[batch_index].beginDate);
+    weekDaytoDate = weekDayToDateObjFactory(batches[batch_index].beginDate);
     if (batch_name && batch_name !== '实习批次选择') {
       api.experiment.getExperimentByBatch(batch_name)
         .done(function success(data) {
@@ -116,23 +124,52 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/experim
     }
   });
 
-  // time_quant 格式 '[01-20][1-7][1-9]' 
+  function dateToWeekDayObjFactory(beginDate) { // begin date 为第一周星期一的时间，需要设置
+    // console.log(beginDate)
+    var begin = moment(beginDate)
+    // console.log(begin)
+    return function (toDate) {
+      var to = moment(toDate);
+      var days = to.diff(begin, 'days');
+      var week = (days - days % 7) / 7;
+      var day = days % 7;
+      return {
+        week: week + 1,
+        day: day + 1
+      }
+    }
+  }
+
+  function weekDayToDateObjFactory(beginDate) {
+    var begin = moment(beginDate)
+    return function (wd) {
+      var days = wd.week * 7 - 7 + wd.day - 1;
+      var date = begin.add(days, 'days')
+      begin = moment(beginDate)
+      return date.format('YYYY-MM-DD')
+    }
+  }
+
+  // time_quant 格式 'YYYYmmddtt' 
   var data_group_by_ctime = {}; // 分配数据 
   function ProcessNewDistributionData(data) {
     data_group_by_ctime = _.groupBy(data, 'class_time')
     _.each(data_group_by_ctime, function (group, k, data_group_by_ctime) {
-      var time = group[0].time_quant
-      var res = _.every(group, function (v, j) {
-        return time && time == v.time_quant;
+      var date_time = group[0].time_quant //最后两个作为第几节课的索引
+      var allNotNull = _.every(group, function (v, j) {
+        return date_time && date_time == v.time_quant;
       });
 
-      if (res) {
+      if (allNotNull) {
         data_group_by_ctime[k].distributed = true;
-        data_group_by_ctime[k].time_quant = time;
+        // console.log(date_time.slice(0, -3))
+        var wdt = dateToWeek(date_time.slice(0, -3));
+        wdt.time = parseInt(date_time.slice(-2));
+        data_group_by_ctime[k].wdt = wdt;
       }
       else {
         data_group_by_ctime[k].distributed = false;
-        data_group_by_ctime[k].time_quant = '';
+        data_group_by_ctime[k].wdt = null;
       }
     });
     // console.log(data_group_by_ctime)
@@ -150,7 +187,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/experim
     _.each(data_group_by_ctime, function (group, class_time) {
       if (!$tr) $tr = $('<tr>')
       var $td = $('<td>').text(class_time).attr('class_time', class_time)
-      if (group.time_quant)
+      if (group.wdt)
         $td.addClass('distributed')
       $td.appendTo($tr);
       cnt++;
@@ -163,15 +200,12 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/experim
       $tr.appendTo($class_time_container);
   }
 
-
   function getGroupInWeek(week) {
-    week = '0' + week;
-    week = week.slice(week.len)
     var res = {}
     _.each(data_group_by_ctime, function (group, ctime) {
-      if (group.time_quant && group.time_quant.slice(0, 2) === week) {
-        var day = group.time_quant.slice(2, 3)
-        var time = group.time_quant.slice(3, 4)
+      if (group.wdt && group.wdt.week == week) {
+        var day = group.wdt.day
+        var time = group.wdt.time
         if (!res[day])
           res[day] = {}
         res[day][time] = ctime;
@@ -182,6 +216,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/experim
 
   function drawDistributionTable() { // 画出指定周的课表
     var week = $('#course_divide1_select_week option:selected').attr('week');
+    week = parseInt(week)
     // console.log('drawDistributionTable week' + week)
     var classInWeek = getGroupInWeek(week)
     // console.log(classInWeek)
@@ -189,7 +224,9 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/experim
     var $tr = $('<tr>');
     _.each(dayRange, function (val, i) {
       val = val || ''
-      $('<th>').attr('day', i).text(val).appendTo($tr);
+      if (i)
+        val = val + '<br/>' + weekDaytoDate({ week: week, day: i })
+      $('<th>').attr('day', i).html(val).appendTo($tr);
     });
     $tr.appendTo($distribution_table_head)
 
@@ -230,7 +267,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/experim
   var $class_time_container = $('#class-time-container').hide();
   var $class_time_selected = null;
   var clicktime = new Date();
-  var t_id = null;
+  var t;
   $class_time_container.on('click', 'td', function () {
     // console.log("$class_time_container.on('click', 'td')")
     var newClicktime = new Date();
@@ -254,7 +291,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/experim
           ct_group.dom.text('');
           ct_group.dom.attr('conquer', '')
           ct_group.dom = null;
-          ct_group.time_quant = '';
+          ct_group.wdt = null;
         }
       } else { // 跳转
         t = setTimeout(function () {
@@ -280,9 +317,11 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/experim
   function jumpToDistributionTableWithClasstime(class_time) {
     var data_group = data_group_by_ctime[class_time]
     if (!data_group) return;
-    var time_quant = data_group.time_quant
-    if (!time_quant) return;
-    var week = parseInt(time_quant.slice(0, 2));
+    // var time_quant = data_group.time_quant
+    // if (!time_quant) return;
+    // var week = parseInt(time_quant.slice(0, 2));
+    if (!data_group.wdt) return;
+    var week = data_group.wdt.week;
     var raw_select = $course_divide1_select_week.get(0)
     raw_select.selectedIndex = week - 1;
     $course_divide1_select_week.change()
@@ -297,17 +336,23 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/experim
     var $this = $(this);
     var conquer = $this.attr('conquer');
     if (conquer) return;
-    var week = $('option:selected', $course_divide1_select_week).attr('week');
-    week = '0' + week;
-    var day = $this.attr('day');
-    var time = $this.attr('time');
+
+    var week = parseInt($('option:selected', $course_divide1_select_week).attr('week'));
+    var day = parseInt($this.attr('day'));
+    var time = parseInt($this.attr('time'));
     var class_time = parseInt($class_time_selected.attr('class_time'));
-    if (!day || !time || !class_time) return;
+    // console.log(week, day, time)
+    if (isNaN(day) || isNaN(time) || isNaN(class_time)) return;
     $class_time_selected.removeClass('selected').addClass('distributed');
     $class_time_selected = null;
-    var wl = week.length;
-    var time_quant = week.slice(wl - 2, wl) + day + time;
-    data_group_by_ctime[class_time].time_quant = time_quant;
+    // var wl = week.length;
+    // var time_quant = week.slice(wl - 2, wl) + day + time;
+    // data_group_by_ctime[class_time].time_quant = time_quant;
+    data_group_by_ctime[class_time].wdt = {
+      week: week,
+      day: day,
+      time: time
+    }
     data_group_by_ctime[class_time].dom = $this
     $this.text(class_time);
     $this.attr('conquer', 1);
@@ -330,7 +375,11 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/experim
             // todo 把 data_group_by_ctime 打包发回去
             var data = []
             _.each(data_group_by_ctime, function (group, ctime) {
-              var time_quant = group.time_quant || '';
+              var time_quant = '';
+              var wdt = group.wdt;
+              if (wdt) {
+                time_quant = weekDaytoDate(wdt) + ' ' + ('0' + wdt.time).slice(-2);
+              }
               _.each(group, function (elem) {
                 elem.time_quant = time_quant;
                 data.push(elem);
@@ -354,9 +403,6 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/experim
       swal('这样可不行！', '请在编辑模式下保存！', 'warning')
     }
   });
-
-
-
 
 
 
@@ -396,23 +442,22 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/experim
     }
   });
 
-  function parse_time_quant(time_quant_string) {
-    var s = time_quant_string;
-    if (typeof s != 'string')
-      throw 'time_quant error' + time_quant_string
-    var week = s.slice(0, 2);
-    if (week[0] === '0') week = week[1]
-    var day = s.slice(2, 3);
-    var time = s.slice(3, 4);
-    var time_quant_arr = [week, day, time];
-    return time_quant_arr;
-  }
+  // function parse_time_quant(time_quant_string) {
+  //   var s = time_quant_string;
+  //   if (typeof s != 'string')
+  //     throw 'time_quant error' + time_quant_string
+  //   var week = s.slice(0, 2);
+  //   if (week[0] === '0') week = week[1]
+  //   var day = s.slice(2, 3);
+  //   var time = s.slice(3, 4);
+  //   var time_quant_arr = [week, day, time];
+  //   return time_quant_arr;
+  // }
 
-  function time_quant_formated(time_quant_arr) {
-    var week = time_quant_arr[0];
-    var day = time_quant_arr[1];
-    var time = time_quant_arr[2];
-    return '第' + week + '周' + dayRange[day] + _.range(time * timeRangeStep + 1, time * timeRangeStep + timeRangeStep + 1) + '节';
+  function time_quant_formated(time_quant) {
+    var index_time = parseInt(time_quant.slice(-2));
+    var time = timeRange[index_time]
+    return time_quant.slice(0, -3) + '(' + _.range(time, time + timeRangeStep) + '节)'
   }
 
   function displayResultByBatch(data) {
@@ -437,8 +482,8 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/experim
     _.each(grouped_data, function (group_data, class_time) {
       $tr = $('<tr>') // 需要计算出课时对应的时间
       var time_quant = group_data[0].time_quant;
-      var time_quant_arr = parse_time_quant(time_quant);
-      $('<td>').text('' + class_time + "->" + time_quant_formated(time_quant_arr)).appendTo($tr)
+      // var time_quant_arr = parse_time_quant(time_quant);
+      $('<td>').text('' + class_time + "->" + time_quant_formated(time_quant)).appendTo($tr)
       var td_datas = []
       td_datas.length = s_groups.length;
       _.each(group_data, function (data, i) {
@@ -512,12 +557,11 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/experim
     // console.log(data)
     _.each(data, function (class_group, class_time) {
       var time_quant = class_group[0].time_quant;
-      var time_quant_arr = parse_time_quant(time_quant);
       $tr = $('<tr>');
-      $('<td>').text('' + class_time + "->" + time_quant_formated(time_quant_arr)).appendTo($tr);
+      $('<td>').text('' + class_time + "->" + time_quant_formated(time_quant)).appendTo($tr);
 
       var proced_groups = _.groupBy(class_group, 'pro_name');
-      console.log(proced_groups);
+      // console.log(proced_groups);
       _.each(proceds, function (proced, i) {
         var s_groups = proced_groups[proced];
         var $td = $('<td>');
@@ -641,7 +685,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/experim
     var $table_body = $('#student-group-result').empty();
     data = _.sortBy(data, 'sid');
     var $student_select_group = $('#student_divide_select_group')
-    console.log(data)
+    // console.log(data)
     _.each(data, function (student, i) {
       var $tr = $('<tr>');
       $('<td>').text(student.sid).addClass('sid').appendTo($tr)
@@ -731,11 +775,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/experim
             data_arr = _.sortBy(data_arr, 'class_time');
             _.each(data_arr, function (val, i) {
               var $tr = $('<tr>');
-              var time_quant_arr = parse_time_quant(val.time_quant);
-              var week = time_quant_arr[0];
-              var day = time_quant_arr[1];
-              var time = time_quant_arr[2];
-              $('<td>').text(val.class_time + "->" + "第" + week + '周' + dayRange[day] + _.range(time * timeRangeStep + 1, time * timeRangeStep + timeRangeStep + 1) + '节').appendTo($tr);
+              $('<td>').text(val.class_time + "->" + time_quant_formated(val.time_quant)).appendTo($tr);
               $('<td>').text(val.pro_name).appendTo($tr);
               $('<td>').text(val.batch_name).appendTo($tr);
               $('<td>').text(val.s_group_id).appendTo($tr);
@@ -843,8 +883,8 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/experim
   $('#query-spec-stud-id-button').click(function () {
     // console.log("$('#query-spec-stud-id-button').click")
     var stud_id = $('#query-spec-stud-id').val().trim();
-    $('#query-spec-stud-id-button').data('sid', stud_id);
-    console.log($('#query-spec-stud-id-button').data('sid'))
+    $('#query-spec-stud-id-button').attr('sid', stud_id);
+    console.log($('#query-spec-stud-id-button').attr('sid'))
 
     if (stud_id === '') { // 查询所有
       // console.log('get all sp student');
@@ -883,16 +923,61 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/experim
     });
   }
 
-
   $('#query-spstudent-result').on('click', 'input.lookup-course', function () {
     var input = $(this);
-    // console.log(input);
     var tr = $(input).parents('tr')
-    // console.log(tr);
     var sid = tr.attr('data-sid');
-    // console.log(sid);
+    init_selected_course(sid);
     $('#edit-specialStudentSchedule').modal('show');
   });
+
+
+
+
+  var spec_courses = [];
+  var selected_course = {};
+  var del_selected_courses = {};
+  var new_courses = {};
+  var operator_courses = {};
+  var edit_sid = null;
+
+  function init_selected_course(sid) {
+    console.log("function init_selected_course(sid)")
+    // console.log(sid) 
+    // 辅助数据初始化
+    selected_course = {};
+    del_selected_courses = {};
+    new_courses = {};
+    operator_courses = {};
+    edit_sid = null;
+    api.specialScore.getClassBySid(sid)
+      .done(function (data) {
+        if (data.status === 0) {
+          var data_arr = data.data;
+          selected_course = _.keyBy(data_arr, 'time_quant')
+          // console.log(selected_course)
+          operator_courses = _.clone(selected_course)
+          edit_sid = sid;
+          fill_selected_course(selected_course)
+        } else {
+          g.fetch_err(data)
+        }
+      })
+      .fail(g.net_err)
+  }
+
+  function fill_selected_course(selected_course) {
+    var $tbody = $('#spec-selected-course-table tbody').empty();
+    var $temp = $('#for_selected_course').children();
+    var time_data_s = _.sortBy(_.toPairs(selected_course), function (p) { return p[0] });
+    _.each(time_data_s, function (time_data, i) {
+      var $cloneTemp = $temp.clone();
+      $cloneTemp.attr('time_quant', time_data[0])
+        .find('.time').text(time_data[0]).end()
+        .find('.proced').text(time_data[1].pro_name);
+      $cloneTemp.appendTo($tbody)
+    })
+  }
 
   var $spec_student_batch_selector = $('#spec-student-batch-selector');
   $spec_student_batch_selector.change(function () {
@@ -902,7 +987,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/experim
       api.experiment.getExperimentByBatch(batch_name)
         .done(function success(data) {
           if (data.status === 0) {
-            console.log(data.data)
+            // console.log(data.data)
             fillSpecBatchCourseTable(data.data)
           } else {
             g.fetch_err(data)
@@ -911,11 +996,100 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/experim
     }
   });
 
+
   function fillSpecBatchCourseTable(data) {
     var $table = $('#spec-batch-course-table');
-    var $thead =$('thead',table);
-    var $tbody = $('tbody',table);
-    
+    var $tbody = $('tbody', $table).empty();
+    var time_groups = _.groupBy(data, 'time_quant');
+    var sorted_time_groups = spec_courses = _.sortBy(_.toPairs(time_groups), function (p) { return p[0] });
+    // console.log(sorted_time_groups)
+    var $temp = $('#for_spec_batch_course').children();
+    _.each(sorted_time_groups, function (time_group, i) {
+      var $cloneTemp = $temp.clone().attr('i', i);
+      var $proceds = $cloneTemp.find('.time').text(time_group[0]).end().find('.proceds');
+      _.each(time_group[1], function (course, j) {
+        $proceds.append($('<button class="btn btn-info for-add"></button>').text(course.pro_name).attr('j', j))
+      });
+      $cloneTemp.appendTo($tbody)
+    })
   }
 
-})
+
+  $('#spec-batch-course-table').on('click', '.for-add', function () {
+    var $this = $(this);
+    var j = $this.attr('j');
+    var i = $this.parents('tr.class-time').attr('i');
+    // console.log(i, j)
+    var time = spec_courses[i][0];
+    var for_add = spec_courses[i][1][j];
+    console.log(for_add);
+    new_courses[time] = operator_courses[time] = for_add;
+    if (selected_course[time] && new_courses[time] && selected_course[time].pro_name == new_courses[time].pro_name) {
+      // 不需要添加原有数据
+      delete new_courses[time];
+    }
+    if (selected_course[time].pro_name !== operator_courses[time].pro_name) { // 被添加的数据不是原来的数据
+      del_selected_courses[time] = {
+        id: selected_course[time].sp_scoreid,
+        course: selected_course[time]
+      }
+    } else { // 原来的数据不需要被删除
+      delete del_selected_courses[time];
+    }
+    fill_selected_course(operator_courses);
+  });
+
+  $('#spec-selected-course-table').on('click', '.del-btn', function () {
+    // console.log("$('#spec-selected-course-table').on('click')")
+    var $this = $(this);
+    var time = $this.parents('tr.time-quant').attr('time_quant');
+    // console.log(time)
+    delete operator_courses[time];
+    // console.log(operator_courses)
+    if (selected_course[time]) {
+      del_selected_courses[time] = {
+        id: selected_course[time].sp_scoreid,
+        course: selected_course[time]
+      }
+    }
+    fill_selected_course(operator_courses);
+  });
+
+
+  $('#log-data').click(function () {
+    console.log('del', _.map(del_selected_courses, 'course'));
+    console.log('new', _.map(new_courses));
+  });
+
+  $('#spec_save_change').click(function () {
+    if (!edit_sid) return;
+    api.specialScore.deleteClass(_.map(del_selected_courses, 'id'))
+      .done(function (data) {
+        if (data.status === 0) {
+          console.log('删除原有课时成功');
+          var res = []
+          var count = 0
+          var new_courses_arr = _.map(new_courses)
+          _.each(new_courses_arr, function (course, i) {
+            api.specialScore.addClass(edit_sid, course.pro_name, null, course.time_quant)
+              .done(function (data) {
+                if (data.status === 0) {
+                  res[i] = true;
+                } else {
+                  res[i] = false;
+                }
+                count++;
+                if (count == new_courses_arr.length) {
+                  var all = _.every(res);
+                  if (all)
+                    swal('修改成功', '请查看课表确认', 'success');
+                  else
+                    swal('修改失败', '请重试或联系管理员', 'error');
+                }
+              }).fail(g.net_err);
+          });
+        }
+      }).fail(g.net_err);
+  });
+
+});

@@ -154,8 +154,9 @@
 							<select class="form-control batch-selector" id="seach_clazzes_select_batch2">
 							</select>
 						</div>
-						<button class="btn btn-success btn-sm"  id="query-by-batch-and-proced-button">查询排课表</button>
-							<button class="btn btn-info btn-sm pull-right" id="print-query-by-batch-proced-table">打印排课表</button>
+						<button class="btn btn-success btn-sm" id="query-by-batch-and-proced-button">查询排课表</button>
+						<button class="btn btn-info btn-sm pull-right"
+							id="print-query-by-batch-proced-table">打印排课表</button>
 					</div>
 					<table class="table" id="query-by-batch-and-proced-table">
 						<thead id="query-by-batch-and-proced-head">
@@ -399,7 +400,7 @@
 
 					<div class="modal fade" id="edit-specialStudentSchedule" tabindex="-1" role="dialog"
 						aria-labelledby="edit-specialStudentScheduleTitle" aria-hidden="true">
-						<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+						<div class="modal-dialog modal-dialog-centered " style="max-width: 95%;" role="document">
 							<div class="modal-content">
 								<div class="modal-header">
 									<h5 class="modal-title" id="edit-specialStudentScheduleTitle">学生信息修改</h5>
@@ -408,87 +409,70 @@
 									</button>
 								</div>
 								<div class="modal-body">
-									<div class="row">
-										<div class="col-3 col-md-3">
-											<select class="form-control batch-selector"
-												id="spec-student-batch-selector">
-												<option>选择已有批次</option>
-												<option>2018A01</option>
-												<option>2018A02</option>
-											</select>
-										</div>
-									</div>
-									<table class="table" id="spec-batch-course-table">
-										<thead>
-										</thead>
-										<tbody>
-											<tr>
-												<td>1(2018/03/13/56)</td>
-												<td>C <a href="#" class="fa fa-plus" aria-hidden="true"></a></td>
-												<td>A <a href="#" class="fa fa-plus" aria-hidden="true"></a></td>
-												<td>B <a href="#" class="fa fa-plus" aria-hidden="true"></a></td>
-											</tr>
-											<tr>
-												<td>2(2018/03/13/56)</td>
-												<td>C <a href="#" class="fa fa-plus" aria-hidden="true"></a></td>
-												<td>A <a href="#" class="fa fa-plus" aria-hidden="true"></a></td>
-												<td>B <a href="#" class="fa fa-plus" aria-hidden="true"></a></td>
-											</tr>
-											<tr>
-												<td>3(2018/03/13/56)</td>
-												<td>C <a href="#" class="fa fa-plus" aria-hidden="true"></a></td>
-												<td>A <a href="#" class="fa fa-plus" aria-hidden="true"></a></td>
-												<td>B <a href="#" class="fa fa-plus" aria-hidden="true"></a></td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-									<button type="button" class="btn btn-primary">确定</button>
-								</div>
 
-								<div class="modal-body2">
-									<table class="table">
-										<thead>
-											<tr>
-												<th>框选</th>
-												<th>课时</th>
-												<th>工种</th>
-												<th>批次</th>
-												<th>小组</th>
-												<th>操作</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td><input type="checkbox"></td>
-												<td>1(2018/03/13/56)</td>
-												<td>车工</td>
-												<td>2018A01</td>
-												<td>B</td>
-												<td><i class="fa fa-trash-o" aria-hidden="true"></i></td>
-											</tr>
-											<tr>
-												<td><input type="checkbox"></td>
-												<td>2(2018/03/13/56)</td>
-												<td>铣削</td>
-												<td>2018A02</td>
-												<td>A</td>
-												<td><i class="fa fa-trash-o" aria-hidden="true"></i></td>
-											</tr>
-											<tr>
-												<td><input type="checkbox"></td>
-												<td>3(2018/03/13/56)</td>
-												<td>钳工</td>
-												<td>2018B01</td>
-												<td>A</td>
-												<td><i class="fa fa-trash-o" aria-hidden="true"></i></td>
-											</tr>
-										</tbody>
-									</table>
-									<div class="pull-right">
-										<input type="button" class="btn btn-danger" value="删除">
+									<!--  这个div作为模板，display是none，不需要样式 -->
+									<div id="templates" class="d-none">
+										<table>
+											<tbody id="for_spec_batch_course">
+												<tr class="class-time">
+													<td class="time"></td>
+													<td class="proceds"></td>
+												</tr>
+											</tbody>
+										</table>
+
+										<table>
+											<tbody id="for_selected_course">
+												<tr class="time-quant">
+													<td class="time"></td>
+													<td class="proced"></td>
+													<td><button class="btn btn-danger del-btn">删除</button></td>
+												</tr>
+											</tbody>
+										</table>
+
+									</div>
+
+
+									<div class="row align-items-start">
+										<div class="col-6">
+											<h3>批次课时表</h3>
+											<div class="row">
+												<div class="col-6">
+													<select class="form-control batch-selector"
+														id="spec-student-batch-selector">
+													</select>
+												</div>
+											</div>
+											<table class="table" id="spec-batch-course-table">
+												<thead>
+													<tr>
+														<!-- 需要 课时、工种 -->
+														<th>课时</th>
+														<th>工种</th>
+													</tr>
+												</thead>
+												<tbody>
+												</tbody>
+											</table>
+											<button class="btn btn-primary" id="log-data">log</button>
+										</div>
+
+										<div class="col-6">
+											<h3>特殊学生课表</h3>
+											<table class="table" id="spec-selected-course-table">
+												<thead>
+													<tr>
+														<th>课时</th>
+														<th>工种</th>
+														<th>操作</th>
+													</tr>
+												</thead>
+												<tbody>
+												</tbody>
+											</table>
+											<button class="btn btn-success" id="spec_save_change">保存更改</button>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -497,20 +481,7 @@
 				</main>
 			</div>
 		</div>
-
-		<!-- <div class="panel panel-info">
-
-			<div class="specialStudentList">
-				<hr>
-				<div class="row pull-right">
-					<input type="button" class="btn btn-danger" value="删&emsp;除">
-					
-				</div>
-			</div>
-		</div> -->
 	</div>
-
-
 	<!-- 主体部分结束 -->
 
 	<script type="text/javascript" src="../js/spec/divide-group.js"></script>
