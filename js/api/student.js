@@ -42,6 +42,12 @@ define(['api/apiobj', 'config/global'], function (api, g) {
                 '/student/getSpStudentById',
                 { id: sp_sid }
             )
+        },
+        getSpProName:function (sid) {
+            let post_data={
+                sid:sid
+            };
+            return g.post_json('/student/getSpProName',post_data);
         }
     }
 })

@@ -1,0 +1,89 @@
+.select-area {
+	width: 80%;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.input-select {
+	width: 80%;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	margin-top: 20px;
+}
+
+.input-select>input {
+	margin-left: 25px;
+	margin-right: 25px;
+}
+
+.score-table tr td input {
+	width: 100%;
+}
+
+th, td {
+	text-align: center;
+}
+
+/*.list-name {
+	padding-left: 0;
+	padding-right: 0;
+}*/
+
+.card{
+	margin-bottom: 50px;
+}
+
+.addGradeTest-table {
+	margin-top: 50px;
+}
+
+.score-list-table {
+	margin-bottom: 50px;
+}
+
+.tips {
+	color: green;
+	margin-bottom: 10px;
+}
+
+.choose-line p {
+	width: 20%;
+	font-size: 18px;
+	margin: 50px 30px;
+}
+
+.choose-line form {
+	width: 70%;
+	/*border: 1px solid cyan;*/
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.form-control-file {
+	/*border: 1px solid red;*/
+	width: 35%;
+}
+
+.changeSore-select {
+	width: 80%;
+	margin: 30px 0;
+}
+
+.changeSore-select input {
+	margin: 0 20px;
+}
+
+.specialList-select-area {
+	width: 50%;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	margin-bottom: 30px;
+}
+
+.edit-input {
+	width: 45px;
+}

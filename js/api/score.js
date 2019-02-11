@@ -34,6 +34,36 @@ define(['api/apiobj', 'config/global'], function (api, g) {
         getScoreUpdate: function (post_data) {
             let query = $.param(post_data);
             return g.post_query('/score/getScoreUpdate?' + query, {});
+        },
+        //查询成绩录入记录
+        getInputInfo:function (batchName='all',proName='all',sgroup='all',sid='all',sname='all') {
+            let post_data={
+                batchName:batchName,
+                proName:proName,
+                sgroup:sgroup,
+                sid:sid,
+                sname:sname
+            };
+            return g.post_json('/score/getInputInfo',post_data);
+        },
+        //查询特殊学生成绩
+        getSpScore:function (templateName,sid='', sname='') {
+            let post_data={
+                sid:sid,
+                sname:sname,
+                templateName:templateName
+            };
+            return g.post_query('/score/getSpScore',post_data);
+        },
+        //更新特殊学生成绩
+        updateSpScore:function (sid, new_score_map) {
+            return g.post_json('/score/updateSpScore?sid='+sid,new_score_map);
+        },
+        //发布特殊学生成绩
+        releaseSpScore:function (sids) {
+            return g.post_json('/score/releaseSpScore',{
+                sid:sids
+            });
         }
     };
 });
