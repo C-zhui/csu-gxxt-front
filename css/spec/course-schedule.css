@@ -3,25 +3,29 @@
 	margin: 20px;
 }
 
-.operate {
-	width: 75%;
-	display: flex;
-	align-items: center;
-	justify-content: space-around;
-	margin-left: 0px;
-}
-
-/* .table {
-	max-width: 95%;
-	margin: 30px;
-} */
-
 .new-scheduleName-row {
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
 }
+#template-table{
+	margin-bottom: 1rem;
+	width: auto;
+}
+#template-tbody tr th:first-child{
+	text-align: center;
+	padding: 8px 12px;
+}
 
 #template-tbody td:hover{
 	background-color: #eeeeee;
+}
+#template-tbody td{
+	padding-right: 18px;
+	/*width: 250px;*/
+	/*white-space:nowrap;*/
+}
+#table-edit-status{
+	color: #5b8fb4;
+	font-size: 16px;
 }

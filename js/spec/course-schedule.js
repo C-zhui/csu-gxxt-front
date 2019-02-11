@@ -177,17 +177,16 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/group',
 
   var edit_mode = false;
   var $edit_template_button = $('#edit-template')
-  $edit_template_button.text('编辑off')
   $edit_template_button.click(function () {
     if (edit_mode) {
       edit_mode = false;
-      $edit_template_button.text('编辑off')
       $('#edit-tool').hide()
+      $('#table-edit-status').html("")
     } else {
       edit_mode = true;
-      $edit_template_button.text('编辑on')
       update_edit_selectors()
       $('#edit-tool').show()
+      $('#table-edit-status').html("编辑模式中")
     }
   })
 

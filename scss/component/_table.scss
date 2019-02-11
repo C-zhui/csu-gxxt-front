@@ -4,6 +4,9 @@
             background: $table-head;
             color: $text-white;
         }
+        th{
+            padding: 5px 12px;
+        }
     }
     tbody{
         tr:nth-child(odd){
@@ -25,6 +28,10 @@
     }
     .table_note,.table_operate{
         width: 200px;
+    }
+    td{
+        white-space:nowrap;
+        padding: 8px 12px;
     }
 }
 table .row{

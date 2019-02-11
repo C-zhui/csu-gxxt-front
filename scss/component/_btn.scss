@@ -1,7 +1,7 @@
 .btn-outline{
     //border-color: $button-outline-color;
     color: $button-outline-color;
-    border-radius: 4px;
+    border-radius: 5px;
     border:1px solid $button-outline-border;
     font-family: "Microsoft YaHei UI";
     &:hover{
@@ -12,11 +12,24 @@
 
     }
 }
-
+.btn-background1{
+    background: $button-background-color;
+    color:$button-background-text;
+    border-radius: 5px;
+    font-family: "Microsoft YaHei UI";
+}
+.btn-background2{
+    background: $button-background-back;
+    color:$button-outline-color;
+    border-radius: 5px;
+    border: 1px solid $button-outline-color;
+    box-sizing: border-box;
+    font-family: "Microsoft YaHei UI";
+}
 .btn-default{
     background: $button-default-back;
     color:$text-white;
-    border-radius: 4px;
+    border-radius: 5px;
     font-family: "Microsoft YaHei UI";
     &:hover{
         background: inherit;
@@ -35,8 +48,15 @@
 }
 //选择框的按钮组
 .btn-select{
-    width: 80px;
+    width: 58px;
     color: $button-outline-color;
+}
+//按钮按照内容长度设置宽度
+.btn-single{
+    padding: 4px 17px;
+}
+.btn-multi{
+    padding: 4px 14px;
 }
 .select-top.row div[class^="col-"]{
     padding-left: 0;

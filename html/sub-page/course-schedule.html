@@ -11,49 +11,52 @@
 			<!-- 操作区域 -->
 			<div class="operate-area">
 
-				<div class="row operate">
-					<span>选择模板:</span>
-					<select class="custom-select custom-select-sm col-4" id="template-selector">
+				<div class="operate">
+					<span>排课模板:</span>
+					<select class="custom-select custom-select-sm select" id="template-selector">
 					</select>
-					<button class="btn btn-sm btn-outline" id="new-template">新建</button>
-					<button class="btn btn-sm btn-outline" id="edit-template">编辑</button>
-					<button class="btn btn-sm btn-outline" id="save-template">保存</button>
-					<button class="btn btn-sm btn-outline" id="delete-template">删除</button>
+					<button class="btn btn-sm btn-outline btn-multi" id="new-template">新建</button>
+					<button class="btn btn-sm btn-background1 btn-multi" id="edit-template">编辑</button>
+					<button class="btn btn-sm btn-default btn-multi" id="save-template">保存</button>
+					<button class="btn btn-sm btn-background2 btn-multi" id="delete-template">删除</button>
+					<div class="clearfix"></div>
 				</div>
 
-				<div>&nbsp;</div>
-
-				<div class="row operate" id="edit-tool" style="display:none">
-					<span class="">教师组：</span>
-					<select class="custom-select custom-select-sm col-3" id="teacher-selector">
+				<div class="operate" id="edit-tool" style="display:none">
+					<span class="">教师组:</span>
+					<select class="custom-select custom-select-sm select" id="teacher-selector">
 					</select>
-					<span class="">工序：</span>
-					<select class="custom-select custom-select-sm col-3" id="proced-selector">
+					<span class="">工序:</span>
+					<select class="custom-select custom-select-sm select" id="proced-selector">
 					</select>
-					<button class="btn btn-sm btn-outline" id="add-student-group">添加组</button>
-					<button class="btn btn-sm btn-outline" id="add-class-time">添加课时</button>
+					<button class="btn btn-sm btn-outline btn-multi" id="add-student-group">添加组</button>
+					<button class="btn btn-sm btn-outline btn-multi" id="add-class-time">添加课时</button>
+					<div class="clearfix"></div>
 				</div>
+				<div class="clearfix"></div>
 			</div>
 			<!-- 操作区域结束 -->
 
 			<!-- table区域 -->
 			<div>
+				<div id="table-edit-status"></div>
+				<div class="table-responsive">
+					<table class="table table-bordered" id="template-table">
+						<thead id="template-thead">
+
+						</thead>
+						<tbody id="template-tbody">
+
+						</tbody>
+					</table>
+				</div>
 				<hr />
-				<table class="table table-bordered" id="template-table">
-					<thead id="template-thead">
-
-					</thead>
-					<tbody id="template-tbody">
-
-					</tbody>
-				</table>
-
 				<h6 class="text-info">编辑说明</h6>
 
-				<ol class="list">
-					<li>选择教师组和工序，点击表格项即可填入，双击表格项可以删除，双击表头可以删除整行整列</li>
-					<li>更进一步，你可以使用快捷键 <key>q</key> 和 <key>e</key> 更改教师组，使用 <key>a</key> 和 <key>d</key> 更改工序</li>
-				</ol>
+				<ul class="list">
+					<li>1.选择教师组和工序，点击表格项即可填入，双击表格项可以删除，双击表头可以删除整行整列</li>
+					<li>2.更进一步，你可以使用快捷键 <key>q</key> 和 <key>e</key> 更改教师组，使用 <key>a</key> 和 <key>d</key> 更改工序</li>
+				</ul>
 			</div>
 			<!-- table区域结束 -->
 		</main>

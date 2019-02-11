@@ -7,6 +7,7 @@ $card-paddingy:10px;
     
     header,main,footer{
         padding: $card-paddingy $card-paddingx;
+        padding-left: 38px;
     }
     
     header{
@@ -16,7 +17,7 @@ $card-paddingy:10px;
             display: inline-block;
             padding: 0 8px;
             font-family: "Microsoft YaHei UI";
-            font-size: 1.2rem;
+            font-size: 20px;
             color: $text-card-title;
             &::after{
                 position: absolute;
@@ -31,5 +32,49 @@ $card-paddingy:10px;
     }
     main{
         background-color: white;
+        .text-info{
+            font-family: "Microsoft YaHei UI";
+            font-size: 1rem;
+            color: $card-head-title-border;
+        }
+        .list{
+            padding-left: 0;
+            list-style: none;
+        }
+        .list li{
+            font-family: "Microsoft YaHei UI";
+            font-size: 0.8rem;
+            color: $text-info;
+            margin: 5px 0;
+        }
+
     }
+}
+.operate {
+    /*display: flex;*/
+    align-items: center;
+    justify-content: space-around;
+    margin-left: 0px;
+    padding: 0;
+    /*margin-bottom: 5px;*/
+}
+.operate *{
+    float: left;
+    margin-top: 24px;
+}
+
+.operate span{
+    font-family: "Microsoft YaHei UI";
+    font-size: 16px;
+    color:#4d4d4d;
+    line-height: 31px;
+    margin-right: 14px;
+    display: block;
+}
+.operate .select{
+    width: 162px;
+    margin-right: 24px;
+}
+.operate button{
+    margin-right: 12px;
 }

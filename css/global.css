@@ -54,9 +54,11 @@
   text-align: center;
   padding: 4px;
   margin-bottom: 4px;
+  font-size: 18px;
 }
 #navigation header span:not(:empty)::before {
   content: ">";
+  padding: 0 6px 0 4px;
 }
 #navigation header span:not(:empty):first-child::before {
   content: "";
@@ -88,14 +90,15 @@
   border-bottom: none;
 }
 #navigation main > ul > li {
-  color: #111;
+  color: #000;
   padding: 5px 0;
 }
 #navigation main > ul > li .category-name {
   color: #575757;
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 #navigation main > ul > li ul {
+  margin-top: 2px;
   padding: 0;
   list-style: none;
 }
@@ -107,7 +110,7 @@
 }
 #navigation main > ul > li ul li a, #navigation main > ul > li ul li a:visited {
   font-size: 1rem;
-  color: #111;
+  color: #000;
   text-decoration: none;
 }
 #navigation main > ul > li ul > li:hover {
@@ -120,6 +123,7 @@
   width: 24px;
   height: 24px;
   margin-top: -4px;
+  margin-right: 4px;
 }
 
 .nav {
@@ -170,7 +174,10 @@
 
 .table thead tr:first-child {
   background: #5b8fb4;
-  color: #eee;
+  color: #ffffff;
+}
+.table thead th {
+  padding: 5px 12px;
 }
 .table tbody tr:nth-child(odd) {
   background: #e5f0f6;
@@ -190,6 +197,10 @@
 }
 .table .table_note, .table .table_operate {
   width: 200px;
+}
+.table td {
+  white-space: nowrap;
+  padding: 8px 12px;
 }
 
 table .row {
@@ -223,6 +234,7 @@ input[name=btSelectAll] {
 }
 .content-card header, .content-card main, .content-card footer {
   padding: 10px 30px;
+  padding-left: 38px;
 }
 .content-card header {
   background-color: #bbdaee;
@@ -232,7 +244,7 @@ input[name=btSelectAll] {
   display: inline-block;
   padding: 0 8px;
   font-family: "Microsoft YaHei UI";
-  font-size: 1.2rem;
+  font-size: 20px;
   color: #112d4e;
 }
 .content-card header .header-title::after {
@@ -246,6 +258,53 @@ input[name=btSelectAll] {
 }
 .content-card main {
   background-color: white;
+}
+.content-card main .text-info {
+  font-family: "Microsoft YaHei UI";
+  font-size: 1rem;
+  color: #3f8bc7;
+}
+.content-card main .list {
+  padding-left: 0;
+  list-style: none;
+}
+.content-card main .list li {
+  font-family: "Microsoft YaHei UI";
+  font-size: 0.8rem;
+  color: #434343;
+  margin: 5px 0;
+}
+
+.operate {
+  /*display: flex;*/
+  align-items: center;
+  justify-content: space-around;
+  margin-left: 0px;
+  padding: 0;
+  /*margin-bottom: 5px;*/
+}
+
+.operate * {
+  float: left;
+  margin-top: 24px;
+}
+
+.operate span {
+  font-family: "Microsoft YaHei UI";
+  font-size: 16px;
+  color: #4d4d4d;
+  line-height: 31px;
+  margin-right: 14px;
+  display: block;
+}
+
+.operate .select {
+  width: 162px;
+  margin-right: 24px;
+}
+
+.operate button {
+  margin-right: 12px;
 }
 
 #body {
@@ -278,9 +337,13 @@ input[name=btSelectAll] {
   background: #f6f6f6;
 }
 
+.clearfix {
+  clear: both;
+}
+
 .btn-outline {
   color: #3f8bc7;
-  border-radius: 4px;
+  border-radius: 5px;
   border: 1px solid #0066b7;
   font-family: "Microsoft YaHei UI";
 }
@@ -289,16 +352,32 @@ input[name=btSelectAll] {
   color: #3f8bc7;
 }
 
+.btn-background1 {
+  background: #62acde;
+  color: #feffff;
+  border-radius: 5px;
+  font-family: "Microsoft YaHei UI";
+}
+
+.btn-background2 {
+  background: #dcf1ff;
+  color: #3f8bc7;
+  border-radius: 5px;
+  border: 1px solid #3f8bc7;
+  box-sizing: border-box;
+  font-family: "Microsoft YaHei UI";
+}
+
 .btn-default {
-  background: #56a3d7;
-  color: #eee;
-  border-radius: 4px;
+  background: #3f8bc7;
+  color: #ffffff;
+  border-radius: 5px;
   font-family: "Microsoft YaHei UI";
 }
 .btn-default:hover {
   background: inherit;
-  color: #56a3d7;
-  border-color: #56a3d7;
+  color: #3f8bc7;
+  border-color: #3f8bc7;
 }
 
 .btn-group {
@@ -310,8 +389,16 @@ input[name=btSelectAll] {
 }
 
 .btn-select {
-  width: 80px;
+  width: 58px;
   color: #3f8bc7;
+}
+
+.btn-single {
+  padding: 4px 17px;
+}
+
+.btn-multi {
+  padding: 4px 14px;
 }
 
 .select-top.row div[class^=col-] {
@@ -336,7 +423,7 @@ input[name=btSelectAll] {
 }
 
 .no-background {
-  background-color: #eee;
+  background-color: #ffffff;
 }
 
 .row {

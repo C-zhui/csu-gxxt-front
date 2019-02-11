@@ -9,14 +9,15 @@ $blue4:rgb(32, 56, 177);
 $gray:rgb(173, 173, 173);
 
 // 字色
-$text-white:#eee;
+$text-white:#ffffff;
 $text-gray:#555;
-$text-black:#111;
+$text-black:#000;
 $text-nav-head:#575757;
 $text-card-title:#112d4e;
 $text-card-item:#4d4d4d;
 $text-pagination:#505050;
 $text-page:#266997;
+$text-info:#434343;
 
 // 右容器背景
 $body-background:#f6f6f6;
@@ -43,4 +44,7 @@ $card-head-title-border:#3f8bc7;
 $button-outline-color: #3f8bc7;
 $button-outline-border:#0066b7;
 $button-outline-hover:#e5f0f6;
-$button-default-back:#56a3d7;
+$button-default-back:#3f8bc7;
+$button-background-color:#62acde;
+$button-background-text:#feffff;
+$button-background-back:#dcf1ff;
