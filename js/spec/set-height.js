@@ -4,7 +4,6 @@ define(['jquery','util/resize'],function($){
         setTimeout(function()
         {
             var heightContent = $("#content_body").height();
-            console.log(heightContent)
             if(heightContent>800){
                 heightContent=heightContent+20;
             }

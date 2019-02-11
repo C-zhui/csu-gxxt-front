@@ -34,3 +34,6 @@ h4 {
 .tips {
 	color: green;
 }
+#new_weight_list_table input[type='number']{
+	width: 100px;
+}

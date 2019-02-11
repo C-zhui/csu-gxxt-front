@@ -19,6 +19,10 @@ define(['jquery', 'swal', 'lodash', 'spec/set-height'], function ($, swal, _, se
         'student': '学生'
     }
 
+    $("#content_body").bind('resize', function(e) {
+        setHeight()
+    });
+
     var role = window.location.search || '';
     role = role.slice(1);
     // console.log(role)
@@ -42,14 +46,13 @@ define(['jquery', 'swal', 'lodash', 'spec/set-height'], function ($, swal, _, se
                     return;
                 }
                 $('.active', navi).removeClass('active')
-                a.addClass('active')
+                a.parent().addClass('active')
                 var part = a.text();
                 var category = a.parents('.category').find('.category-name').text();
                 // console.log(part, category);
                 $('#category', navi).text(category);
                 $('#part', navi).text(part)
             });
-            setHeight()
         })
     });
 
