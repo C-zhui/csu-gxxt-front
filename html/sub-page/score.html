@@ -1,0 +1,330 @@
+<div id="body">
+    <link type="text/css" href="../../css/spec/score.css">
+    <link type="text/css" href="../../css/lib/bootstrap-table-fixed-columns.css">
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#Section1" role="tab">成绩列表</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#Section2" role="tab">成绩批量提交</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#Section3" role="tab">成绩录入记录</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#Section4" role="tab">成绩提交记录</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#Section5" role="tab">成绩修改记录</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#Section6" role="tab">特殊学生成绩列表</a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <!-- 成绩列表 -->
+        <div class="tab-pane fade show active" id="Section1" role="tabpanel">
+            <div class="card score-list">
+                <div class="card-header">
+                    <h5>成绩列表</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row select-area">
+                        <select class="form-control custom-select col-xs-3 col-sm-3" id="score_list_select_batch">
+                            <option>实习批次选择</option>
+                        </select>
+                        <select class="form-control custom-select col-xs-3 col-sm-3" id="score_list_select_process">
+                            <option>选择工种</option>
+                        </select>
+                        <select class="form-control custom-select col-xs-3 col-sm-3"
+                                id="score_list_select_group_number">
+                            <option>组号</option>
+                        </select>
+                    </div>
+                    <div class="row input-select">
+                        <input type="text" name="stu-num" placeholder="学生学号" class="form-control col-xs-3 col-sm-3"
+                               id="score_list_stu_number">
+                        <input type="text" name="stu-name" placeholder="学生姓名" class="form-control col-xs-3 col-sm-3"
+                               id="score_list_stu_name">
+                        <button class="btn btn-sm btn-success" id="get_score_list">查&emsp;询</button>
+                        <button class="btn btn-sm btn-primary" id="execute-score" onclick="executeScore()">核算总成绩</button>
+                        <button class="btn btn-sm btn-warning float-right" data-toggle="modal"
+                                data-target="#score-grade-test">等级评定
+                        </button>
+                        <div class="modal fade" id="score-grade-test" tabindex="-1" role="dialog"
+                             aria-labelledby="score-grade-testTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="score-grade-testTitle">等级评定规则</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <select class="form-control custom-select col-xs-3" id="setDegreeModal">
+                                            <option>选择成绩等级设置方式</option>
+                                            <option>按照成绩总排名划分</option>
+                                            <option>按照成绩总分数划分</option>
+                                        </select>
+
+                                        <table class="table col-xs-9 addGradeTest-table">
+                                            <tbody id="setDegreeTable">
+                                            </tbody>
+                                        </table>
+                                        <br>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                                id="addNewPlan-close">关闭
+                                        </button>
+                                        <button type="button" class="btn btn-primary" id="addNewPlan-ensure" data-dismiss="modal">确定
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- /.modal -->
+
+                    </div>
+                    <br><br>
+                    <table id="score_list_table">
+                    </table>
+
+                    <!-- 成绩列表-修改成绩 modal -->
+                    <div class="modal fade" id="scorelistEditModal" tabindex="-1" role="dialog"
+                         aria-labelledby="scorelistEditModalTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="scorelistEditModalTitle">学生信息修改</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped" id="edit-score-table"
+                                               style="min-width: 1200px;overflow-x: scroll;">
+                                            <thead>
+                                            <tr>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div>
+                                        <label for="edit-state">成绩修改备注</label>
+                                        <textarea id="edit-state" rows="2" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                                    <button type="button" class="btn btn-primary" id="edit-score">确定</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /.modal -->
+
+                    <div class="tips">
+                        <span>注意：需要发布之后，学生端才能显示成绩等级</span>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-3 col-sm-3">
+                            <select class="form-control csutom-select" id="score_list_select_batch2">
+                                <option>实习批次选择</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-dark" id="publish-score">发布总成绩</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 成绩批量提交 -->
+        <div class="tab-pane fade" id="Section2" role="tabpanel">
+            <div class="card">
+                <h5 class="card-header">成绩批量导入</h5>
+                <div class="card-body">
+                    <h5 class="card-title">从Excel文件导入：
+                        <small class="download-excel"><button class="btn btn-primary" id="download-score-file">标准模板下载</button> </small>
+                    </h5>
+                    <div class="row choose-line">
+                        <p>学生成绩批量导入：</p>
+                        <form class="form-inline" role="form">
+                            <input type="file" class="form-control-file" id="tf">
+                            <select class="form-control custom-select" id="input_score_select_batch">
+                                <option>实习批次选择</option>
+                            </select>
+                            <select class="form-control custom-select" id="input_score_select_scoreitem">
+                                <option>选择工种</option>
+                            </select>
+                            <button type="button" class="btn btn-danger" id="import-students-score" onclick="importStudentsScore()">开始导入
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--成绩录入记录-->
+        <div class="tab-pane fade" id="Section3" role="tabpanel">
+            <div class="card">
+                <div class="card-header">
+                    <h5>成绩录入记录</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row select-area">
+                        <select class="form-control custom-select col-xs-3 col-sm-3" id="entry-list-select-batch">
+                            <option>实习批次选择</option>
+                        </select>
+                        <select class="form-control custom-select col-xs-3 col-sm-3" id="entry-list-select-group">
+                            <option>组号</option>
+                        </select>
+                        <select class="form-control custom-select col-xs-3 col-sm-3" id="entry-list-select-process">
+                            <option>选择工种</option>
+                        </select>
+                    </div>
+                    <div class="row input-select">
+                        <input type="text" name="stu-num" placeholder="学生学号" class="form-control col-xs-3 col-sm-3"
+                               id="entry_list_stu_number">
+                        <input type="text" name="stu-name" placeholder="学生姓名" class="form-control col-xs-3 col-sm-3"
+                               id="entry_list_stu_name">
+                        <button class="btn btn-sm btn-primary" id="get_entry_list">查询</button>
+                    </div>
+                    <br>
+                    <br>
+                    <table id="entry-list-table"></table>
+                </div>
+            </div>
+        </div>
+        <!-- 成绩提交记录 -->
+        <div class="tab-pane fade" id="Section4" role="tabpanel">
+            <div class="card commit-history">
+                <div class="card-header">
+                    <h5>成绩提交记录</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row select-area">
+                        <select class="form-control custom-select col-xs-2 col-sm-2" id="score_submit_select_batch">
+                            <option>实习批次选择</option>
+                        </select>
+                        <select class="form-control custom-select col-xs-2 col-sm-2"
+                                id="score_submit_select_process">
+                            <option>工种</option>
+                        </select>
+                        <select class="form-control custom-select col-xs-2 col-sm-2"
+                                id="score_submit_select_groupid">
+                            <option>组号</option>
+                        </select>
+                        <button class="btn btn-success" id="get-score-record" onclick="getScoreRecord()">查&emsp;询</button>
+                    </div>
+                    <br><br>
+                    <table id="submit_list_table"></table>
+                </div>
+            </div>
+        </div>
+        <!-- 成绩修改记录 -->
+        <div class="tab-pane fade" id="Section5" role="tabpanel">
+            <div class="card">
+                <div class="card-header">
+                    <h5>成绩修改记录</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row select-area">
+                        <select class="form-control custom-select col-xs-2 col-sm-2"
+                                id="score_edithistory_select_batch">
+                            <option>实习批次选择</option>
+                        </select>
+                        <input class="flatpickr mycalendar form-control col-xs-2 col-sm-2 left-flatpickr"
+                               name="start-time"
+                               placeholder="修改开始日期" id="score_edithistory_begin_time">
+                        <span>至</span>
+                        <input class="flatpickr mycalendar form-control col-xs-2 col-sm-2" name="end-time"
+                               placeholder="修改结束时间" id="score_edithistory_end_time">
+                        <input type="button" name="" class="btn btn-success float-right" value="查询"
+                               id="score_edithistory_seach">
+                    </div>
+                    <div class="row changeSore-select">
+                        <input type="text" class="form-control col-xs-2 col-sm-2" placeholder="姓名"
+                               id="score_edithistory_sname">
+                        <input type="text" class="form-control col-xs-2 col-sm-2" placeholder="学号"
+                               id="score_edithistory_sid">
+                    </div>
+                    <table id="update_list_table"></table>
+                </div>
+            </div>
+        </div>
+        <!-- 特殊学生成绩列表 -->
+        <div class="tab-pane fade" id="Section6" role="tabpanel">
+            <div class="card">
+                <div class="card-header">
+                    <h5>特殊学生成绩列表</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row specialList-select-area">
+                        <select class="form-control custom-select col-xs-4 col-sm-4" id="weight-template-list">
+                            <option>请选择权重模板</option>
+                        </select>
+                        <input type="text" class="form-control col-xs-4 col-md-4" placeholder="学号" id="spStu_sname">
+                        <button class="btn btn-primary" id="get_special_score_list">查询</button>
+                        <!--<button class="btn btn-outline-success" onclick="releaseSpScore()">发布成绩</button>-->
+                    </div>
+                    <table id="special_score_list_table"></table>
+                    <div class="modal fade" id="specialListEditModal" tabindex="-1" role="dialog"
+                         aria-labelledby="specialListEditModalTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="specialListEditModalTitle">学生信息修改</h5>
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped" style="min-width: 1200px;overflow-x: scroll" id="edit_special_score_table">
+                                            <thead>
+                                            <tr>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div>
+                                        <label for="edit-state">成绩修改备注</label>
+                                        <textarea id="special-edit-state" rows="2"
+                                                  class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">关闭
+                                    </button>
+                                    <button type="button" class="btn btn-primary" id="submit-special-student-score">确定</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /.modal -->
+
+                    <!--<div class="row float-right tips">-->
+                    <!--<p>注意：总成绩发布后将不可修改该批次成绩</p>-->
+                    <!--</div>-->
+                    <div class="clearfix">
+                    </div>
+                    <div class="row float-right">
+                        <input type="button" class="btn btn-outline-success" value="发布总成绩" id="publish-special-score">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="../../js/spec/score.js"></script>
+</div>
+

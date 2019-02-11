@@ -7,7 +7,9 @@ require.config({
         lodash:'lib/lodash',
         flatpickr:'lib/flatpickr',
         swal:'lib/sweetalert.min',
-        moment:'lib/moment'
+        moment:'lib/moment',
+        bootstrapTable:'lib/bootstrap-table.min',
+        bootstrapTableFixedColumns:'lib/bootstrap-table-fixed-columns'
     }
 })
 
