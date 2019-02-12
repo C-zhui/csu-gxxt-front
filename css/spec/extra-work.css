@@ -1,0 +1,37 @@
+.card {
+	margin-bottom: 50px;
+}
+
+.time-last {
+	border: none;
+	text-align: center;
+}
+
+.select-worktype {
+	margin-left: 50px;
+}
+
+.float-right {
+	margin-left: 100px;
+}
+
+.left-flatpickr {
+	margin-left: 20px;
+}
+
+table {
+	margin-top: 40px;
+}
+
+th, td {
+	text-align: center;
+}
+
+.last-time {
+	margin-left: 50px;
+}
+
+.tips {
+	clear: both;
+	color: green;
+}
