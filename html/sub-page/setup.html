@@ -1,5 +1,5 @@
 <div id="body">
-	<link rel="stylesheet" type="text/css" href="../css/setup.css">
+	<link rel="stylesheet" type="text/css" href="../../css/spec/setup.css">
 
 	<!-- 修改密码模块 -->
 	<div class="content-card">
@@ -11,23 +11,29 @@
 		<main>
 			<!-- 修改密码框 -->
 			<div class="edit_password">
-				<div class="form-group row">
-					<label class="col-sm-3 col-form-label">教师组：</label>
-					<input type="text" class="textInfo" id="teacherGroupInfo" class="form-control col-sm-8" disabled>
+				<div class="operate">
+					<span>教师组：</span>
+					<input type="text" class="textInfo form-control form-control-sm select" id="teacherGroupInfo" disabled>
+					<div class="clearfix"></div>
 				</div>
-				<div class="form-group row">
-					<label class="col-sm-3 col-form-label">姓名：</label>
-					<input type="text" class="textInfo" id="teacherNameInfo" class="form-control col-sm-8" disabled>
+				<div class="operate">
+					<span>姓名：</span>
+					<input type="text" class="textInfo form-control form-control-sm select" id="teacherNameInfo" disabled>
+					<div class="clearfix"></div>
 				</div>
-				<div class="form-group row">
-					<label class="col-sm-3 col-form-label">原密码：</label>
-					<input type="text" name="old_password" id="old_password" class="form-control col-sm-8" placeholder="原密码">
+				<div class="operate">
+					<span>原密码：</span>
+					<input type="text" name="old_password" id="old_password" class="form-control form-control-sm select" placeholder="原密码">
+					<div class="clearfix"></div>
 				</div>
-				<div class="form-group row">
-					<label class="col-sm-3 col-form-label">新密码：</label>
-					<input type="password" name="new_password" id="new_password" class="form-control col-sm-8" placeholder="新密码">
+				<div class="operate">
+					<span>新密码：</span>
+					<input type="password" name="new_password" id="new_password" class="form-control form-control-sm select" placeholder="新密码">
+					<div class="clearfix"></div>
 				</div>
-				<button type="submit" class="btn btn-danger" id="change_password_submit">确定</button>
+				<div class="clearfix"></div>
+				<button type="submit" class="btn btn-sm btn-outline btn-single" id="change_password_submit">确定</button>
+
 			</div>
 
 		</main>

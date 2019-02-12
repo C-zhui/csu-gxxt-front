@@ -1,0 +1,18 @@
+.basic_info {
+  text-align: center;
+  margin: auto 0px;
+}
+
+.edit_password span{
+  text-align: right;
+  display: block;
+  width: 4rem;
+}
+.edit_password{
+  margin-left: 2.25rem;
+  margin-bottom: 30px;
+}
+#change_password_submit{
+  margin-left: 4.875rem;
+  margin-top: 0.5rem;
+}
