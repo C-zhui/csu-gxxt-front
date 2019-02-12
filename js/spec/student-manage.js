@@ -1,688 +1,537 @@
-var base_url='http://134.175.152.210:8084';
+require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/batch', 'api/student', 'api/user', 'flatpickr', 'util/md5'], function ($, _, swal, api, g) {
+  var base_url = g.base_url
 
-$(document).ready(function () {
-  init_data();
-  console.log('$(document).ready');
-});
+  function boot_grouper() {
+    $('.grouper').on('click', '.toggle-btn', function () {
+      var p = $(this).parents('.group').find('.group-detail');
+      if (p.is('.d-none')) {
+        p.toggleClass('d-none');
+        p.slideUp(1);
+        p.slideDown();
+      } else {
+        p.slideUp(function () {
+          p.toggleClass('d-none');
+        });
+      }
+    });
+  }
 
-// 初始化页面数据
-function init_data(){
-  // 初始化实习批次管理模块
-  getAllSemesterName();
-  // 学生列表初始化批次 + 初始化学生列表
-  getAllBatch_StuList();
-}
+  function init_flatpickr() {
+    $('.date-plugin').flatpickr({
+      dateFormat: 'Y-m-d'
+    })
+  }
 
-// 1、实习批次管理部分(OK)
+  $(document).ready(function () {
+    boot_grouper();
+    init_flatpickr()
+    init_data();
+  });
 
-// 查询所有学期及每个学期对应的批次---完成学期与批次的初始化工作
-function getAllSemesterName(){
-  $('.allBatchManage').empty();   //初始化清空
-  $.ajax({
-    type: 'post',
-    url: base_url + '/batch/getAllSemesterName',
-    data: {},
-    datatype: 'json',
-    // beforeSend: function(xhr) {
-    //   xhr.withCredentials = true;
-    // },
-    // crossDomain:true,
-    success: function(data){
-      if(data.status === 0){
-        console.log(data)
-        semesters_obj = data.data;
-        // console.log(semesters_obj);
-        for(let i=0; i<semesters_obj.length; i++){
-          if(semesters_obj[i].semester_name !== null){
-            let html = '';
-            // 学期名 button
-            html += '<p><button class="btn btn-outline-primary" data-toggle="collapse" href="#'+semesters_obj[i].semester_name+'" type="button" aria-expanded="false" aria-controls="'+semesters_obj[i].semester_name+'">'+semesters_obj[i].semester_name+'学期</button>';
+  // 初始化页面数据
+  function init_data() {
+    // 初始化实习批次管理模块
+    getAndFillSemesterBatchList();
+    // 学生列表初始化批次 + 初始化学生列表
+    getAllBatch_StuList();
+  }
 
-            // 添加新批次图标
-            html += '<i class="btn btn-sm btn-default" onclick="add_semester_batch(this)" name="'+semesters_obj[i].semester_name+'" data-toggle="modal" data-target="#add_semester_batchModal"><img class="add-icon" src="../icon/add-sm.svg"></i>';
-
-            // 编辑学期名图标
-            html += '<i class="btn btn-sm btn-default" onclick="editSemesterName_init(this)" name="'+semesters_obj[i].semester_name+'" data-toggle="modal" data-target="#edit_semester_nameModal"><img class="edit-icon" src="../icon/edit-inner.svg"></i>';
-
-            // 删除学期图标
-            html += '<i class="btn btn-sm btn-default" onclick="delSemester(this)" name="'+semesters_obj[i].semester_name+'" data-toggle="modal" data-target="#del_semesterModal"><img class="del-icon" src="../icon/delete-x.svg"></i>';
-            html += '</p>';
-
-            // 根据学期名查询批次
-            $.ajax({
-              type: 'post',
-              url: base_url + '/batch/getBatchBySemesterName',
-              data: {'semester_name': semesters_obj[i].semester_name},
-              datatype: 'json',
-              beforeSend: function(xhr) {
-                xhr.withCredentials = true;
-              },
-              crossDomain:true,
-              success: function(data){
-                if(data.status === 0){
-                  let batchs = data.data;
-                  // console.log(batchs);
-                  html += '<div class="collapse" id="'+semesters_obj[i].semester_name+'"><div class="card card-body"><ul>';
-                  for(let j=0; j<batchs.length; j++){
-                    // 修改批次图标
-                    html += '<li>'+batchs[j].batch_name+'<i class="btn btn-sm btn-default" semester_name="'+batchs[j].semester_name+'" batch_name="'+batchs[j].batch_name+'" credit="'+batchs[j].credit+'"  onclick="editOneBatch_init(this)" data-toggle="modal" data-target="#editOneBatchModal"><img class="inner-edit-icon" src="./img/edit-inner.svg"></i>';
-
-                    // 删除批次图标
-                    html += '<i class="btn btn-sm btn-default" batch_name="'+batchs[j].batch_name+'" onclick="delOneBatch(this)"><img class="inner-del-icon" src="./img/delete.svg"></i></li>';
-                  }
-                  html += '</ul></div></div>';
-                  // console.log(html);
-                  $('.allBatchManage').append(html);
-                }
-              }
-            });
-          }
+  var semester_data = [];
+  function getAndFillSemesterBatchList() {
+    // 获取所有学期名
+    api.batch.getAllSemesterName()
+      .done(function (data) {
+        if (data.status === 0) {
+          semester_data = data.data;
+          // 过滤重复
+          semester_data = _.uniqBy(semester_data, 'semester_name')
+          semester_data = _.filter(semester_data, 'semester_name')
+          getAndFillBatchList();
+        } else {
+          g.fetch_err(data)
         }
-        // $('.allBatchManage').html(html);
-      }
-    }
-  });
-}
+      })
+      .fail(g.net_err)
+  }
 
-// 添加新学期  或  添加新批次
-function addNewSemester(){
-  let new_semester = $('#new_semester').val();
-  let new_semester_batch = $('#new_semester_batch').val();
-  let new_semester_credit = $('#new_semester_credit').val();
-  console.log(new_semester);
-  $.ajax({
-    type: 'post',
-    url: base_url + '/batch/addBatch',
-    datatype: 'json',
-    data: {
-      'batch_name': new_semester_batch,
-      'credit': new_semester_credit,
-      'semester_name': new_semester
-    },
-    success: function(data){
-      if(data.status === 0){
-        console.log(data);
-        swal(
-          '添加成功',
-          '添加新学期成功',
-          'success'
-        );
-        init_data();
-      }
-    }
-  });
-}
+  var batches = [];
+  function getAndFillBatchList() {
+    batches = []; // 重置清空
+    var $batch_list = $('#batch_list').empty();
+    var $temp = $('#templates #semester_data').children();
+    _.each(semester_data, function (val, i) {
+      var $cloneTemp = $temp.clone();
+      $cloneTemp.find('.semester_name').text(val.semester_name).end()
+        .attr('data-semester-index', i)
+      $cloneTemp.appendTo($batch_list);
+      api.batch.getBatchBySemesterName(val.semester_name)
+        .done($.proxy(fillBatchList, $cloneTemp.find('.group-detail')))
+        .fail(g.net_err)
+    });
+  }
 
-// 修改学期名初始化
-function editSemesterName_init(obj){
-  let semester_name = obj.getAttribute('name');
-  // console.log(semester_name);
-  $('#editSemesterName_old').val(semester_name);
-}
-// 修改学期名
-function editSemesterName(){
-  let old_semester_name = $('#editSemesterName_old').val();
-  let new_semester_name = $('#editSemesterName_new').val();
-  // console.log(semester);
-  $.ajax({
-    type: 'post',
-    url: base_url + '/batch/updateSemesterName',
-    datatype: 'json',
-    data: {
-      'old': old_semester_name,
-      'semesterName': new_semester_name
-    },
-    success: function(data){
-      if(data.status === 0){
-        // console.log(data);
-        swal(
-          '修改成功',
-          '修改学期名成功，你的新学期名为：'+new_semester_name,
-          'success'
-        );
-        init_data();
-      }
-    }
-  });
-}
+  function fillBatchList(data) {
+    if (data.status === 0) {
+      var data_arr = data.data;
+      var $this = this;
+      var $temp = $('#templates #batch_data').children();
+      _.each(data_arr, function (val, i) {
+        var $cloneTemp = $temp.clone().find('.batch_name').text(val.batch_name).end();
 
-// 删除某个学期
-function delSemester(obj){
-  let semester_name = obj.getAttribute('name');
-  swal({
-	  title: '确定删除吗？',
-	  text: '确定删除"' + semester_name + '学期"吗？你将无法恢复它！',
-	  type: 'warning',
-	  showCancelButton: true,
-	  confirmButtonColor: '#d33',
-	  cancelButtonColor: '#3085d6',
-	  confirmButtonText: '确定删除！',
-    cancelButtonText: '取消',
-	}).then(result => {
-	  if (result.value) {
-      $.ajax({
-        type: 'post',
-        url: base_url + '/batch/deleteSemester',
-        datatype: 'json',
-        data: {
-          'semesterName': semester_name
-        },
-        success: function(data){
-          if(data.status === 0){
-            // console.log(data);
+        $cloneTemp.attr('data-batch-index', batches.length);
+        batches.push(val);
+        $cloneTemp.appendTo($this);
+      });
+    } else {
+      g.fetch_err(data)
+    }
+  }
+
+  // 添加新学期
+  $('#addNewSemester-btn').click(add_new_semester);
+  function add_new_semester() {
+    var semester_name = $('#new_semester_name').val();
+    var beginDate = $('#new_semester_beginDate').val();
+    if (!semester_name || !beginDate) {
+      swal('请完成表单填写', '', 'warning')
+      return;
+    }
+    api.batch.addBatch(semester_name, '', 1, beginDate) // todo check 
+      // 后端报错
+      .done(function (data) {
+        if (data.status === 0) {
+          init_data();
+        } else {
+          g.fetch_err(data)
+        }
+      })
+      .fail(g.net_err)
+  }
+
+  // 触发添加批次对话框事件
+  $('#batch_list').on('click', '.new_batch_entry', function () {
+    var $this = $(this);
+    var index = $this.parents('.semester_data').attr('data-semester-index');
+    // console.log(semester_data[index])
+    init_new_batch_modal(semester_data[index])
+    $('#add_semester_batchModal').modal('show');
+  })
+
+  //初始化添加批次编辑区
+  function init_new_batch_modal(semester) {
+    $('#addNewBatch_semester').val(semester.semester_name);
+    $('#addNewBatch_batch').val('');
+    $('#addNewBatch_credit').val('');
+    $('#addNewBatch_beginDate').val(semester.date); //时间初始化为学期的起始时间，但是可以修改。
+  }
+
+  $('#add-new-batch').click(add_batch_ensure);
+  function add_batch_ensure() {
+    var new_semester = $('#addNewBatch_semester').val();
+    var new_semester_batch = $('#addNewBatch_batch').val();
+    var new_semester_credit = $('#addNewBatch_credit').val();
+    var new_semester_beginDate = $('#addNewBatch_beginDate').val();
+    if (!new_semester || !new_semester_batch || !new_semester_credit || !new_semester_beginDate) {
+      swal('请完成表单填写', '', 'warning')
+      return;
+    }
+    api.batch.addBatch(new_semester, new_semester_batch, new_semester_credit, new_semester_beginDate)
+      .done(function (data) {
+        if (data.status === 0) {
+          // console.log(data);
+          swal(
+            '添加成功',
+            '添加新批次成功',
+            'success'
+          );
+          init_data();
+        } else {
+          g.fetch_err(data);
+        }
+      })
+  }
+
+  // 编辑学期点击事件
+  // $('#batch_list').on('click', '.edit_semester_entry', function () {
+  //   var $this = $(this);
+  //   var index = $this.parents('.semester_data').attr('data-semester-index');
+  //   console.log(semester_data[index])
+  // })
+
+  // 删除学期点击事件
+  $('#batch_list').on('click', '.delete_semester_entry', function () {
+    var $this = $(this);
+    var index = $this.parents('.semester_data').attr('data-semester-index');
+    // console.log(semester_data[index])
+    swal({
+      title: '请确定',
+      text: '是否删除学期' + semester_data[index].semester_name,
+      icon: 'warning',
+      buttons: ['取消', '确定'],
+      dangerMode: true
+    }).then(function (ensure) {
+      if (!ensure) return;
+      api.batch.deleteSemester(semester_data[index].semester_name)
+        .done(function (data) {
+          if (data.status === 0) {
+            swal('删除成功')
+            init_data()
+          } else {
+            g.fetch_err(data)
+          }
+        }).fail(g.net_err)
+    });
+  });
+
+  var $editOneBatchModal = $('#editOneBatchModal');
+  // 触发编辑批次对话框
+  $('#batch_list').on('click', '.edit_batch_entry', function () {
+    var $this = $(this)
+    var batch_index = $this.parents('.batch_data').attr('data-batch-index');
+
+    var batch = batches[batch_index]
+    // console.log(batch)
+    init_edit_onebatch_modal(batch);
+    $editOneBatchModal.modal('show');
+  });
+
+  // 初始化
+  function init_edit_onebatch_modal(batch) {
+    $editOneBatchModal.find('#editOneBatchSemesterName').val(batch.semester_name);
+    $editOneBatchModal.find('#editOneBatchName').val(batch.batch_name);
+    $editOneBatchModal.find('#editOneBatchCredit').val(batch.credit);
+    $editOneBatchModal.find('#editOneBatchBeginDate').val(batch.beginDate);
+  }
+
+  //提交修改
+  $('#editOneBatchCommit').click(function () {
+    var semester_name = $editOneBatchModal.find('#editOneBatchSemesterName').val();
+    var batch_name = $editOneBatchModal.find('#editOneBatchName').val();
+    var credit = $editOneBatchModal.find('#editOneBatchCredit').val();
+    var beginDate = $editOneBatchModal.find('#editOneBatchBeginDate').val();
+    api.batch.updateBatch(semester_name, batch_name, credit, beginDate)
+      .done(function (data) {
+        if (data.status === 0) {
+          swal('提示', '修改成功', 'success')
+        } else {
+          g.fetch_err(data)
+        }
+      })
+      .fail(g.net_err)
+  });
+
+  $('#batch_list').on('click', '.delete_batch_entry', function () {
+    var $this = $(this)
+    var batch_index = $this.parents('.batch_data').attr('data-batch-index');
+
+    var batch = batches[batch_index]
+    // console.log(batch.batch_name);
+    delOneBatch(batch);
+  });
+
+  // 删除某个批次
+  function delOneBatch(batch) {
+    var batch_name = batch.batch_name;
+    swal({
+      title: '确定删除吗？',
+      text: '确定删除"' + batch_name + '批次"吗？你将无法恢复它！',
+      icon: 'warning',
+      dangerMode: true,
+      buttons: ['取消', '确定']
+    }).then(function (result) {
+      api.batch.deleteBatch(batch_name)
+        .done(function (data) {
+          if (data.status === 0) {
             swal(
-        			'删除！',
-        			'"' + semester_name + '学期"已经被删除。',
-        			'success'
-      			);
+              '删除！',
+              '"' + batch_name + '批次"已经被删除。',
+              'success'
+            );
             // 刷新实习批次信息
             init_data();
+          } else {
+            g.fetch_err(data)
           }
-        }
-      });
-	    console.log(result.value)
-	  } else {
-	    // handle dismiss, result.dismiss can be 'cancel', 'overlay', 'close', and 'timer'
-	    console.log(result.dismiss)
-	  }
-  })
-}
+        }).fail(g.net_err)
+    })
+  }
 
-// 添加新批次初始化
-function add_semester_batch(obj){
-  let semester_name = obj.getAttribute('name');
-  // console.log(semester_name);
-  $('#addNewBatch_semester').val(semester_name);
-}
-// 添加新批次
-function addNewBatch(){
-  let semester = $('#addNewBatch_semester').val();
-  let new_semester_batch = $('#addNewBatch_batch').val();
-  let new_semester_credit = $('#addNewBatch_credit').val();
-  // console.log(semester);
-  $.ajax({
-    type: 'post',
-    url: base_url + '/batch/addBatch',
-    datatype: 'json',
-    data: {
-      'batch_name': new_semester_batch,
-      'credit': new_semester_credit,
-      'semester_name': semester
-    },
-    success: function(data){
-      if(data.status === 0){
-        // console.log(data);
-        swal(
-          '添加成功',
-          '添加新批次成功',
-          'success'
-        );
-        init_data();
-      }
-    }
+  // 2、学生信息导入部分
+  $('#download_template').click(function (e) {
+    downloadTemplate();
   });
-}
 
-// 编辑某个批次--初始化
-function editOneBatch_init(obj){
-  let semester_name = obj.getAttribute('semester_name');
-  let batch_name = obj.getAttribute('batch_name');
-  let credit = obj.getAttribute('credit');
-  let bat_describe = obj.getAttribute('bat_describe');
-  // console.log(batch_name);
-  $('#editOneBatchSemesterName').val(semester_name);
-  $('#editOneBatchName').val(batch_name);
-  $('#editOneBatchCredit').val(credit);
-}
-// 编辑某个批次
-function editOneBatch(){
-  let semester_name = $('#editOneBatchSemesterName').val();
-  let batch_name = $('#editOneBatchName').val();
-  let credit = $('#editOneBatchCredit').val();
-  let bat_describe = "";
-  $.ajax({
-    type: 'post',
-    url: base_url + '/batch/updateBatch',
-    datatype: 'json',
-    data: {
-      'semester_name': semester_name,
-      'batch_name': batch_name,
-      'credit': credit,
-      'bat_describe': bat_describe
-    },
-    success: function(data){
-      if(data.status === 0){
-        // console.log(data);
-        swal(
-          '修改成功',
-          '修改批次信息成功',
-          'success'
-        );
-        init_data();
-      }
-    }
-  });
-}
+  // 下载标准模版
+  function downloadTemplate() {
+    g.downloads('/admin/download', "GET", {})
+  }
 
-// 删除某个批次
-function delOneBatch(obj){
-  let batch_name = obj.getAttribute('batch_name');
-  swal({
-	  title: '确定删除吗？',
-	  text: '确定删除"' + batch_name + '批次"吗？你将无法恢复它！',
-	  type: 'warning',
-	  showCancelButton: true,
-	  confirmButtonColor: '#d33',
-	  cancelButtonColor: '#3085d6',
-	  confirmButtonText: '确定删除！',
-    cancelButtonText: '取消',
-	}).then(result => {
-	  if (result.value) {
-      $.ajax({
-        type: 'post',
-        url: base_url + '/batch/deleteBatch/' + batch_name,
-        datatype: 'json',
-        data: {},
-        success: function(data){
-          if(data.status === 0){
-            // console.log(data);
-            swal(
-        			'删除！',
-        			'"' + batch_name + '批次"已经被删除。',
-        			'success'
-      			);
-            // 刷新实习批次信息
-            init_data();
-          }
-        }
-      });
-	    console.log(result.value)
-	  } else {
-	    // handle dismiss, result.dismiss can be 'cancel', 'overlay', 'close', and 'timer'
-	    console.log(result.dismiss)
-	  }
-  })
-}
-
-
-// 2、学生信息导入部分【有问题！！！】
-
-// 下载标准模版【有问题！！！】
-// function downloadTemplate(){
-//   $.ajax({
-//     type: 'get',
-//     url: base_url + '/admin/download',
-//     // datatype: 'json',
-//     // data: {},
-//     success: function(result){
-//       // 创建a标签，设置属性，并触发点击下载
-//       var $a = $("<a>");
-//       $a.attr("href", result.data.file);
-//       $a.attr("download", result.data.filename);
-//       $("body").append($a);
-//       $a[0].click();
-//       $a.remove();
-//     }
-//   });
-// }
-
-// 上传文件导入学生信息
-function importStudents(){
-  // console.log($("#uploadfiles").val());
-  var formdata = new FormData();
-  formdata.append("file",  $("#uploadfiles")[0].files[0]);
-  let batchName = $('#importStudents_select').val();
-  formdata.append("batchName", batchName);
-  console.log(formdata.getAll("file"));
-  console.log(formdata.getAll("batchName"));
-  $.ajax({
+  // 上传文件导入学生信息
+  $('#import_btn').click(importStudents);
+  function importStudents() {
+    // console.log($("#uploadfiles").val());
+    var formdata = new FormData();
+    formdata.append("file", $("#uploadfiles")[0].files[0]);
+    var batchName = $('#importStudents_select').val();
+    formdata.append("batchName", batchName);
+    // console.log(formdata.getAll("file"));
+    // console.log(formdata.getAll("batchName"));
+    $.ajax({
       url: base_url + "/admin/importStudents",
       type: "post",
       data: formdata,
-      cache : false,
+      cache: false,
       processData: false,
       contentType: false,
-      success:function(data){
-          // window.clearInterval(timer);
-          console.log("over..");
-          swal(
-            '导入成功！',
-            '导入学生信息成功！',
-            'success'
-          );
-          // $('#tf').empty();
-          // getAllBatch_StuList();
-          // window.location.href = "./student-manage.js";
+      success: function (data) {
+        // window.clearInterval(timer);
+        // console.log("over..");
+        swal(
+          '导入成功！',
+          '导入学生信息成功！',
+          'success'
+        );
+        // $('#tf').empty();
+        // getAllBatch_StuList();
+        // window.location.href = "./student-manage.js";
       },
-      error:function(e){
+      error: function (e) {
         swal(
           '导入失败！',
           '导入学生信息失败！',
           'success'
         );
-          // window.clearInterval(timer);
+        // window.clearInterval(timer);
       }
-  });
-}
+    });
+  }
 
 
+  // 3、学生列表部分(OK)
 
-// 3、学生列表部分(OK)
-
-// 获取所有批次 + 根据批次名获取学生列表
-function getAllBatch_StuList(){
-  $.ajax({
-    type: 'post',
-    url: base_url + '/batch/getAllBatch',
-    datatype: 'json',
-    data: {},
-    beforeSend: function(xhr) {
-      xhr.withCredentials = true;
-    },
-    crossDomain:true,
-    success: function(data){
-      if(data.status === 0){
-        console.log(data);
-        html = "";
-        for(let i=0; i<data.data.length; i++){
-          html += '<option>'+data.data[i].batch_name+'</option>';
+  // 获取所有批次 + 根据批次名获取学生列表
+  function getAllBatch_StuList() {
+    api.batch.getAllBatch()
+      .done(function (data) {
+        if (data.status === 0) {
+          // console.log(data);
+          var data_arr = data.data;
+          var $temp = $('<p></p>');
+          _.each(data_arr, function (val) {
+            $temp.append($('<option></option>').text(val.batch_name))
+          });
+          $('.batch_selector').html($temp.html());
+          getStudentByBatchName();
+        } else {
+          g.fetch_err(data)
         }
-        // console.log(html);
-        $('#stu_list_batch_name').html(html);
-        $('#addStudentSelecetBatch').html(html);
-        $('#stu-batch-edit').html(html);
-        $('#importStudents_select').html(html);
-        // 根据批次名获取学生列表
-        getStudentByBatchName();
-      }
-    }
-  });
-}
+      })
+      .fail(g.net_err)
+  }
 
-// 根据批次名获取学生列表
-function getStudentByBatchName(){
-  let batch_name = $('#stu_list_batch_name').val();
-  let stu_list_tbody = document.getElementById('adminTbody');
-  // console.log(batch_name);
-  $.ajax({
-    type: 'post',
-    url: base_url + '/student/getStudentByBatchName',
-    datatype: 'json',
-    data: {
-      'batchName': batch_name
-    },
-    success: function(data){
-      if(data.status === 0){
-        data_arr = data.data;
-        // console.log(data_arr);
-        let html = "";
-        for(let i=0; i<data_arr.length; i++){
-          html += '<tr>';
-          // 复选框
-          html += '<td><input type="checkbox" name="stu_list_checkbox" class="" id='+data_arr[i].sid+'></td>';
-          // 表格数据
-          html += '<td>'+data_arr[i].sid+'</td><td>'+data_arr[i].sname+'</td><td>'+data_arr[i].clazz+'</td><td>'+data_arr[i].batch_name+'</td>';
-          // 删除按钮
-          html += '<td><input type="button" class="btn btn-danger btn-sm" value="删除" sid='+data_arr[i].sid+' onclick="deleteOneStudent(this)" />&emsp;';
-          // 重置密码按钮
-          html += '<input type="button" class="btn btn-primary btn-sm" value="重置密码" sid='+data_arr[i].sid+' onclick="initOneStudentPassword(this)" />&emsp;';
-          // 编辑按钮
-          html += '<input type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#studentManage-button-editModal" value="编辑" sid='+data_arr[i].sid+' onclick="editOneStudent_init(this)" sname='+data_arr[i].sname+' clazz='+data_arr[i].clazz+' batch='+data_arr[i].batch_name+' /></td></tr>';
+  var student_list = []
+  $('#query_student_list_by_batch').click(getStudentByBatchName);
+  // 根据批次名获取学生列表
+  function getStudentByBatchName() {
+    var batch_name = $('#stu_list_batch_name').val();
+    var $stu_list_tbody = $('#student_list_body').empty();
+
+    api.student.getStudentByBatchName(batch_name)
+      .done(function (data) {
+        if (data.status === 0) {
+          data_arr = data.data;
+          student_list = data_arr;
+          var $temp = $('#templates #student_list_item_data').children();
+          _.each(data_arr, function (val, i) {
+            var $cloneTemp = $temp.clone();
+            $cloneTemp.attr('data-stud-idx', i)
+              .find('.sid').text(val.sid).end()
+              .find('.sname').text(val.sname).end()
+              .find('.clazz').text(val.clazz).end()
+              .find('.batch_name').text(val.batch_name).end();
+            $cloneTemp.appendTo($stu_list_tbody)
+          });
+          // 初始化分页
+          goPage(1, 10);   // 当前页数为1，每页10条数据
+        } else {
+          g.fetch_err(data)
         }
-        stu_list_tbody.innerHTML = html;
-        // 初始化分页
-        goPage(1,10);   // 当前页数为1，每页10条数据
-      }
-    }
-  });
-}
+      })
+      .fail(g.net_err)
+  }
 
-// 删除一个学生
-function deleteOneStudent(obj){
-  // console.log(obj);
-  let sid = obj.getAttribute('sid');
-  var sid_arr = new Array();
-  sid_arr.push(sid);
-  var sid_arr = JSON.stringify(sid_arr);
-  swal({
-	  title: '确定删除吗？',
-	  text: '确定删除吗？你将无法恢复它！',
-	  type: 'warning',
-	  showCancelButton: true,
-	  confirmButtonColor: '#d33',
-	  cancelButtonColor: '#3085d6',
-	  confirmButtonText: '确定删除！',
-    cancelButtonText: '取消',
-	}).then(result => {
-	  if (result.value) {
-      $.ajax({
-        type: 'post',
-        url: base_url + '/student/deleteStudent',
-        datatype: 'json',
-        contentType: "application/json",
-        data: sid_arr,
-        success: function(data){
-          console.log(data);
-          if(data.status === 0){
-            // console.log(data);
+
+  // 添加一个学生
+  $('#add_a_student').click(addOneStudent);
+  var $add_student_modal = $('#add_student_modal');
+  function addOneStudent() {
+    var sid = $add_student_modal.find('#stu-number-add').val();
+    var sname = $add_student_modal.find('#stu-name-add').val();
+    var clazz = $add_student_modal.find('#stu-classes-add').val();
+    var batch_name = $add_student_modal.find('#addStudentSelecetBatch').val();
+
+    api.student.addStudent(sid, sname, clazz, batch_name)
+      .done(function (data) {
+        if (data.status === 0) {
+          swal(
+            '添加成功',
+            '添加学生信息成功',
+            'success'
+          );
+          getStudentByBatchName();
+        } else {
+          g.fetch_err(data)
+        }
+      })
+      .fail(g.net_err)
+  }
+
+
+  var $student_list_body = $('#student_list_body');
+  $student_list_body.on('click', '.del_stud_entry', function () {
+    var student_index = $(this).parents('.student_list_item_data').attr('data-stud-idx');
+    // console.log(student_list[student_index])
+    deleteOneStudent(student_list[student_index]);
+  });
+
+  // 删除一个学生
+  function deleteOneStudent(student) {
+    // console.log(student)
+    if (!student) return;
+    swal({
+      title: '确定删除吗？',
+      text: '确定删除吗？你将无法恢复它！',
+      buttons: ['取消', '确定'],
+      dangerMode: true
+    }).then(ensure => {
+      // console.log(ensure)
+      if (!ensure) return;
+
+      api.student.deleteStudent([student.sid])
+        .done(function (data) {
+          // console.log(data)
+          if (data.status === 0) {
+
             swal(
               '删除成功',
               '删除学生信息成功',
               'success'
             );
-            getAllBatch_StuList();
+            getStudentByBatchName();
+          } else {
+            g.fetch_err(data);
           }
-          else{
-            swal(
-              '删除失败',
-              '删除学生信息失败，请重试！',
-              'error'
-            );
-          }
-        }
-      });
-	    console.log(result.value)
-	  } else {
-	    // handle dismiss, result.dismiss can be 'cancel', 'overlay', 'close', and 'timer'
-	    console.log(result.dismiss)
-	  }
-  })
-}
+        })
+        .fail(g.net_err);
+    });
+  }
 
-// 批量删除学生
-function deleteSomeStudent(){
-  var id_array = new Array();
-  let checked_stu_ids = $('#adminTbody input[name="stu_list_checkbox"]:checked');
-  console.log(checked_stu_ids);
-  checked_stu_ids.each(function(){
-    id_array.push($(this)[0].id);
-  })
-  console.log(id_array);
-  var sid_arr = JSON.stringify(id_array);
-  swal({
-	  title: '确定删除吗？',
-	  text: '确定删除吗？你将无法恢复它！',
-	  type: 'warning',
-	  showCancelButton: true,
-	  confirmButtonColor: '#d33',
-	  cancelButtonColor: '#3085d6',
-	  confirmButtonText: '确定删除！',
-    cancelButtonText: '取消',
-	}).then(result => {
-	  if (result.value) {
-      $.ajax({
-        type: 'post',
-        url: base_url + '/student/deleteStudent',
-        datatype: 'json',
-        contentType: "application/json",
-        data: sid_arr,
-        success: function(data){
-          console.log(data);
-          if(data.status === 0){
+
+  // 编辑一个学生
+  var $edit_stud_modal = $("#edit_stud_modal");
+  $student_list_body.on('click', '.edit_stud_entry', function () {
+    var student_index = $(this).parents('.student_list_item_data').attr('data-stud-idx');
+    init_edit_stud_modal(student_list[student_index]);
+    $edit_stud_modal.modal('show');
+  });
+
+  function init_edit_stud_modal(student) {
+    $edit_stud_modal.find('#stu-number-edit').val(student.sid);
+    $edit_stud_modal.find('#stu-name-edit').val(student.sname);
+    $edit_stud_modal.find('#stu-class-edit').val(student.clazz);
+    var batch_selector = $edit_stud_modal.find('#stu-batch-edit');
+    var index = batch_selector.find(':contains("' + student.batch_name + '")').index();
+    batch_selector[0].selectedIndex = index;
+  }
+
+  // 编辑学生确认
+  $('#edit_stud_ensure').click(editOneStudent)
+
+  // 修改一个学生的信息
+  function editOneStudent() {
+    var sid = $edit_stud_modal.find('#stu-number-edit').val();
+    var sname = $edit_stud_modal.find('#stu-name-edit').val();
+    var clazz = $edit_stud_modal.find('#stu-class-edit').val();
+    var batch_name = $edit_stud_modal.find('#stu-batch-edit').val();
+
+    if (!sid || !sname || !clazz || !batch_name) {
+      swal('请完成表单填写', '', 'warning');
+      return;
+    }
+
+    api.student.updateStudent(sid, sname, clazz, batch_name)
+      .done(function (data) {
+        if (data.status === 0) {
+          swal(
+            '修改成功',
+            '修改学生信息成功',
+            'success'
+          );
+          getAllBatch_StuList();
+        } else {
+          g.fetch_err(data)
+        }
+      })
+      .fail(g.net_err)
+  }
+
+  // 重置密码
+  $student_list_body.on('click', '.reset_stud_entry', function () {
+    var student_index = $(this).parents('.student_list_item_data').attr('data-stud-idx');
+    var student = student_list[student_index]
+    // console.log(student)
+
+    swal({
+      title: '输入新的密码',
+      content: 'input',
+      buttons: true,
+      dangerMode: true
+    }
+    ).then(function (input) {
+      api.user.changePwd(student.sid, hex_md5(input))
+        .done(function (data) {
+          if (data.status === 0) {
             // console.log(data);
             swal(
-              '删除成功',
-              '删除学生信息成功',
+              '消息',
+              data.message,
               'success'
-            );
-            getAllBatch_StuList();
+            )
+          } else {
+            g.fetch_err(data)
           }
-          else{
-            swal(
-              '删除失败',
-              '删除学生信息失败，请重试！',
-              'error'
-            );
-          }
-        }
-      });
-	    console.log(result.value)
-	  } else {
-	    // handle dismiss, result.dismiss can be 'cancel', 'overlay', 'close', and 'timer'
-	    console.log(result.dismiss)
-	  }
-  })
-}
-
-// 添加一个学生
-function addOneStudent(){
-  let sid = $('#stu-number-add').val();
-  let sname = $('#stu-name-add').val();
-  let clazz = $('#stu-classes-add').val();
-  let batch_name = $('#addStudentSelecetBatch').val();
-
-  $.ajax({
-    type: 'post',
-    url: base_url + '/student/addStudent',
-    datatype: 'json',
-    data: {
-      'sid': sid,
-      'sname': sname,
-      'clazz': clazz,
-      'batch_name': batch_name
-    },
-    success: function(data){
-      if(data.status === 0){
-        // console.log(data);
-        swal(
-          '添加成功',
-          '添加学生信息成功',
-          'success'
-        );
-        getAllBatch_StuList();
-      }
-      else{
-        swal(
-          '添加失败',
-          '添加学生信息失败，请重试！',
-          'error'
-        );
-      }
-    }
+        })
+        .fail(g.net_err)
+    });
   });
-}
 
-// 修改一个学生--初始化
-function editOneStudent_init(obj){
-  // console.log(obj);
-  let sid = obj.getAttribute('sid');
-  let sname = obj.getAttribute('sname');
-  let clazz = obj.getAttribute('clazz');
-  let batch = obj.getAttribute('batch');
 
-  $('#stu-number-edit').val(sid);
-  $('#stu-name-edit').val(sname);
-  $('#stu-class-add').val(clazz);
-  $('#stu-batch-edit').val(batch);
-  // console.log(batch);
-}
-// 修改一个学生的信息
-function editOneStudent(){
-  let sid = $('#stu-number-edit').val();
-  let batch_name = $('#stu-batch-edit').val();
-  let sname = $('#stu-name-edit').val();
-  let clazz = $('#stu-class-add').val();
-  // console.log(sid);
-  // var data = {'sid': sid, 'batch_name': batch_name, 'sname': sname, 'clazz': clazz};
-  $.ajax({
-    type: 'post',
-    url: base_url + '/student/updateStudent',
-    data: JSON.stringify({
-      'sid': sid,
-      'batch_name': batch_name,
-      'sname': sname,
-      'clazz': clazz
-    }),
-    contentType : "application/json",              //发送至服务器的类型
-    dataType : "json",
-    success: function(data){
-      // console.log(data);
-      if(data.status === 0){
-        // console.log(data);
-        swal(
-          '修改成功',
-          '修改学生信息成功',
-          'success'
-        );
-        getAllBatch_StuList();
-      }
-      else{
-        swal(
-          '修改失败',
-          '修改学生信息失败，请重试！',
-          'error'
-        );
-      }
-    }
-  });
-}
+  // 批量删除学生
+  $('#delete_selected_stud').click(deleteSomeStudent);
+  function deleteSomeStudent() {
+    var $checked = $student_list_body.find('.batch-op').filter(':checked').parents('.student_list_item_data');
+    // console.log($checked);
+    var stud_ids = [];
+    $checked.each(function (i, dom) {
+      var index = $(dom).attr('data-stud-idx');
+      stud_ids.push(student_list[index].sid);
+    });
+    // console.log(stud_ids);
 
-// 重置一个学生的密码【等接口】
-function initOneStudentPassword(obj){
-  let sid = obj.getAttribute('sid');
-  let spwd = hex_md5("123456");
-  let senddata = JSON.stringify([{'id': sid,'pwd': spwd}]);
-  swal({
-	  title: '确定重置密码吗？',
-	  text: '确定重置该学生的密码吗？你将无法撤回此操作！',
-	  type: 'warning',
-	  showCancelButton: true,
-	  confirmButtonColor: '#d33',
-	  cancelButtonColor: '#3085d6',
-	  confirmButtonText: '确定重置！',
-    cancelButtonText: '取消',
-	}).then(result => {
-	  if (result.value) {
-      $.ajax({
-        type: 'post',
-        url: base_url + '/user/changePwd',
-        datatype: 'json',
-        contentType: "application/json",
-        data: senddata,
-        success: function(data){
-          console.log(data);
-          if(data.status === 0){
-            // console.log(data);
-            swal(
-              '重置密码成功',
-              '重置密码成功，该学生的密码已经回复初始密码：123456',
-              'success'
-            );
-            getAllBatch_StuList();
-          }
-          else{
-            swal(
-              '重置密码失败',
-              '重置密码失败，请重试！',
-              'error'
-            );
-          }
+    api.student.deleteStudent(stud_ids)
+      .done(function (data) {
+        if (data.status === 0) {
+          swal(
+            '删除成功',
+            '删除学生信息成功',
+            'success'
+          );
+          getStudentByBatchName();
+        } else {
+          g.fetch_err(data)
         }
-      });
-	    console.log(result.value)
-	  } else {
-	    // handle dismiss, result.dismiss can be 'cancel', 'overlay', 'close', and 'timer'
-	    console.log(result.dismiss)
-	  }
-  })
-}
+      })
+      .fail(g.net_err)
+  }
+
+});
