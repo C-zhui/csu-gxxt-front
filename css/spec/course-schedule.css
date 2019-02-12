@@ -9,7 +9,7 @@
 	align-items: center;
 }
 #template-table{
-	margin-bottom: 1rem;
+	margin-bottom: 0;
 	width: auto;
 }
 #template-tbody tr th:first-child{
@@ -24,8 +24,4 @@
 	padding-right: 18px;
 	/*width: 250px;*/
 	/*white-space:nowrap;*/
-}
-#table-edit-status{
-	color: #5b8fb4;
-	font-size: 16px;
 }

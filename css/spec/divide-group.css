@@ -1,16 +1,66 @@
-.tips {
-    color: green;
-    font-size: 12px;
-    margin-left: 50px;
-  }
+/*有关表格调整*/
+#distribution-table,#class-time-tracer,#divide_course_select_batch{
+    margin-bottom: 0;
+}
+#query-distribute-tab .table,#student-divide-tab .table,#student-class-table-tab .table,#spec-student-tab .table{
+    margin-bottom: 0;
+    margin-top: 28px;
+}
 
+/*课时分配调整*/
 #class-time-container .distributed {
     background-color: greenyellow;
 }
 #class-time-container .selected{
     background-color: rgb(136, 136, 221); 
 }
-
-#distribution-table td:hover{
-	background-color: #eeeeee;
+#class-time-table-box{
+    margin-top: 20px;
+    display: none;
 }
+#table-edit-status{
+    display: none;
+}
+#distribution-table td:hover{
+    background-color: #eeeeee;
+}
+
+/*批次、工序排课查询调整*/
+#query-by-batch-result,#query-by-batch-and-proced-table{
+    min-width: 450px;
+    width: auto;
+}
+#query-by-batch-result td,#query-by-batch-and-proced-table td{
+    padding-right: 20px;
+}
+
+/*学生分组提示调整*/
+#student-divide-tab .text-info,#student-divide-tab .list{
+    margin-top: 0;
+}
+#student-divide-tab .list li{
+    margin: 0;
+}
+
+/*特殊学生调整*/
+#spec-student-tab .table{
+    margin-bottom: 8px;
+}
+#spec-student-tab main{
+    padding-bottom: 25px;
+}
+#mytable .row-image{
+    float: left;
+}
+
+/*.operate-center{*/
+    /*width: 50px;*/
+/*}*/
+.row-image.lookup-course{
+    margin-right: 0.5rem;
+}
+.delete-sp-stud{
+    margin-right: 0;
+}
+
+
