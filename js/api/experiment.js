@@ -78,7 +78,7 @@ define(['api/apiobj','config/global'], function (api,g) {
         },
         send_download_excel: function (data) { // data 是 二维的字符串数组
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', base_url + '/experiment/ExcelDownload', true);        // 也可以使用POST方式，根据接口
+            xhr.open('POST', g.base_url + '/experiment/ExcelDownload', true);        // 也可以使用POST方式，根据接口
             xhr.responseType = "blob";    // 返回类型blob
             xhr.setRequestHeader("Content-type", "application/json");
             // 定义请求完成的处理函数，请求前也可以增加加载框/禁用下载按钮逻辑
