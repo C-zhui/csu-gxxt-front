@@ -1,0 +1,329 @@
+<div id="body">
+
+	<link rel="stylesheet" type="text/css" href="../../css/spec/extra-work.css">
+	<link rel="stylesheet" type="text/css" href="../../css/cut_page.css">
+
+	<!-- 学生开放申请 -->
+	<div class="content-card">
+		<header>
+			<div class="header-title">
+				学生开放申请
+			</div>
+		</header>
+		<main>
+			<div class="row">
+				<input class="flatpickr mycalendar form-control col-2 col-sm-2 left-flatpickr" name="submit-time" placeholder="提交日期"
+				 id="stu_submit_time">
+				<input class="flatpickr mycalendar form-control col-2 col-sm-2 left-flatpickr" name="start-time" placeholder="开放开始日期"
+				 id="stu_extra_work_start_time">
+				<span class="form-control col-1 col-sm-1 time-last">至</span>
+				<input class="flatpickr mycalendar form-control col-2 col-sm-2" name="end-time" placeholder="开放结束时间" id="stu_extra_work_end_time">
+				<select class="form-control custom-select col-2 col-sm-2 select-worktype" id="stu_extra_select_process">
+					<option>选择教师组</option>
+				</select>
+				<input type="button" name="" class="btn btn-success float-right" value="查询" id="get-over-work-by-time">
+			</div>
+
+			<table class="table" id="student-open-apply-table">
+				<thead>
+					<tr>
+						<th>提交日期</th>
+						<th>姓名</th>
+						<th>班级</th>
+						<th>工种</th>
+						<th>开放时间</th>
+						<th>时长</th>
+						<th>开放事由</th>
+					</tr>
+				</thead>
+				<tbody id="stu_extra_work_tbody">
+					<!-- <tr>
+								<td>2018-10-04 20:45</td>
+								<td>张扬帆</td>
+								<td>材料1610班</td>
+								<td>钳工</td>
+								<td>2018-10-05 20:00-22:00</td>
+								<td>2h</td>
+								<td>无碳小车校赛开放</td>
+							</tr> -->
+				</tbody>
+			</table>
+
+			<!-- 分页功能部分 -->
+			<!--<div id="kbarcon" class="kbarcon clearfix">-->
+				<!--<div id="kbarcon1" class="kbarcon1"></div>-->
+				<!--<div id="kbarcon2" class="kbarcon2">-->
+					<!--<ul>-->
+						<!--<li>-->
+							<!--<a href="###" id="kfirstPage" class="btn btn-sm">首页</a></li>-->
+						<!--<li>-->
+							<!--<a href="###" id="kprePage" class="btn btn-sm">上一页</a></li>-->
+						<!--<li>-->
+							<!--<a href="###" id="knextPage" class="btn btn-sm">下一页</a></li>-->
+						<!--<li>-->
+							<!--<a href="###" id="klastPage" class="btn btn-sm">尾页</a></li>-->
+						<!--<li>-->
+							<!--&lt;!&ndash; <select id="jumpWhere"></select> &ndash;&gt;-->
+							<!--<input type="text" id="kjumpWhere">-->
+						<!--</li>-->
+						<!--<li><a href="###" id="kjumpPage" onclick="kjumpPage()" class="btn btn-sm btn-primary">跳转</a></li>-->
+					<!--</ul>-->
+				<!--</div>-->
+			<!--</div>-->
+		</main>
+	</div>
+	<!-- 学生开放申请结束 -->
+
+	<!-- 新增教师值班 -->
+	<div class="content-card">
+		<header>
+			<div class="header-title">
+				新增教师值班
+			</div>
+		</header>
+		<main>
+			<div class="row">
+				<input class="flatpickr mycalendar form-control col-2 col-sm-2 left-flatpickr" name="start-time" data-enable-time="true"
+				 data-time_24hr="true" placeholder="值班时间" id="teacher_overwork_start_time">
+				<select class="form-control custom-select col-2 col-sm-2 select-worktype" id="teacher_overwork_select_process">
+					<option>选择教师组</option>
+				</select>
+				<select class="form-control custom-select col-2 col-sm-2 select-worktype" id="teacher_overwork_select_teacher">
+					<option>选择教师</option>
+				</select>
+				<input type="text" name="last-time" placeholder="输入时长" class="form-control col-2 col-sm-2 last-time" id="teacher_overwork_last_time">
+			</div>
+			<br>
+
+			<form>
+				<div class="form-group">
+					<label for="extraWork-reason">开放事由：</label>
+					<textarea class="form-control" id="extraWork-reason" rows="3"></textarea>
+				</div>
+			</form>
+			<br>
+
+			<input type="button" name="" class="btn btn-success float-right" value="确定" id="add-teacher-over-work" onclick="addTeacherOverwork()">
+		</main>
+	</div>
+	<!-- 新增教师值班结束 -->
+
+	<!-- 教师值班记录 -->
+	<div class="content-card">
+		<header>
+			<div class="header-title">
+				教师值班记录
+			</div>
+		</header>
+		<main>
+			<div class="row">
+				<input class="flatpickr mycalendar form-control col-2 col-sm-2 left-flatpickr" name="start-time" placeholder="起始日期"
+				 id="history_start_time">
+				<span class="form-control col-1 col-sm-1 time-last">至</span>
+				<input class="flatpickr mycalendar form-control col-2 col-sm-2" name="end-time" placeholder="终止时间" id="history_end_time">
+				<select class="form-control custom-select col-2 col-sm-2 select-worktype" id="history_select_process">
+					<option>选择教师组</option>
+				</select>
+				<input type="button" name="" class="btn btn-success float-right" value="查询" onclick="getOverworkByTimeOrProName()">
+			</div>
+
+			<table class="table" id="teacher-table">
+				<thead>
+					<tr>
+						<th>值班日期时间</th>
+						<th>姓名</th>
+						<th>工种</th>
+						<th>时长</th>
+						<th>开放事由</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody id="adminTbody">
+					<!-- <tr>
+								<td>2018-10-05 20:00-22:00</td>
+								<td>夏丽君</td>
+								<td>钳工</td>
+								<td>2h</td>
+								<td>无碳小车校赛开放</td>
+								<td>
+									<button class="btn btn-primary btn-sm">编辑</button>
+									<button class="btn btn-danger btn-sm">删除</button>
+								</td>
+							</tr> -->
+				</tbody>
+			</table>
+
+			<!-- 分页功能部分 -->
+			<!--<div id="barcon" class="barcon clearfix">-->
+				<!--<div id="barcon1" class="barcon1"></div>-->
+				<!--<div id="barcon2" class="barcon2">-->
+					<!--<ul>-->
+						<!--<li>-->
+							<!--<a href="###" id="firstPage" class="btn btn-sm">首页</a></li>-->
+						<!--<li>-->
+							<!--<a href="###" id="prePage" class="btn btn-sm">上一页</a></li>-->
+						<!--<li>-->
+							<!--<a href="###" id="nextPage" class="btn btn-sm">下一页</a></li>-->
+						<!--<li>-->
+							<!--<a href="###" id="lastPage" class="btn btn-sm">尾页</a></li>-->
+						<!--<li>-->
+							<!--&lt;!&ndash; <select id="jumpWhere"></select> &ndash;&gt;-->
+							<!--<input type="text" id="jumpWhere">-->
+						<!--</li>-->
+						<!--<li><a href="###" id="jumpPage" onclick="jumpPage()" class="btn btn-sm btn-primary">跳转</a></li>-->
+					<!--</ul>-->
+				<!--</div>-->
+			<!--</div>-->
+
+			<!-- 编辑教师开放记录 Modal -->
+			<div class="modal fade" id="editTeacherHistoryModal" tabindex="-1" role="dialog" aria-labelledby="editTeacherHistoryModalTitle"
+			 aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="editTeacherHistoryModalTitle">修改教师开放记录</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<div class="row">
+								<input type="hidden" id="edit_history_overworkId">
+								<input class="flatpickr mycalendar form-control col-2 col-sm-2 left-flatpickr" name="start-time"
+								 data-enable-time="true" data-time_24hr="true" placeholder="值班时间" id="edit_history_start_time">
+								<select class="form-control custom-select col-2 col-sm-2 select-worktype" id="edit_history_select_process">
+									<option>选择教师组</option>
+								</select>
+								<select class="form-control custom-select col-2 col-sm-2 select-worktype" id="edit_history_select_teacher">
+									<!-- <option>选择教师</option>
+											<option>张三</option>
+											<option>李四</option>
+											<option>王五</option>
+											<option>李伟虹</option> -->
+								</select>
+								<input type="text" name="last-time" placeholder="输入时长" class="form-control col-2 col-sm-2 last-time" id="edit_history_last_time">
+							</div>
+							<br>
+
+							<form>
+								<div class="form-group">
+									<label for="edit_history_extraWork_reason">开放事由：</label>
+									<textarea class="form-control" id="edit_history_extraWork_reason" rows="3"></textarea>
+								</div>
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+							<button type="button" class="btn btn-primary" id="update-teacher-over-work" data-dismiss="modal">确定</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /.modal -->
+
+			<div class="tips">
+				<p>注意：学生端界面默认只公示即日起未来7天内的值班安排</p>
+			</div>
+		</main>
+	</div>
+	<!-- 教师值班记录结束 -->
+
+	<!-- 主体部分结束 -->
+	<!--<script type="text/javascript">-->
+		<!--$(".mycalendar").flatpickr();-->
+
+		<!--// /**-->
+		<!--// * 分页函数-->
+		<!--// * pno&#45;&#45;页数-->
+		<!--// * psize&#45;&#45;每页显示记录数-->
+		<!--// * 分页部分是从真实数据行开始，因而存在加减某个常数，以确定真正的记录数-->
+		<!--// * 纯js分页实质是数据行全部加载，通过是否显示属性完成分页功能-->
+		<!--// **/-->
+		<!--//-->
+		<!--// var kpageSize = 0;		//每页显示行数-->
+		<!--// var kcurrentPage_ = 1;	//当前页全局变量，用于跳转时判断是否在相同页，在就不跳，否则跳转。-->
+		<!--// var ktotalPage;		//总页数-->
+		<!--//-->
+		<!--// function kgoPage(pno, psize) {-->
+		<!--// 	console.log(pno);-->
+		<!--// 	console.log(psize);-->
+		<!--// 	// ================================================= tbody 部分-->
+		<!--// 	var itable = document.getElementById("stu_extra_work_tbody");-->
+		<!--// 	var num = itable.rows.length;	//未分页表格数据所有行数(所有记录数)-->
+		<!--//-->
+		<!--// 	kpageSize = psize;				//每页显示行数-->
+		<!--//-->
+		<!--// 	//总共分几页-->
+		<!--// 	if (num / kpageSize > parseInt(num / kpageSize)) {-->
+		<!--// 		ktotalPage = parseInt(num / kpageSize) + 1;-->
+		<!--// 	} else {-->
+		<!--// 		ktotalPage = parseInt(num / kpageSize);-->
+		<!--// 	}-->
+		<!--// 	var currentPage = pno;	//当前页数-->
+		<!--// 	currentPage_ = currentPage;-->
+		<!--// 	var startRow = (currentPage - 1) * kpageSize + 1;-->
+		<!--// 	var endRow = currentPage * kpageSize;-->
+		<!--// 	endRow = (endRow > num) ? num : endRow;-->
+		<!--// 	//遍历显示数据实现分页-->
+		<!--// 	/*for(var i=1;i<(num+1);i++){-->
+		<!--// 		var irow = itable.rows[i-1];-->
+		<!--// 		if(i>=startRow && i<=endRow){-->
+		<!--// 			irow.style.display = "";-->
+		<!--// 		}else{-->
+		<!--// 			irow.style.display = "none";-->
+		<!--// 		}-->
+		<!--// 	}*/-->
+		<!--//-->
+		<!--// 	// ================================================= tbody 部分-->
+		<!--// 	$("#stu_extra_work_tbody tr").hide();-->
+		<!--// 	for (var i = startRow - 1; i < endRow; i++) {-->
+		<!--// 		// ================================================= tbody 部分-->
+		<!--// 		$("#stu_extra_work_tbody tr").eq(i).show();-->
+		<!--// 	}-->
+		<!--// 	var tempStr = "共" + num + "条记录 | 分" + ktotalPage + "页 | 当前第" + currentPage + "页";-->
+		<!--// 	// ================================================= barcon1 部分-->
+		<!--// 	document.getElementById("kbarcon1").innerHTML = tempStr;-->
+		<!--//-->
+		<!--// 	if (currentPage > 1) {-->
+		<!--// 		$("#kfirstPage").on("click", function () {-->
+		<!--// 			kgoPage(1, psize);-->
+		<!--// 		}).removeClass("ban");-->
+		<!--// 		$("#kprePage").on("click", function () {-->
+		<!--// 			kgoPage(currentPage - 1, psize);-->
+		<!--// 		}).removeClass("ban");-->
+		<!--// 	} else {-->
+		<!--// 		$("#kfirstPage").off("click").addClass("ban");-->
+		<!--// 		$("#kprePage").off("click").addClass("ban");-->
+		<!--// 	}-->
+		<!--//-->
+		<!--// 	if (currentPage < ktotalPage) {-->
+		<!--// 		$("#knextPage").on("click", function () {-->
+		<!--// 			kgoPage(currentPage + 1, psize);-->
+		<!--// 		}).removeClass("ban")-->
+		<!--// 		$("#klastPage").on("click", function () {-->
+		<!--// 			kgoPage(ktotalPage, psize);-->
+		<!--// 		}).removeClass("ban")-->
+		<!--// 	} else {-->
+		<!--// 		$("#knextPage").off("click").addClass("ban");    // 添加 ban class属性，用于设置透明度，不可点击等-->
+		<!--// 		$("#klastPage").off("click").addClass("ban");-->
+		<!--// 	}-->
+		<!--//-->
+		<!--// 	$("#kjumpWhere").val(currentPage);       // 设置“跳转”按钮的值-->
+		<!--// }-->
+		<!--//-->
+		<!--// function kjumpPage() {-->
+		<!--// 	var num = parseInt($("#kjumpWhere").val());-->
+		<!--// 	if (num != kcurrentPage_) {-->
+		<!--// 		kgoPage(num, kpageSize);-->
+		<!--// 	}-->
+		<!--// }-->
+
+	<!--</script>-->
+
+	<script type="text/javascript" src='../../js/spec/extra-work.js'></script>
+
+	<!-- 分页开始 -->
+	<!--<script type="text/javascript" src="../js/cut_page.js"></script>-->
+	<!--<link rel="stylesheet" type="text/css" href="../css/cut_page.css">-->
+	<!-- 分页结束 -->
+</div>
