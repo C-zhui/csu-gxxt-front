@@ -479,19 +479,17 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/batch',
   $student_list_body.on('click', '.reset_stud_entry', function () {
     var student_index = $(this).parents('.student_list_item_data').attr('data-stud-idx');
     var student = student_list[student_index]
-    // console.log(student)
 
     swal({
       title: '输入新的密码',
       content: 'input',
-      buttons: true,
+      buttons: ['取消', '确定'],
       dangerMode: true
     }
     ).then(function (input) {
       api.user.changePwd(student.sid, hex_md5(input))
         .done(function (data) {
           if (data.status === 0) {
-            // console.log(data);
             swal(
               '消息',
               data.message,

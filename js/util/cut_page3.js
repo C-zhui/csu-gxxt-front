@@ -18,27 +18,27 @@ function CutPage(tableID, psize) {
         this.totalPage=parseInt(this.totalRows/this.pageSize)+1;
     }
 
-    html='<div class="barcon clearfix">' +
+    html = '<div class="barcon clearfix" id="' + tableID + 'barcon">' +
         '<div id="'+tableID+'barcon1" class="barcon1"></div>' +
         '<div class="barcon2">' +
         '<ul>' +
         '<li>' +
-        '<a href="###" id="'+tableID+'firstPage" class="btn btn-sm">首页</a></li>' +
+        '<a href="###" id="' + tableID + 'firstPage" class="btn btn-sm btn-outline">首页</a></li>' +
         '<li>' +
-        '<a href="###" id="'+tableID+'prePage" class="btn btn-sm">上一页</a></li>' +
+        '<a href="###" id="' + tableID + 'prePage" class="btn btn-sm btn-outline">上一页</a></li>' +
         '<li>\n' +
-        '<a href="###" id="'+tableID+'nextPage" class="btn btn-sm">下一页</a></li>' +
+        '<a href="###" id="' + tableID + 'nextPage" class="btn btn-sm btn-outline">下一页</a></li>' +
         '<li>' +
-        '<a href="###" id="'+tableID+'lastPage" class="btn btn-sm">尾页</a></li>' +
+        '<a href="###" id="' + tableID + 'lastPage" class="btn btn-sm btn-outline">尾页</a></li>' +
         '<li>' +
         '<input type="text" id="'+tableID+'jumpWhere" class="jumpWhere">' +
         '</li>' +
-        '<li><a href="###" id="'+tableID+'jumpPage" class="btn btn-sm btn-primary">跳转</a></li>' +
+        '<li><a href="###" id="' + tableID + 'jumpPage" class="btn btn-sm btn-outline">跳转</a></li>' +
         '</ul>' +
         '</div>' +
         '</div>';
     let table=$('#'+tableID);
-    if($('#'+this.tableID+'barcon1').length<1){
+    if ($('#' + this.tableID + 'barcon').length < 1) {
         table.after(html);
     }
     $('#'+this.tableID+'jumpPage').click(this.lazyJumpPage(this));
