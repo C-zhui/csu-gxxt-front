@@ -172,6 +172,9 @@
   border-bottom: 2px solid transparent;
 }
 
+.table {
+  margin-bottom: 0;
+}
 .table thead tr:first-child {
   background: #5b8fb4;
   color: #ffffff;
@@ -314,9 +317,12 @@ input[name=btSelectAll] {
   /*margin-bottom: 5px;*/
 }
 
-.operate * {
+.operate > * {
   float: left;
   margin-top: 24px;
+}
+.operate > *.clearfix {
+  clear: both;
 }
 
 .operate:first-child span, .operate:first-child input, .operate:first-child .select, .operate:first-child button {
@@ -411,6 +417,24 @@ hr {
   font-family: "Microsoft YaHei UI";
 }
 
+.btn-background3 {
+  background: #56a3d7;
+  color: #feffff;
+  border-radius: 5px;
+  border: 1px solid #56a3d7;
+  box-sizing: border-box;
+  font-family: "Microsoft YaHei UI";
+}
+
+.btn-manage {
+  background: rgba(214, 237, 249, 0.8);
+  color: #000;
+  border-radius: 5px;
+  border: 1px solid rgba(214, 237, 249, 0.8);
+  box-sizing: border-box;
+  font-family: "Microsoft YaHei UI";
+}
+
 .btn-default {
   background: #3f8bc7;
   color: #ffffff;
@@ -474,6 +498,31 @@ hr {
   margin-bottom: 10px;
 }
 
+.custom-file-sm {
+  width: 245px;
+  height: 31px;
+}
+.custom-file-sm .custom-file-input {
+  height: 31px;
+}
+.custom-file-sm .custom-file-label {
+  height: 31px;
+  margin-bottom: 0;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+.custom-file-sm .custom-file-label::after {
+  content: "浏览";
+  height: 30px;
+  line-height: 31px;
+  box-sizing: border-box;
+  font-size: 14px;
+  padding: 0 0.75rem;
+  margin-right: -1px;
+  background: #62acde;
+  color: #ffffff;
+}
+
 .barcon {
   margin: 0 auto;
   text-align: center;
@@ -483,6 +532,7 @@ hr {
 }
 .barcon .barcon2 > ul {
   margin: 20px 0;
+  margin-bottom: 0;
   padding-left: 0;
   list-style: none;
   text-align: center;
@@ -528,7 +578,7 @@ hr {
 }
 
 .modal {
-  padding-right: 0;
+  padding-right: 0 !important;
 }
 
 .modal-dialog {

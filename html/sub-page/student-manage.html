@@ -1,5 +1,5 @@
 <div id="body">
-	<link rel="stylesheet" href="../css/spec/student-manage.css">
+	<link rel="stylesheet" href="../../css/spec/student-manage.css">
 
 	<!-- 模板代码 -->
 	<div id="templates" class="d-none">
@@ -7,10 +7,11 @@
 		<ul id="semester_data">
 			<li class="group semester_data">
 				<div class="group-summury">
-					<button class="toggle-btn btn btn-outline-info semester_name">hhh</button>
-					<button class="btn btn-sm new_batch_entry"><i class="fa fa-plus "></i>添加批次</button>
+					<button class="toggle-btn btn btn-manage semester_name">hhh</button>
+					<button class="btn btn-sm delete_semester_entry right"><img class="row-image-lg" src="../../icon/delete.svg"></button>
+					<button class="btn btn-sm new_batch_entry right"><img class="row-image-lg" src="../../icon/add.svg"></button>
 					<!-- <i class="btn btn-sm fa fa-edit edit_semester_entry " title="编辑学期"></i> -->
-					<button class="btn btn-sm delete_semester_entry"><i class="fa fa-trash "></i>删除学期</button>
+
 				</div>
 				<ul class="group-detail d-none">
 				</ul>
@@ -19,25 +20,26 @@
 
 		<ul id="batch_data">
 			<li class="batch_data">
-				<button class="btn btn-outline-info batch_name">hhh</button>
-				<button class="btn btn-sm edit_batch_entry"><i class="fa fa-edit"></i>编辑批次</button>
-				<button class="btn btn-sm delete_batch_entry"><i class="fa fa-trash"></i>删除批次</button>
+				<button class="btn batch_name" disabled>hhh</button>
+				<button class="btn btn-sm edit_batch_entry"><img src="../../icon/edit.svg" class="row-image-sm"></button>
+				<button class="btn btn-sm delete_batch_entry"><img src="../../icon/delete.svg" class="row-image-sm"></button>
 			</li>
 		</ul>
 
 		<table>
 			<tbody id="student_list_item_data">
 				<tr class="student_list_item_data">
-					<td><input type="checkbox" class="batch-op"></td>
+					
 					<td class="sid"></td>
 					<td class="sname"> </td>
 					<td class="clazz"> </td>
 					<td class="batch_name"> </td>
-					<td class="operations">
-						<button class="btn btn-sm edit_stud_entry"><i class="fa fa-edit"></i>编辑</button>
-						<button class="btn btn-sm reset_stud_entry"><i class="fa fa-refresh"></i>重置密码</button>
-						<button class="btn btn-sm del_stud_entry"><i class="fa fa-trash"></i>删除</button>
+					<td class="operations" style="width: 182px">
+						<button class="btn btn-sm edit_stud_entry"><img src="../../icon/edit.svg" class="row-image-sm"></button>
+						<button class="btn btn-sm del_stud_entry"><img src="../../icon/delete.svg" class="row-image-sm"></button>
+						<button class="btn btn-sm reset_stud_entry"><img src="../../icon/reset.svg" class="row-image-sm">重置密码</button>
 					</td>
+					<td style="width: 50px" class="center"><input type="checkbox" class="batch-op"></td>
 				</tr>
 			</tbody>
 		</table>
@@ -50,20 +52,21 @@
 			<div class="header-title">
 				实习批次管理
 			</div>
-			<span class="f">注意：删除某一批次，将会删除此批次内的所有学生信息</span>
 		</header>
 
 		<main>
-			<button class="btn btn-success" data-toggle="modal" data-target="#new_semester_modal">添加新学期</button>
-			<div class="mt-2"></div>
+			<div class="content-body">
+				<span class="tip right">注意：删除某一批次，将会删除此批次内的所有学生信息</span>
 
-			<span class="clearfix"></span>
+				<span class="clearfix"></span>
 
-			<!-- 学期与批次列表 -->
-			<ul class="list grouper" id="batch_list">
-			</ul>
+				<!-- 学期与批次列表 -->
+				<ul class="grouper stu-manage-list" id="batch_list">
+				</ul>
+				<!-- 学期与批次列表结束 -->
+				<button class="btn btn-sm btn-background3 btn-single" data-toggle="modal" data-target="#new_semester_modal">添加新学期</button>
+			</div>
 
-			<!-- 学期与批次列表结束 -->
 		</main>
 
 	</div>
@@ -77,18 +80,30 @@
 			</div>
 		</header>
 		<main>
-			<h5 class="card-title">从Excel文件导入：<small class="download-excel"><a id="download_template"
-						class="btn btn-outline-danger">标准模版下载</a></small></h5>
-			<div class="row choose-line">
-				<p>学生信息批量导入：</p>
-				<form class="form row" enctype="multipart/form-data" role="form" id="tf">
-					<input type="file" name="file" class="form-control-file" id="uploadfiles">
-					<select class="form-control custom-select col-3 col-sm-3 batch_selector" name="batchName"
-						id='importStudents_select'>
-					</select>
-					<span class="col-3 col-sm-3">
-				</form>
-				<input type="button" class="btn btn-primary row" value="开始导入" id="import_btn">
+			<div class="content-body">
+				<div class="manage-operate">
+					<span class="download-tip">从Excel文件导入:</span>
+					<button id="download_template" class="btn btn-manage btn-sm btn-single">标准模版下载</button>
+					<div class="clearfix"></div>
+				</div>
+				<div class="choose-line manage-operate no-margin">
+					<span class="download-tip">学生信息批量导入:</span>
+					<form class="form" enctype="multipart/form-data" role="form" id="tf">
+
+						<div class="custom-file custom-file-sm left">
+							<input type="file" name="file" class="custom-file-input" id="uploadfiles">
+							<label class="custom-file-label" for="uploadfiles">选择文件</label>
+						</div>
+
+						<select class="custom-select custom-select-sm batch_selector left batch-select" name="batchName"
+								id='importStudents_select'>
+						</select>
+					</form>
+					<input type="button" class="btn btn-background3 btn-sm btn-sm btn-single right" value="开始导入" id="import_btn">
+					<div class="clearfix"></div>
+
+				</div>
+				<div class="clearfix"></div>
 			</div>
 		</main>
 	</div>
@@ -103,78 +118,64 @@
 		</header>
 
 		<main>
-			<div class="row align-items-center">
-				<label>批次：</label>
-				<select class="form-control custom-select col-2 batch_selector" id="stu_list_batch_name">
-				</select>
+			<div class="content-body">
+				<div class="operate-manage">
+					<span>批次：</span>
+					<select class="custom-select custom-select-sm select batch_selector batch-select" id="stu_list_batch_name">
+					</select>
 
-				<button class="btn btn-outline-primary" id="query_student_list_by_batch">查 询</button>
-				<button class="add btn btn-cyan" data-toggle="modal" data-target="#add_student_modal">添 加</button>
-				<span class="tips">注意：重置密码后密码为 123456 </span>
-			</div>
+					<button class="btn btn-sm btn-outline btn-multi" id="query_student_list_by_batch">查 询</button>
+					<button class="add btn btn-background3 btn-sm btn-multi" data-toggle="modal" data-target="#add_student_modal">添 加</button>
+					<span class="tip">注意：重置密码后密码为 123456 </span>
+				</div>
 
-			<div class="container">
-				<table class="table">
-					<thead>
+				<!--<div class="container">-->
+				<div class="table-responsive">
+					<table class="table table-bordered">
+						<thead>
 						<tr>
-							<th></th>
 							<th>学号</th>
 							<th>姓名</th>
 							<th>班级</th>
 							<th>批次</th>
 							<th>操作</th>
+							<th></th>
 						</tr>
-					</thead>
-					<tbody id="student_list_body">
-					</tbody>
-				</table>
+						</thead>
+						<tbody id="student_list_body">
+						</tbody>
+					</table>
+				</div>
+
+				<!--</div>-->
 
 				<!-- 分页功能部分 -->
-				<div id="barcon" class="barcon clearfix">
+				<div id="barcon" class="barcon">
 					<div id="barcon1" class="barcon1"></div>
 					<div id="barcon2" class="barcon2">
 						<ul>
 							<li>
-								<a href="###" id="firstPage" class="btn btn-sm">首页</a></li>
+								<a href="###" id="firstPage" class="btn btn-sm btn-outline">首页</a></li>
 							<li>
-								<a href="###" id="prePage" class="btn btn-sm">上一页</a></li>
+								<a href="###" id="prePage" class="btn btn-sm btn-outline">上一页</a></li>
 							<li>
-								<a href="###" id="nextPage" class="btn btn-sm">下一页</a></li>
+								<a href="###" id="nextPage" class="btn btn-sm btn-outline">下一页</a></li>
 							<li>
-								<a href="###" id="lastPage" class="btn btn-sm">尾页</a></li>
+								<a href="###" id="lastPage" class="btn btn-sm btn-outline">尾页</a></li>
 							<li>
 								<!-- <select id="jumpWhere"></select> -->
-								<input type="text" id="jumpWhere">
+								<input class="jumpWhere" type="text" id="jumpWhere">
 							</li>
-							<li><a href="###" id="jumpPage" onclick="jumpPage()" class="btn btn-sm btn-primary">跳转</a>
+							<li><a href="###" id="jumpPage" onclick="jumpPage()" class="btn btn-sm btn-background2">跳转</a>
 							</li>
 						</ul>
 					</div>
 				</div>
-				<div class="operaten">
-					<button class="btn btn-danger" id="delete_selected_stud">
-						<i class="fa fa-trash"></i>
-						删 除</button>
-					<span class="clearfix"></span>
-				</div>
+				<button class="btn btn-sm btn-background3 btn-single right" id="delete_selected_stud">删除</button>
+				<div class="clearfix"></div>
 			</div>
 		</main>
 		<!-- 主要页面结构结束 -->
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
 
 		<!-- 存放所有modal -->
 		<div id="modals">
@@ -182,7 +183,7 @@
 			<!-- 添加新学期 Modal -->
 			<div class="modal fade" id="new_semester_modal" tabindex="-1" role="dialog"
 				aria-labelledby="add_semester_ModalTitle" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-dialog modal-dialog-centered" role="document" style="width: 620px">
 					<div class="modal-content">
 						<div class="modal-header">
 							<h5 class="modal-title" id="add_semester_ModalTitle">添加新学期</h5>
@@ -212,8 +213,8 @@
 							</form>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-							<button type="button" class="btn btn-primary" id="addNewSemester-btn"
+							<button type="button" class="btn btn-sm btn-outline btn-multi" data-dismiss="modal">关闭</button>
+							<button type="button" class="btn btn-sm btn-background3 btn-multi" id="addNewSemester-btn"
 								data-dismiss="modal">确定</button>
 						</div>
 					</div>
@@ -225,7 +226,7 @@
 			<!-- 添加新批次 Modal -->
 			<div class="modal fade" id="add_semester_batchModal" tabindex="-1" role="dialog"
 				aria-labelledby="add_semester_batchModalTitle" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-dialog modal-dialog-centered" role="document" style="width: 900px">
 					<div class="modal-content">
 						<div class="modal-header">
 							<h5 class="modal-title" id="add_semester_batchModalTitle">添加新批次</h5>
@@ -270,8 +271,8 @@
 							</form>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-							<button type="button" class="btn btn-primary" id="add-new-batch"
+							<button type="button" class="btn btn-sm btn-outline btn-multi" data-dismiss="modal">关闭</button>
+							<button type="button" class="btn btn-sm btn-background3 btn-multi" id="add-new-batch"
 								data-dismiss="modal">确定</button>
 						</div>
 					</div>
@@ -283,7 +284,7 @@
 			<!-- 编辑批次 Modal -->
 			<div class="modal fade" id="editOneBatchModal" tabindex="-1" role="dialog"
 				aria-labelledby="editOneBatchModalTitle" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-dialog modal-dialog-centered" role="document" style="width: 900px">
 					<div class="modal-content">
 						<div class="modal-header">
 							<h5 class="modal-title" id="editOneBatchModalTitle">修改批次信息</h5>
@@ -325,8 +326,8 @@
 							</form>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-							<button type="button" class="btn btn-primary" id="editOneBatchCommit"
+							<button type="button" class="btn btn-sm btn-outline btn-multi" data-dismiss="modal">关闭</button>
+							<button type="button" class="btn btn-sm btn-default btn-multi" id="editOneBatchCommit"
 								data-dismiss="modal">确定</button>
 						</div>
 					</div>
@@ -339,7 +340,7 @@
 			<!-- 修改学期名 Modal -->
 			<div class="modal fade" id="edit_semester_nameModal" tabindex="-1" role="dialog"
 				aria-labelledby="edit_semester_nameModalTitle" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-dialog modal-dialog-centered" role="document" style="width: 600px">
 					<div class="modal-content">
 						<div class="modal-header">
 							<h5 class="modal-title" id="edit_semester_nameModalTitle">添加新批次</h5>
@@ -365,8 +366,8 @@
 							</form>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-							<button type="button" class="btn btn-primary" onclick="editSemesterName()"
+							<button type="button" class="btn btn-sm btn-outline btn-multi" data-dismiss="modal">关闭</button>
+							<button type="button" class="btn btn-sm btn-default btn-multi" onclick="editSemesterName()"
 								data-dismiss="modal">确定</button>
 						</div>
 					</div>
@@ -378,7 +379,7 @@
 			<!-- 添加学生 Modal -->
 			<div class="modal fade" id="add_student_modal" tabindex="-1" role="dialog"
 				aria-labelledby="add_student_modalTitle" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-dialog modal-dialog-centered" role="document" style="width: 780px">
 					<div class="modal-content">
 						<div class="modal-header">
 							<h5 class="modal-title" id="add_student_modalTitle">添加学生</h5>
@@ -406,8 +407,8 @@
 							</div>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-							<button type="button" class="btn btn-primary"  id="add_a_student"
+							<button type="button" class="btn btn-sm btn-outline btn-multi" data-dismiss="modal">关闭</button>
+							<button type="button" class="btn btn-sm btn-default btn-multi"  id="add_a_student"
 								data-dismiss="modal">确定</button>
 						</div>
 					</div>
@@ -419,7 +420,7 @@
 			<!-- stu_list_tbody中编辑的 modal  -->
 			<div class="modal fade" id="edit_stud_modal" tabindex="-1" role="dialog"
 				aria-labelledby="edit_stud_modalTitle" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-dialog modal-dialog-centered" role="document" style="width: 780px">
 					<div class="modal-content">
 						<div class="modal-header">
 							<h5 class="modal-title" id="edit_stud_modalTitle">学生信息修改</h5>
@@ -448,8 +449,8 @@
 							</div>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-							<button type="button" class="btn btn-primary" id="edit_stud_ensure"
+							<button type="button" class="btn btn-sm btn-outline btn-multi" data-dismiss="modal">关闭</button>
+							<button type="button" class="btn btn-sm btn-default btn-multi" id="edit_stud_ensure"
 								data-dismiss="modal">确定</button>
 						</div>
 					</div>

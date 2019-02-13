@@ -352,7 +352,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/batch',
             $cloneTemp.appendTo($stu_list_tbody)
           });
           // 初始化分页
-          goPage(1, 10);   // 当前页数为1，每页10条数据
+          goPage("",1, 10);   // 当前页数为1，每页10条数据
         } else {
           g.fetch_err(data)
         }

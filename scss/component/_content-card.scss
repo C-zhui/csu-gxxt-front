@@ -80,9 +80,12 @@ $card-paddingy:10px;
     padding: 0;
     /*margin-bottom: 5px;*/
 }
-.operate *{
+.operate >*{
     float: left;
     margin-top: 24px;
+    &.clearfix{
+        clear:both;
+    }
 }
 .operate:first-child span,.operate:first-child input,.operate:first-child .select,.operate:first-child button{
     margin-top: 0;
