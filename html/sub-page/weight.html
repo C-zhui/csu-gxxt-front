@@ -1,5 +1,5 @@
 <div id="body">
-    <link type="text/css" href="../../css/spec/weight.css">
+    <link type="text/css" rel="stylesheet" href="../../css/spec/weight.css">
     <!-- 权重设置模块 -->
     <div class="content-card">
         <header>
@@ -8,9 +8,22 @@
             </div>
         </header>
         <main>
-            <div class="row">
-                <input type="button" class="btn btn-sm btn-outline col-xs-2 col-md-2" id="add-new-plan"
-                       data-toggle="modal" data-target="#weight-plan-add" value="添加新权重方案">
+            <div class="content-body">
+                <div class="operate-area">
+                    <div class="operate">
+                        <input type="button" class="btn btn-sm btn-outline btn-single" id="add-new-plan"
+                               data-toggle="modal" data-target="#weight-plan-add" value="添加新权重方案">
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="operate select-module">
+                        <select class="custom-select custom-select-sm select" id="weight_select_templates1">
+                        </select>
+                        <button class="btn btn-sm btn-background1 btn-multi" id="edit-weight-template">编辑</button>
+                        <button class="btn btn-sm btn-default btn-multi" id="save-weight-template">保存</button>
+                        <button class="btn btn-sm btn-background2 btn-multi"  id="delete-weight-template">删除</button>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
                 <div class="modal fade" id="weight-plan-add" tabindex="-1" role="dialog"
                      aria-labelledby="weight-plan-addTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" style="max-width: 90%;min-width: 1020px" role="document">
@@ -22,80 +35,73 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-
-                                <input type="text" id="new_weight_temp_name" class="form-control form-control-sm col-xs-3"
-                                       placeholder="请输入新权重方案名称">
+                                <div class="operate-area">
+                                    <div class="operate">
+                                        <input type="text" id="new_weight_temp_name" class="form-control form-control-sm"
+                                               placeholder="请输入新权重方案名称">
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
                                 <table class="table col-xs-9" id="new_weight_list_table">
                                     <thead>
                                     </thead>
                                     <tbody>
                                     </tbody>
                                 </table>
-                                <br>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-sm btn-outline" data-dismiss="modal"
-                                        id="addNewPlan-close">关闭
-                                </button>
-                                <button type="button" class="btn btn-sm btn-outline" id="addNewPlan-ensure"
-                                        onclick="createNewWeightTemp()">确定
-                                </button>
+                                <div class="operate operate-right">
+                                    <button type="button" class="btn btn-sm btn-outline btn-multi" data-dismiss="modal"
+                                            id="addNewPlan-close">关闭
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-default btn-multi" id="addNewPlan-ensure"
+                                            onclick="createNewWeightTemp()">确定
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div><!-- /.modal -->
+                <div class="table-responsive">
+                    <div id="table-edit-status" class="table-edit-status">编辑模式中</div>
+                    <table class="table table-striped table-bordered table-weight">
+                        <thead>
+                        <tr>
+                            <th>打分项</th>
+                            <th>权重</th>
+                        </tr>
+                        </thead>
+                        <tbody id="weight_edit_list_adminTbody">
+                        <!-- <tr>
+                            <td>钳工</td>
+                            <td><input type="text" name="" value="30"> %</td>
+                        </tr>
+                        <tr>
+                            <td>钳工</td>
+                            <td><input type="text" name="" value="30"> %</td>
+                        </tr> -->
+                        </tbody>
+                    </table>
+                </div>
 
+                <div class="operate-area">
+                    <div class="operate">
+                        <select class="custom-select custom-select-sm select" id="weight_select_batch1">
+                        </select>
+                        <select class="custom-select custom-select-sm select" id="weight_select_templates2">
+                        </select>
+                        <button class="btn btn-sm btn-outline btn-single" id="band-weight-template">绑定</button>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
             </div>
-            <br>
-            <div class="row select-module">
-                <select class="form-control custom-select col-xs-5 col-sm-5" id="weight_select_templates1">
-                    <!-- <option>权重模版选择</option>
-                    <option>权重模版1</option>
-                    <option>权重模版2</option> -->
-                </select>
-                <button class="btn btn-outline-primary" id="edit-weight-template">编辑</button>
-                <button class="btn btn-outline-success" id="save-weight-template">保存</button>
-                <button class="btn btn-outline-danger"  id="delete-weight-template">删除</button>
-            </div>
+            <hr />
+            <h6 class="text-info">注意：</h6>
 
-            <div>
-                <table class="table table-striped">
-                    <thead class="table-dark">
-                    <tr>
-                        <th>打分项</th>
-                        <th>权重</th>
-                    </tr>
-                    </thead>
-                    <tbody id="weight_edit_list_adminTbody">
-                    <!-- <tr>
-                        <td>钳工</td>
-                        <td><input type="text" name="" value="30"> %</td>
-                    </tr>
-                    <tr>
-                        <td>钳工</td>
-                        <td><input type="text" name="" value="30"> %</td>
-                    </tr> -->
-                    </tbody>
-                </table>
-                <br>
-            </div>
-
-            <div>
-                <select class="form-control custom-select col-xs-3 col-sm-3" id="weight_select_batch1">
-                </select>
-                <span class="col-xs-1 col-sm-3"></span>
-                <select class="form-control custom-select col-xs-3 col-sm-3" id="weight_select_templates2">
-                </select>
-                <span class="col-xs-1 col-sm-3"></span>
-                <button class="btn btn-success" id="band-weight-template">绑&emsp;定</button>
-            </div>
-            <div class="tips">
-                <span>注意：</span>
-                <br>
-                <span>1、如若绑定之后欲对某批次权重方案进行修改，只能修改母模版后再次绑定；</span>
-                <br>
-                <span>2、两次绑定仅限于在学生成绩发布之前进行操作。</span>
-            </div>
+            <ul class="list">
+                <li>1.如若绑定之后欲对某批次权重方案进行修改，只能修改母模版后再次绑定</li>
+                <li>2.两次绑定仅限于在学生成绩发布之前进行操作</li>
+            </ul>
         </main>
     </div>
     <div class="content-card">
@@ -105,24 +111,32 @@
             </div>
         </header>
         <main>
-            <select class="form-control custom-select col-xs-3 col-sm-3" id="weight_select_batch2">
-            </select>
+            <div class="content-body">
+                <div class="operate-area">
+                    <div class="operate">
+                        <select class="custom-select custom-select-sm select" id="weight_select_batch2">
+                        </select>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="clearfix"></div>
 
-            <h4>成绩权重</h4>
-            <div>
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>打分项</th>
-                        <th>权重</th>
-                    </tr>
-                    </thead>
-                    <tbody id="show_weight_list_tbody">
-                    <tr>
-                    </tbody>
-                </table>
-                <br>
+                <!--<h4>成绩权重</h4>-->
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered no-margin">
+                        <thead>
+                        <tr>
+                            <th>打分项</th>
+                            <th>权重</th>
+                        </tr>
+                        </thead>
+                        <tbody id="show_weight_list_tbody">
+                        <tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
+
         </main>
     </div>
     <script type="text/javascript" src="../../js/spec/weight.js"></script>

@@ -1,39 +1,40 @@
-.select-module {
-	width: 50%;
-	display: flex;
-	justify-content: space-around;
-	align-items: center;
-}
+/*.select-module {*/
+	/*width: 50%;*/
+	/*display: flex;*/
+	/*justify-content: space-around;*/
+	/*align-items: center;*/
+/*}*/
 
-table {
-	margin: 30px 0;
-}
+/*tr td input {*/
+	/*width: 50px;*/
+	/*border-radius: 3px;*/
+	/*border: solid 1px;*/
+/*}*/
 
-tr td input {
-	width: 50px;
-	border-radius: 3px;
-	border: solid 1px;
-}
+/*td,th {*/
+	/*text-align: center;*/
+/*}*/
 
-td,th {
-	text-align: center;
+.modal-body .operate-area{
+	margin-bottom: 1rem;
 }
-
-.edit-ensure {
-	margin-top: 30px;
-}
-
-h4 {
-	margin-top: 50px;
-}
-
-#add-new-plan {
-	margin-left: 15px;
-}
-
-.tips {
-	color: green;
+.modal-body .table{
+	margin-bottom: 0;
 }
 #new_weight_list_table input[type='number']{
 	width: 100px;
+	margin-right: 0.5rem;
+	float: left;
+}
+.operate-area:first-child{
+	margin-bottom: 38px;
+}
+.table-weight{
+	margin-bottom: 2rem;
+}
+#table-edit-status{
+	display: none;
+}
+.table{
+	margin-top: 0;
 }
