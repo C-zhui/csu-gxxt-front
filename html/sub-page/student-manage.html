@@ -9,9 +9,8 @@
 				<div class="group-summury">
 					<button class="toggle-btn btn btn-manage semester_name">hhh</button>
 					<button class="btn btn-sm delete_semester_entry right"><img class="row-image-lg" src="../../icon/delete.svg"></button>
+					<button class="btn btn-sm edit_semester_entry right"><img class="row-image-lg" src="../../icon/edit.svg"></button>
 					<button class="btn btn-sm new_batch_entry right"><img class="row-image-lg" src="../../icon/add.svg"></button>
-					<!-- <i class="btn btn-sm fa fa-edit edit_semester_entry " title="编辑学期"></i> -->
-
 				</div>
 				<ul class="group-detail d-none">
 				</ul>
@@ -257,7 +256,7 @@
 											id="addNewBatch_credit">
 									</div>
 								</div>
-								<div class="form-group row">
+								<div class="form-group row d-none">
 									<label class="col-sm-2 col-form-label" for="addNewBatch_beginDate">起始时间</label>
 									<div class="col-sm-10">
 										<input type="text" class="form-control date-plugin" placeholder=""
@@ -297,7 +296,7 @@
 								<div class="form-group row">
 									<label class="col-sm-2 col-form-label" for="editOneBatchSemesterName">学期名</label>
 									<div class="col-sm-10">
-										<input type="text" class="form-control" id="editOneBatchSemesterName">
+										<input type="text" class="form-control" id="editOneBatchSemesterName" disabled> 
 									</div>
 								</div>
 								<div class="form-group row">
@@ -312,7 +311,7 @@
 										<input type="text" class="form-control" id="editOneBatchCredit">
 									</div>
 								</div>
-								<div class="form-group row">
+								<div class="form-group row d-none">
 									<label class="col-sm-2 col-form-label" for="editOneBatchBeginDate">起始时间</label>
 									<div class="col-sm-10">
 										<input type="text" class="form-control date-plugin" placeholder=""
@@ -337,13 +336,13 @@
 
 
 
-			<!-- 修改学期名 Modal -->
-			<div class="modal fade" id="edit_semester_nameModal" tabindex="-1" role="dialog"
-				aria-labelledby="edit_semester_nameModalTitle" aria-hidden="true">
+			<!-- 编辑学期 Modal -->
+			<div class="modal fade" id="edit_semester_modal" tabindex="-1" role="dialog"
+				aria-labelledby="edit_semester_modalTitle" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered" role="document" style="width: 600px">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title" id="edit_semester_nameModalTitle">添加新批次</h5>
+							<h5 class="modal-title" id="edit_semester_modalTitle">修改学期信息</h5>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
@@ -363,11 +362,18 @@
 											id="editSemesterName_new">
 									</div>
 								</div>
+								<div class="form-group row">
+									<label class="col-sm-2 col-form-label" for="editSemesterBeginDate">起始时间</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control date-plugin" placeholder=""
+											id="editSemesterBeginDate">
+									</div>
+								</div>
 							</form>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-sm btn-outline btn-multi" data-dismiss="modal">关闭</button>
-							<button type="button" class="btn btn-sm btn-default btn-multi" onclick="editSemesterName()"
+							<button type="button" class="btn btn-sm btn-default btn-multi" id="edit_semester_ensure"
 								data-dismiss="modal">确定</button>
 						</div>
 					</div>

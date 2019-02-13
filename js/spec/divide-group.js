@@ -1,14 +1,5 @@
-require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'moment', 'api/experiment', 'api/batch', 'api/proced', 'api/studentGroup', 'api/student', 'api/specialScore'], function ($, _, swal, api, g, moment) {
-  // console.log(moment().format('YYYY/MM/DD'))
-  var weekRange = _.range(1, 21, 1);
-  var dayRange = [null, '周一', '周二', '周三', '周四', '周五', '周六', '周日'];
-  var timeRangeStep = 2;
-  var timeRange = _.range(1, 10, timeRangeStep);
-  var class_time_container_line_size = 8;
+require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/date_format_transform', 'config/config-course-schedule', 'api/experiment', 'api/batch', 'api/proced', 'api/studentGroup', 'api/student', 'api/specialScore'], function ($, _, swal, api, g, dft, ccs) {
 
-  // var m = moment('2019-02-25')
-
-  // console.log(m)
 
   $(document).ready(function () {
     init_data()
@@ -98,7 +89,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'moment', 'a
 
   function fillWeekSelectorOptions() {
     var $weekselect = $('#course_divide1_select_week');
-    _.each(weekRange, function (val, i) {
+    _.each(ccs.weekRange, function (val, i) {
       $('<option>').text('第' + val + '周').attr('week', val).appendTo($weekselect);
     })
   }
@@ -107,11 +98,11 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'moment', 'a
   var weekDaytoDate = null;
   var $course_divide1_select_batch2 = $('#course_divide1_select_batch2')
   $course_divide1_select_batch2.change(function () {
-    $("#class-time-table-box").css("display","block");
+    $("#class-time-table-box").css("display", "block");
     var batch_index = $course_divide1_select_batch2.find('option:selected').attr('batch-index');
     var batch_name = batches[batch_index].batch_name;
-    dateToWeek = dateToWeekDayObjFactory(batches[batch_index].beginDate);
-    weekDaytoDate = weekDayToDateObjFactory(batches[batch_index].beginDate);
+    dateToWeek = dft.dateToWeekDayObjFactory(batches[batch_index].beginDate);
+    weekDaytoDate = dft.weekDayToDateObjFactory(batches[batch_index].beginDate);
     if (batch_name && batch_name !== '实习批次选择') {
       api.experiment.getExperimentByBatch(batch_name)
         .done(function success(data) {
@@ -125,31 +116,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'moment', 'a
     }
   });
 
-  function dateToWeekDayObjFactory(beginDate) { // begin date 为第一周星期一的时间，需要设置
-    // console.log(beginDate)
-    var begin = moment(beginDate)
-    // console.log(begin)
-    return function (toDate) {
-      var to = moment(toDate);
-      var days = to.diff(begin, 'days');
-      var week = (days - days % 7) / 7;
-      var day = days % 7;
-      return {
-        week: week + 1,
-        day: day + 1
-      }
-    }
-  }
 
-  function weekDayToDateObjFactory(beginDate) {
-    var begin = moment(beginDate)
-    return function (wd) {
-      var days = wd.week * 7 - 7 + wd.day - 1;
-      var date = begin.add(days, 'days')
-      begin = moment(beginDate)
-      return date.format('YYYY-MM-DD')
-    }
-  }
 
   // time_quant 格式 'YYYYmmddtt' 
   var data_group_by_ctime = {}; // 分配数据 
@@ -192,7 +159,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'moment', 'a
         $td.addClass('distributed')
       $td.appendTo($tr);
       cnt++;
-      if (cnt % class_time_container_line_size == 0) {
+      if (cnt % ccs.class_time_container_line_size == 0) {
         $tr.appendTo($class_time_container);
         $tr = null;
       }
@@ -223,7 +190,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'moment', 'a
     // console.log(classInWeek)
     var $distribution_table_head = $('#distribution-table-head').empty()
     var $tr = $('<tr>');
-    _.each(dayRange, function (val, i) {
+    _.each(ccs.dayRange, function (val, i) {
       val = val || ''
       if (i)
         val = val + '<br/>' + weekDaytoDate({ week: week, day: i })
@@ -232,10 +199,10 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'moment', 'a
     $tr.appendTo($distribution_table_head)
 
     var $distribution_table_body = $('#distribution-table-body').empty()
-    _.each(timeRange, function (tval, ti) {
+    _.each(ccs.timeRange, function (tval, ti) {
       var $tr = $('<tr>');
-      $('<th>').attr('time', ti).text('' + _.range(tval, tval + timeRangeStep)).appendTo($tr)
-      _.each(dayRange, function (dval, di) {
+      $('<th>').attr('time', ti).text('' + _.range(tval, tval + ccs.timeRangeStep)).appendTo($tr)
+      _.each(ccs.dayRange, function (dval, di) {
         if (dval) {
           var $td = $('<td>').attr('day', di).attr('time', ti)
           if (classInWeek[di] && classInWeek[di][ti]) {
@@ -257,12 +224,12 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'moment', 'a
     if (distributeEditMode) {
       $class_time_container.hide();
       distributeEditMode = false;
-        $('#table-edit-status').css('display','none')
+      $('#table-edit-status').css('display', 'none')
     } else {
-      $("#class-time-table-box").css("display","block")
+      $("#class-time-table-box").css("display", "block")
       $class_time_container.show();
       distributeEditMode = true;
-        $('#table-edit-status').css('display','block')
+      $('#table-edit-status').css('display', 'block')
 
     }
   });
@@ -459,8 +426,8 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'moment', 'a
 
   function time_quant_formated(time_quant) {
     var index_time = parseInt(time_quant.slice(-2));
-    var time = timeRange[index_time]
-    return time_quant.slice(0, -3) + '(' + _.range(time, time + timeRangeStep) + '节)'
+    var time = ccs.timeRange[index_time]
+    return time_quant.slice(0, -3) + '(' + _.range(time, time + ccs.timeRangeStep) + '节)'
   }
 
   function displayResultByBatch(data) {
@@ -921,11 +888,11 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'moment', 'a
       $('<td></td>').text(val.clazz).appendTo($tr);
       $('<td></td>').text(val.template_name).appendTo($tr);
       $('<td><div class="operate-center">' +
-          '<img src="../icon/edit.svg" class="row-image lookup-course">' +
-          '<img src="../icon/delete.svg" class="row-image delete-sp-stud no-padding"> ' +
-          '<div class="clearfix"></div> '+
-          '</div>' +
-          '</td></tr>').appendTo($tr);
+        '<img src="../icon/edit.svg" class="row-image lookup-course">' +
+        '<img src="../icon/delete.svg" class="row-image delete-sp-stud no-padding"> ' +
+        '<div class="clearfix"></div> ' +
+        '</div>' +
+        '</td></tr>').appendTo($tr);
 
       // $('<td><input type="button" class="btn btn-sm btn-success lookup-course" value="查看&编辑" ><input type="button" class="btn btn-sm btn-danger delete-sp-stud" name="" value="删除"></td>').appendTo($tr)
       $('<td class="center"><input type="checkbox"></td>').appendTo($tr);

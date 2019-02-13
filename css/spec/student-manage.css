@@ -61,7 +61,7 @@
 	width: 17px;
 	height: 17px;
 }
-.delete_semester_entry,.new_batch_entry{
+.delete_semester_entry,.edit_semester_entry,.new_batch_entry{
 	padding: 0;
 	margin-right: 1rem;
 	border: none;
