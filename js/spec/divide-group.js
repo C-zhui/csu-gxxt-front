@@ -933,7 +933,8 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'moment', 'a
     });
   }
 
-  $('#query-spstudent-result').on('click', 'input.lookup-course', function () {
+  $('#query-spstudent-result').on('click', 'img.lookup-course', function () {
+    console.log(this)
     var input = $(this);
     var tr = $(input).parents('tr')
     var sid = tr.attr('data-sid');

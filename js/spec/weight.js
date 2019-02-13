@@ -74,7 +74,7 @@ require(['jquery','swal', 'api/apiobj', 'config/global','api/batch','api/proced'
                         let tr = $('<tr></tr>');
                         let td = $('<td class="edit_weight_list_name"></td>');
                         let td2 = $('<td></td>');
-                        let input = $('<input type="text" disabled class="edit_weight_list">');
+                        let input = $('<input type="text" disabled class="edit_weight_list form-control form-control-sm">');
                         td.text(data_arr[i].pro_name);
                         input.val(parseInt(100 * data_arr[i].weight));
                         td2.append(input);
@@ -89,7 +89,8 @@ require(['jquery','swal', 'api/apiobj', 'config/global','api/batch','api/proced'
 
 // 点击编辑对权重设置表进行编辑
     $('#edit-weight-template').click(function () {
-        $('input[class="edit_weight_list"]').each(function () {
+        $("#table-edit-status").css("display","block");
+        $('input[class="edit_weight_list form-control form-control-sm"]').each(function () {
             this.removeAttribute("disabled");
         })
     });
@@ -98,7 +99,8 @@ require(['jquery','swal', 'api/apiobj', 'config/global','api/batch','api/proced'
     $('#save-weight-template').click(function () {
         let names = [];
         let weights = [];
-        $('input[class="edit_weight_list"]').each(function () {
+        $("#table-edit-status").css("display","none");
+        $('input[class="edit_weight_list form-control form-control-sm"]').each(function () {
             this.setAttribute("disabled", "disabled");
             weights.push(Number(this.value));
         });
@@ -277,7 +279,7 @@ require(['jquery','swal', 'api/apiobj', 'config/global','api/batch','api/proced'
                             $td.text(proces[index])
                         }
                         $td.appendTo($tr);
-                        $tr.append('<td><input type="number"> %</td>');
+                        $tr.append('<td><input type="number" class="form-control form-control-sm"> %</td>');
                         ++index;
                     }
                     $tr.appendTo(tableBody)
@@ -290,7 +292,7 @@ require(['jquery','swal', 'api/apiobj', 'config/global','api/batch','api/proced'
                             $td.text(proces[index])
                         }
                         $td.appendTo($tr);
-                        $tr.append('<td><input type="number"> %</td>');
+                        $tr.append('<td><input type="number" class="form-control form-control-sm"> %</td>');
                         ++index;
                     }
                     $tr.appendTo(tableBody)

@@ -301,6 +301,9 @@ input[name=btSelectAll] {
 .content-card main .center {
   text-align: center;
 }
+.content-card main .no-margin {
+  margin: 0;
+}
 
 .operate {
   /*display: flex;*/
@@ -522,6 +525,35 @@ hr {
 
 .text-page {
   color: #266997;
+}
+
+.modal {
+  padding-right: 0;
+}
+
+.modal-dialog {
+  max-width: 1200px;
+}
+.modal-dialog .modal-header {
+  padding: 24px 28px;
+  height: 71px;
+  box-sizing: border-box;
+  background-image: url("../img/modal-header.jpg");
+  background-repeat: no-repeat;
+  background-position: right;
+  background-size: auto 100%;
+  border: none;
+}
+.modal-dialog .modal-header .modal-title {
+  font-size: 20px;
+  font-family: "Microsoft YaHei UI";
+  line-height: 22px;
+}
+.modal-dialog .modal-body {
+  padding: 1.25rem;
+}
+.modal-dialog .modal-footer {
+  padding: 1rem 1.25rem;
 }
 
 /*# sourceMappingURL=global.css.map */
