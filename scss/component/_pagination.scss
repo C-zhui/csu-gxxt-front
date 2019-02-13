@@ -27,6 +27,9 @@
                 }
 
             }
+            >li:last-child a{
+                margin-right: 0;
+            }
             .jumpWhere {
                 width: 50px;
                 padding: 0 5px;

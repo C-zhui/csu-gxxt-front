@@ -562,6 +562,9 @@ hr {
 .barcon .barcon2 > ul > li:nth-child(4) {
   width: 50px;
 }
+.barcon .barcon2 > ul > li:last-child a {
+  margin-right: 0;
+}
 .barcon .barcon2 > ul .jumpWhere {
   width: 50px;
   padding: 0 5px;
