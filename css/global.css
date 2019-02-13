@@ -527,14 +527,21 @@ hr {
   color: #266997;
 }
 
+.modal {
+  padding-right: 0;
+}
+
 .modal-dialog {
   max-width: 1200px;
 }
 .modal-dialog .modal-header {
   padding: 24px 28px;
-  height: 70px;
+  height: 71px;
   box-sizing: border-box;
-  background: #a3d7f6;
+  background-image: url("../img/modal-header.jpg");
+  background-repeat: no-repeat;
+  background-position: right;
+  background-size: auto 100%;
   border: none;
 }
 .modal-dialog .modal-header .modal-title {
@@ -543,6 +550,9 @@ hr {
   line-height: 22px;
 }
 .modal-dialog .modal-body {
+  padding: 1.25rem;
+}
+.modal-dialog .modal-footer {
   padding: 1rem 1.25rem;
 }
 
