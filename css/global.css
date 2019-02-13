@@ -189,6 +189,7 @@
   padding: 8px 12px;
 }
 .table th {
+  white-space: nowrap;
   font-family: 黑体;
   font-weight: normal;
 }
@@ -237,6 +238,10 @@ input[name=btSelectAll] {
 .table-edit-status {
   color: #5b8fb4;
   font-size: 16px;
+}
+
+.fixed-table-pagination {
+  display: none !important;
 }
 
 .content-card {
@@ -306,6 +311,9 @@ input[name=btSelectAll] {
 }
 .content-card main .no-margin {
   margin: 0;
+}
+.content-card main .text-right {
+  text-align: right;
 }
 
 .operate {
