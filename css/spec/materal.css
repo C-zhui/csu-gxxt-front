@@ -1,0 +1,79 @@
+.fill-in {
+	margin-left: 100px;
+	margin-top: 60px;
+}
+
+.fill-check {
+	margin-right: 100px;
+	margin-top: 30px;
+}
+
+.card {
+	margin-bottom: 50px;
+}
+
+.time-last {
+	border: none;
+	text-align: center;
+}
+
+table {
+	margin-top: 10px;
+}
+
+th, td {
+	text-align: center;
+}
+
+.materal-out-number {
+	margin: 10px;
+}
+
+.outNumber-card {
+	margin-top: 20px;
+}
+
+.outNumber-card input {
+	margin: 10px;
+}
+
+.outNumber-card select {
+	margin: 0 10px;
+}
+
+.outNumber-card a {
+	margin-top: 30px;
+}
+
+.record-search2 input {
+	margin: 20px;
+}
+
+.fa-plus-square-o {
+	cursor: pointer;
+}
+
+.clearfix{
+	clear: both;
+}
+.right{
+	float: right;
+}
+.no-padding{
+	padding: 0;
+}
+.no-border{
+	border-left: none;
+	border-right: none;
+}
+.input_td{
+	padding: 0!important;
+	line-height: 3rem;
+}
+
+.delete-image{
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+}
+

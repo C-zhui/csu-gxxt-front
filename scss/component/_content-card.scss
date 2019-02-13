@@ -5,9 +5,8 @@ $card-paddingy:10px;
     background: #ffffff;
     margin-bottom:1.4em;
     
-    header,main,footer{
+    header,footer{
         padding: $card-paddingy $card-paddingx;
-        padding-left: 38px;
     }
     
     header{
@@ -31,21 +30,41 @@ $card-paddingy:10px;
         }
     }
     main{
+        padding: 32px 30px 50px 38px;
         background-color: white;
         .text-info{
             font-family: "Microsoft YaHei UI";
-            font-size: 1rem;
+            font-size: 0.875rem;
             color: $card-head-title-border;
         }
         .list{
             padding-left: 0;
             list-style: none;
+            margin-bottom: 0;
         }
         .list li{
             font-family: "Microsoft YaHei UI";
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: $text-info;
             margin: 5px 0;
+        }
+        .content-body{
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+        .right{
+            float: right;
+        }
+        .left{
+            float: left;
+        }
+        .row-image{
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        .center{
+            text-align: center;
         }
 
     }
@@ -62,7 +81,9 @@ $card-paddingy:10px;
     float: left;
     margin-top: 24px;
 }
-
+.operate:first-child span,.operate:first-child input,.operate:first-child .select,.operate:first-child button{
+    margin-top: 0;
+}
 .operate span{
     font-family: "Microsoft YaHei UI";
     font-size: 16px;
@@ -77,4 +98,11 @@ $card-paddingy:10px;
 }
 .operate button{
     margin-right: 12px;
+}
+hr{
+    margin-top: 50px;
+    margin-bottom: 24px;
+}
+.left{
+    float: left;
 }

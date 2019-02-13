@@ -107,6 +107,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'moment', 'a
   var weekDaytoDate = null;
   var $course_divide1_select_batch2 = $('#course_divide1_select_batch2')
   $course_divide1_select_batch2.change(function () {
+    $("#class-time-table-box").css("display","block");
     var batch_index = $course_divide1_select_batch2.find('option:selected').attr('batch-index');
     var batch_name = batches[batch_index].batch_name;
     dateToWeek = dateToWeekDayObjFactory(batches[batch_index].beginDate);
@@ -256,11 +257,13 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'moment', 'a
     if (distributeEditMode) {
       $class_time_container.hide();
       distributeEditMode = false;
-      $edit_distribution.val('编辑off')
+        $('#table-edit-status').css('display','none')
     } else {
+      $("#class-time-table-box").css("display","block")
       $class_time_container.show();
       distributeEditMode = true;
-      $edit_distribution.val('编辑on')
+        $('#table-edit-status').css('display','block')
+
     }
   });
 
@@ -695,7 +698,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'moment', 'a
       var grouptd = $('<td>').text(student.s_group_id);
       grouptd.appendTo($tr)
       var btn_td = $('<td>');
-      $('<button>').text('切换分组').addClass('btn btn-sm btn-info switch-sgroup').appendTo(btn_td);
+      $('<button>').text('切换分组').addClass('btn btn-sm btn-background1 btn-single switch-sgroup').appendTo(btn_td);
       btn_td.appendTo($tr);
       $tr.appendTo($table_body);
     })
@@ -913,12 +916,19 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'moment', 'a
     var $table = $('#query-spstudent-result').empty();
     _.each(data, function (val, i) {
       var $tr = $('<tr class="sid-row"></tr>').attr('data-sid', val.sid);
-      $('<td><input type="checkbox"></td>').appendTo($tr);
       $('<td></td>').text(val.sid).appendTo($tr);
       $('<td></td>').text(val.sname).appendTo($tr);
       $('<td></td>').text(val.clazz).appendTo($tr);
       $('<td></td>').text(val.template_name).appendTo($tr);
-      $('<td><input type="button" class="btn btn-sm btn-success lookup-course" value="查看&编辑" ><input type="button" class="btn btn-sm btn-danger delete-sp-stud" name="" value="删除"></td>').appendTo($tr)
+      $('<td><div class="operate-center">' +
+          '<img src="../icon/edit.svg" class="row-image lookup-course">' +
+          '<img src="../icon/delete.svg" class="row-image delete-sp-stud no-padding"> ' +
+          '<div class="clearfix"></div> '+
+          '</div>' +
+          '</td></tr>').appendTo($tr);
+
+      // $('<td><input type="button" class="btn btn-sm btn-success lookup-course" value="查看&编辑" ><input type="button" class="btn btn-sm btn-danger delete-sp-stud" name="" value="删除"></td>').appendTo($tr)
+      $('<td class="center"><input type="checkbox"></td>').appendTo($tr);
       $tr.appendTo($table);
     });
   }

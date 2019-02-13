@@ -182,6 +182,9 @@
 .table tbody tr:nth-child(odd) {
   background: #e5f0f6;
 }
+.table tbody th {
+  padding: 8px 12px;
+}
 .table th {
   font-family: 黑体;
   font-weight: normal;
@@ -228,13 +231,17 @@ input[name=btSelectAll] {
   display: none;
 }
 
+.table-edit-status {
+  color: #5b8fb4;
+  font-size: 16px;
+}
+
 .content-card {
   background: #ffffff;
   margin-bottom: 1.4em;
 }
-.content-card header, .content-card main, .content-card footer {
+.content-card header, .content-card footer {
   padding: 10px 30px;
-  padding-left: 38px;
 }
 .content-card header {
   background-color: #bbdaee;
@@ -257,22 +264,42 @@ input[name=btSelectAll] {
   border-bottom: 4px solid #3f8bc7;
 }
 .content-card main {
+  padding: 32px 30px 50px 38px;
   background-color: white;
 }
 .content-card main .text-info {
   font-family: "Microsoft YaHei UI";
-  font-size: 1rem;
+  font-size: 0.875rem;
   color: #3f8bc7;
 }
 .content-card main .list {
   padding-left: 0;
   list-style: none;
+  margin-bottom: 0;
 }
 .content-card main .list li {
   font-family: "Microsoft YaHei UI";
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: #434343;
   margin: 5px 0;
+}
+.content-card main .content-body {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.content-card main .right {
+  float: right;
+}
+.content-card main .left {
+  float: left;
+}
+.content-card main .row-image {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+.content-card main .center {
+  text-align: center;
 }
 
 .operate {
@@ -287,6 +314,10 @@ input[name=btSelectAll] {
 .operate * {
   float: left;
   margin-top: 24px;
+}
+
+.operate:first-child span, .operate:first-child input, .operate:first-child .select, .operate:first-child button {
+  margin-top: 0;
 }
 
 .operate span {
@@ -305,6 +336,15 @@ input[name=btSelectAll] {
 
 .operate button {
   margin-right: 12px;
+}
+
+hr {
+  margin-top: 50px;
+  margin-bottom: 24px;
+}
+
+.left {
+  float: left;
 }
 
 #body {
@@ -399,6 +439,7 @@ input[name=btSelectAll] {
 
 .btn-multi {
   padding: 4px 14px;
+  margin-right: 0.75rem;
 }
 
 .select-top.row div[class^=col-] {

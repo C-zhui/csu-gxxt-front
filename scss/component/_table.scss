@@ -12,6 +12,9 @@
         tr:nth-child(odd){
             background: $table-odd;
         }
+        th{
+            padding: 8px 12px;
+        }
     }
     th{
         font-family: 黑体;
@@ -52,4 +55,8 @@ input[name="btSelectAll"]{
 }
 .fixed-table-loading{
     display: none;
+}
+.table-edit-status{
+    color: #5b8fb4;
+    font-size: 16px;
 }
