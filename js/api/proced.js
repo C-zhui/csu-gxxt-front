@@ -8,6 +8,35 @@ define(['api/apiobj', 'config/global'], function (api, g) {
                 {}
             )
         },
+        // 添加新工序
+        addProcedToGroup: function (groupName, proName) {
+            return g.post_query(
+                '/proced/addProcedToGroup',
+                {
+                    'groupName': groupName,
+                    'proName': proName
+                },
+            )
+        },
+        // 更改工序名
+        updateProcedFromGroup: function (t_group_id, old_pro_name, new_pro_name) {
+            return g.post_query('/proced/updateProcedFromGroup',
+                {
+                    'groupName': t_group_id,
+                    'newName': new_pro_name,
+                    'old': old_pro_name
+                });
+        },
+        // 删除工序
+        deleteProcedFromGroup: function (t_group_id, pro_name) {
+            return g.post_query(
+                '/proced/deleteProcedFromGroup',
+                {
+                    'groupName': t_group_id,
+                    'pro_name': pro_name
+                }
+            );
+        },
         //获取所有权重模板名
         findAllTemplate: function () {
             return g.post_query('/proced/findAllTemplate');
