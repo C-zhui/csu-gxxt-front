@@ -1,4 +1,3 @@
-
 define(['api/apiobj', 'config/global'], function (api, g) {
     // 采购
     api.purchase = {

@@ -63,7 +63,7 @@
             },
             {
                 "name": "物料申购",
-                "url": "./sub-page/material-bug.html"
+              "url": "./sub-page/material-buy.html"
             }
         ]
     },
