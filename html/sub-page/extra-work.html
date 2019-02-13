@@ -124,7 +124,7 @@
 				<select class="form-control custom-select col-2 col-sm-2 select-worktype" id="history_select_process">
 					<option>选择教师组</option>
 				</select>
-				<input type="button" name="" class="btn btn-success float-right" value="查询" onclick="getOverworkByTimeOrProName()">
+				<input type="button" name="" class="btn btn-success float-right" value="查询" id="get-over-work-by-time-or-ProName">
 			</div>
 
 			<table class="table" id="teacher-table">
@@ -228,102 +228,5 @@
 	</div>
 	<!-- 教师值班记录结束 -->
 
-	<!-- 主体部分结束 -->
-	<!--<script type="text/javascript">-->
-		<!--$(".mycalendar").flatpickr();-->
-
-		<!--// /**-->
-		<!--// * 分页函数-->
-		<!--// * pno&#45;&#45;页数-->
-		<!--// * psize&#45;&#45;每页显示记录数-->
-		<!--// * 分页部分是从真实数据行开始，因而存在加减某个常数，以确定真正的记录数-->
-		<!--// * 纯js分页实质是数据行全部加载，通过是否显示属性完成分页功能-->
-		<!--// **/-->
-		<!--//-->
-		<!--// var kpageSize = 0;		//每页显示行数-->
-		<!--// var kcurrentPage_ = 1;	//当前页全局变量，用于跳转时判断是否在相同页，在就不跳，否则跳转。-->
-		<!--// var ktotalPage;		//总页数-->
-		<!--//-->
-		<!--// function kgoPage(pno, psize) {-->
-		<!--// 	console.log(pno);-->
-		<!--// 	console.log(psize);-->
-		<!--// 	// ================================================= tbody 部分-->
-		<!--// 	var itable = document.getElementById("stu_extra_work_tbody");-->
-		<!--// 	var num = itable.rows.length;	//未分页表格数据所有行数(所有记录数)-->
-		<!--//-->
-		<!--// 	kpageSize = psize;				//每页显示行数-->
-		<!--//-->
-		<!--// 	//总共分几页-->
-		<!--// 	if (num / kpageSize > parseInt(num / kpageSize)) {-->
-		<!--// 		ktotalPage = parseInt(num / kpageSize) + 1;-->
-		<!--// 	} else {-->
-		<!--// 		ktotalPage = parseInt(num / kpageSize);-->
-		<!--// 	}-->
-		<!--// 	var currentPage = pno;	//当前页数-->
-		<!--// 	currentPage_ = currentPage;-->
-		<!--// 	var startRow = (currentPage - 1) * kpageSize + 1;-->
-		<!--// 	var endRow = currentPage * kpageSize;-->
-		<!--// 	endRow = (endRow > num) ? num : endRow;-->
-		<!--// 	//遍历显示数据实现分页-->
-		<!--// 	/*for(var i=1;i<(num+1);i++){-->
-		<!--// 		var irow = itable.rows[i-1];-->
-		<!--// 		if(i>=startRow && i<=endRow){-->
-		<!--// 			irow.style.display = "";-->
-		<!--// 		}else{-->
-		<!--// 			irow.style.display = "none";-->
-		<!--// 		}-->
-		<!--// 	}*/-->
-		<!--//-->
-		<!--// 	// ================================================= tbody 部分-->
-		<!--// 	$("#stu_extra_work_tbody tr").hide();-->
-		<!--// 	for (var i = startRow - 1; i < endRow; i++) {-->
-		<!--// 		// ================================================= tbody 部分-->
-		<!--// 		$("#stu_extra_work_tbody tr").eq(i).show();-->
-		<!--// 	}-->
-		<!--// 	var tempStr = "共" + num + "条记录 | 分" + ktotalPage + "页 | 当前第" + currentPage + "页";-->
-		<!--// 	// ================================================= barcon1 部分-->
-		<!--// 	document.getElementById("kbarcon1").innerHTML = tempStr;-->
-		<!--//-->
-		<!--// 	if (currentPage > 1) {-->
-		<!--// 		$("#kfirstPage").on("click", function () {-->
-		<!--// 			kgoPage(1, psize);-->
-		<!--// 		}).removeClass("ban");-->
-		<!--// 		$("#kprePage").on("click", function () {-->
-		<!--// 			kgoPage(currentPage - 1, psize);-->
-		<!--// 		}).removeClass("ban");-->
-		<!--// 	} else {-->
-		<!--// 		$("#kfirstPage").off("click").addClass("ban");-->
-		<!--// 		$("#kprePage").off("click").addClass("ban");-->
-		<!--// 	}-->
-		<!--//-->
-		<!--// 	if (currentPage < ktotalPage) {-->
-		<!--// 		$("#knextPage").on("click", function () {-->
-		<!--// 			kgoPage(currentPage + 1, psize);-->
-		<!--// 		}).removeClass("ban")-->
-		<!--// 		$("#klastPage").on("click", function () {-->
-		<!--// 			kgoPage(ktotalPage, psize);-->
-		<!--// 		}).removeClass("ban")-->
-		<!--// 	} else {-->
-		<!--// 		$("#knextPage").off("click").addClass("ban");    // 添加 ban class属性，用于设置透明度，不可点击等-->
-		<!--// 		$("#klastPage").off("click").addClass("ban");-->
-		<!--// 	}-->
-		<!--//-->
-		<!--// 	$("#kjumpWhere").val(currentPage);       // 设置“跳转”按钮的值-->
-		<!--// }-->
-		<!--//-->
-		<!--// function kjumpPage() {-->
-		<!--// 	var num = parseInt($("#kjumpWhere").val());-->
-		<!--// 	if (num != kcurrentPage_) {-->
-		<!--// 		kgoPage(num, kpageSize);-->
-		<!--// 	}-->
-		<!--// }-->
-
-	<!--</script>-->
-
 	<script type="text/javascript" src='../../js/spec/extra-work.js'></script>
-
-	<!-- 分页开始 -->
-	<!--<script type="text/javascript" src="../js/cut_page.js"></script>-->
-	<!--<link rel="stylesheet" type="text/css" href="../css/cut_page.css">-->
-	<!-- 分页结束 -->
 </div>

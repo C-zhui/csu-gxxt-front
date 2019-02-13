@@ -6,7 +6,7 @@
  * 分页部分是从真实数据行开始，因而存在加减某个常数，以确定真正的记录数
  * 纯js分页实质是数据行全部加载，通过是否显示属性完成分页功能
  **/
-function cutPage(tableID,psize) {
+function CutPage(tableID, psize) {
     this.tableID=tableID;
     this.pageSize=psize;
     this.currentPage=1;
@@ -45,7 +45,7 @@ function cutPage(tableID,psize) {
     this.goPage(1);
 }
 
-cutPage.prototype.goPage=function (targetPage,offset=null) {
+CutPage.prototype.goPage = function (targetPage, offset = null) {
     if(offset!==null){
         targetPage=this.currentPage+offset;
     }
@@ -84,18 +84,18 @@ cutPage.prototype.goPage=function (targetPage,offset=null) {
         tableTr.eq(i).show();
     }
 };
-cutPage.prototype.lazyGoPage=function (obj,targetPage,offset) {
+CutPage.prototype.lazyGoPage = function (obj, targetPage, offset) {
     return function () {
         obj.goPage(targetPage,offset);
     }
 };
-cutPage.prototype.jumpPage=function () {
+CutPage.prototype.jumpPage = function () {
     let page=parseInt($('#'+this.tableID+'jumpWhere').val());
     if(page!==this.currentPage){
         this.goPage(page);
     }
 };
-cutPage.prototype.lazyJumpPage=function (obj) {
+CutPage.prototype.lazyJumpPage = function (obj) {
     return function () {
         obj.jumpPage();
     }
