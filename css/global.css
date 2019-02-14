@@ -244,6 +244,10 @@ input[name=btSelectAll] {
   display: none !important;
 }
 
+.no-records-found td {
+  text-align: center;
+}
+
 .content-card {
   background: #ffffff;
   margin-bottom: 1.4em;
@@ -309,10 +313,12 @@ input[name=btSelectAll] {
 .content-card main .row-image-lg {
   width: 19px;
   height: 19px;
+  cursor: pointer;
 }
 .content-card main .row-image-sm {
   width: 17px;
   height: 17px;
+  cursor: pointer;
 }
 .content-card main .center {
   text-align: center;

@@ -65,3 +65,6 @@ input[name="btSelectAll"]{
 .fixed-table-pagination{
     display: none!important;
 }
+.no-records-found td{
+    text-align: center;
+}
