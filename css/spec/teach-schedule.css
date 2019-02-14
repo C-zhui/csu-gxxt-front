@@ -3,9 +3,21 @@
 	text-align: center;
 	margin-top: 28px;
 }
-#query_student{
+#query_student,#get-score{
 	margin-top: 0.25rem;
 }
 #export_table{
 	margin-top: 28px;
+}
+.mt-24{
+	margin-top: 1.5rem;
+}
+.batch-chosen{
+	margin-left: 126px;
+}
+.batch-chosen span{
+	margin-right: 0.5rem;
+}
+#import-score{
+	margin-right: 0;
 }
