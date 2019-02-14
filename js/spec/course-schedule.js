@@ -413,13 +413,12 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/group',
   })
 
   $('#save-template').click(saveTemplate)
-
   function saveTemplate() {
     if (edit_mode) {
       // edit_mode = false;
       swal({
-        title: 'Are you sure?',
-        text: '真的要保存了哦……',
+        title: '请确定?',
+        text: '将保存下面的模板',
         icon: 'info',
         buttons: true,
         dangerMode: true
@@ -433,12 +432,21 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/group',
                 data.push(val)
             })
           })
-          api.experiment.modifyTemplate(data).
-            done(function (res) {
-              // console.log(res)
-              if (res.status == 0)
+          api.experiment.modifyTemplate(data)
+            .done(function (data) {
+              if (data.status === 0) {
+                swal({
+                  title: '通知',
+                  text: '保存成功',
+                  icon: 'success',
+                });
                 $edit_template_button.click();
-            });
+              } else {
+                g.fetch_err(data)
+              }
+            })
+            .fail(g.net_err)
+
         }
         else {
           // console.log('cancel')
