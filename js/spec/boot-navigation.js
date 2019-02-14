@@ -15,8 +15,8 @@ define(['jquery', 'swal', 'lodash', 'spec/set-height'], function ($, swal, _, se
 
     role_to_end = {
         'admin': '管理员',
-        'teacher': '教师',
-        'student': '学生'
+        'teacher': '教师端',
+        'student': '学生端'
     }
 
     $("#content_body").bind('resize', function(e) {

@@ -21,6 +21,9 @@
 #student-open-apply-table,#teacher-table{
 	margin-top: 28px;
 }
+.row{
+	margin-bottom: 0;
+}
 form{
 	margin-top: 20px;
 	margin-bottom: 1.5rem;

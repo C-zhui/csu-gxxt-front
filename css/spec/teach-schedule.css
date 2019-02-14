@@ -1,64 +1,11 @@
-.distribute-table {
-	width: 95%;
-    margin: 20px;
-    text-align: center;
-}
-
-.input-select input {
-	margin-right: 50px;
-	margin-bottom: 40px;
-}
-
-.table2 {
-	margin-top: 50px;
-}
-
-/* .operate-score .card {
-	margin: 20px;
-} */
-
-.input-score .btn-outline-danger {
-	margin-left: 30px;
-}
-
-table {
+/*调整表格周边的间距*/
+.table {
 	text-align: center;
+	margin-top: 28px;
 }
-
-.select-teacher {
-	margin-left: 30px;
+#query_student{
+	margin-top: 0.25rem;
 }
-
-.input-times {
-	margin-left: 30px;
-	margin-right: -20px;
-}
-
-.extra-record-card3 {
-	margin-top: -35px;
-}
-
-.stu-divide-search {
-	margin: 15px;
-}
-
-.input-socre-excel {
-	margin: 30px 0;
-}
-
-.choose-line {
-	margin: 30px 0;
-}
-
-.choose-line p {
-	margin: 0 20px 0 50px;
-}
-
-.choose-line select,button {
-	margin: 0 10px;
-}
-
-.reason-area {
-	width: 60%;
-	margin: 20px 0 0 5px;
+#export_table{
+	margin-top: 28px;
 }

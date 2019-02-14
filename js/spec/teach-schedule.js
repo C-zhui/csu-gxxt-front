@@ -1,5 +1,6 @@
-require(['jquery', 'lodash', 'api/apiobj', 'config/global', 'config/config-course-schedule', 'util/date_format_transform', 'api/batch', 'api/student', 'api/experiment', 'api/proced'], function ($, _, api, g, ccs, dft) {
+require(['jquery', 'lodash', 'api/apiobj', 'config/global', 'util/cut_page3','config/config-course-schedule', 'util/date_format_transform', 'api/batch', 'api/student', 'api/experiment', 'api/proced'], function ($, _, api, g, CutPage, ccs, dft) {
 
+    const pageSize = 5; //设置分页条数
     $(function () {
         init_data();
     });
@@ -291,6 +292,7 @@ require(['jquery', 'lodash', 'api/apiobj', 'config/global', 'config/config-cours
                 .find('.s_group_id').text(student.s_group_id).end()
                 .appendTo($tbody);
         });
+        CutPage.cutPage('student_datas_table', pageSize);
     }
 
     // 导出表格
