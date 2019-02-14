@@ -31,7 +31,7 @@ define(['api/apiobj', 'config/global'], function (api, g) {
             )
         },
         // 修改学生
-        updateStudent:function (sid, sname, clazz, batch_name) {
+        updateStudent: function (sid, sname, clazz, batch_name) {
             return g.post_json('/student/updateStudent',
                 {
                     'sid': sid,
@@ -40,11 +40,13 @@ define(['api/apiobj', 'config/global'], function (api, g) {
                     'batch_name': batch_name
                 });
         },
+        // 获取批次里的学生
         getStudentByBatchName: function (batch_name) {
             return g.post_query('/student/getStudentByBatchName', {
                 batchName: batch_name
             });
         },
+        // 根据批次、分组获取学生
         getStudentByBatchAndSGroup: function (batch_name, s_group_id) {
             return g.post_query('/student/getStudent',
                 {
@@ -52,6 +54,7 @@ define(['api/apiobj', 'config/global'], function (api, g) {
                     s_group_id: s_group_id
                 });
         },
+        // 添加特殊学生
         addSpStudent: function (student_id, template_name) {
             return g.post_query('/student/addSpStudent',
                 {
@@ -59,12 +62,14 @@ define(['api/apiobj', 'config/global'], function (api, g) {
                     template_name: template_name
                 });
         },
+        // 获取所有特殊学生
         getAllSpStudent: function () {
             return g.post_query(
                 '/student/getAllSpStudent',
                 {}
             )
         },
+        // 根据特殊学生id获取
         getSpStudentById: function (sp_sid) {
             return g.post_query(
                 '/student/getSpStudentById',
@@ -76,6 +81,13 @@ define(['api/apiobj', 'config/global'], function (api, g) {
                 sid: sid
             };
             return g.post_json('/student/getSpProName', post_data);
+        },
+        // 传入特殊学生数组删除特殊学生
+        deleteSpStudentById: function (sids) {
+            return g.post_json(
+                '/student/deleteSpStudentById',
+                sids
+            )
         }
     }
 })
