@@ -595,34 +595,44 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/materi
         $('#add-one-purchase').click(addOnePurchase);
 
         function addOnePurchase() {
-            let newPurchase = {};
-            newPurchase.purchase_id = $("#add_purchase_num").val();
-            newPurchase.pur_time = $("#add_purchase_date").val();
-            newPurchase.pur_num = $("#add_purchase_number").val();
-            newPurchase.pur_remark = $("#add_purchase_note").val();
-            newPurchase.tName = tname;
-            api.purchase.addPurchase(newPurchase)
-                .done(function (data) {
-                    $("#add_purchase_num").val("");
-                    $("#add_purchase_date").val("");
-                    $("#add_purchase_number").val("");
-                    $("#add_purchase_note").val("");
-                    if (data.status === 0) {
-                        swal(
-                            '新增成功',
-                            '新增采购物料成功',
-                            'success'
-                        );
-                        init_data();
-                    } else {
-                        swal(
-                            '新增失败',
-                            data.message,
-                            // '申购物料失败，请重试！',
-                            'error'
-                        );
-                    }
-                })
+            if(tname===""){
+                swal(
+                    '新增失败',
+                    '请重新登录再试',
+                    // '申购物料失败，请重试！',
+                    'error'
+                )
+            }
+            else{
+                let newPurchase = {};
+                newPurchase.purchase_id = $("#add_purchase_num").val();
+                newPurchase.pur_time = $("#add_purchase_date").val();
+                newPurchase.pur_num = $("#add_purchase_number").val();
+                newPurchase.pur_remark = $("#add_purchase_note").val();
+                newPurchase.tName = tname;
+                api.purchase.addPurchase(newPurchase)
+                    .done(function (data) {
+                        $("#add_purchase_num").val("");
+                        $("#add_purchase_date").val("");
+                        $("#add_purchase_number").val("");
+                        $("#add_purchase_note").val("");
+                        if (data.status === 0) {
+                            swal(
+                                '新增成功',
+                                '新增采购物料成功',
+                                'success'
+                            );
+                            init_data();
+                        } else {
+                            swal(
+                                '新增失败',
+                                data.message,
+                                // '申购物料失败，请重试！',
+                                'error'
+                            );
+                        }
+                    })
+            }
         }
 
 // 生成采购单
@@ -885,29 +895,37 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/materi
 
 // 确认修改报账记录
         function verifyOneRemi(data) {
-            let id = data.id.substring(6, data.id.length);
-            let postdata = {};
-            postdata.id = id;
-            postdata.num = $("#modifyNum" + id).val();
-            postdata.tname = tname;
-            api.reim.remiVerify(postdata)
-                .done(function (data) {
-                    if (data.status === 0) {
-                        swal(
-                            '审核成功',
-                            '审核报账记录成功',
-                            'success'
-                        );
-                        init_data()
-                    } else {
-                        swal(
-                            '审核失败',
-                            data.message,
-                            'error'
-                        )
-                    }
-                })
-
+            if(tname===""){
+                swal(
+                    '审核失败',
+                    '请重新登录再试',
+                    'error'
+                )
+            }
+            else{
+                let id = data.id.substring(6, data.id.length);
+                let postdata = {};
+                postdata.id = id;
+                postdata.num = $("#modifyNum" + id).val();
+                postdata.tname = tname;
+                api.reim.remiVerify(postdata)
+                    .done(function (data) {
+                        if (data.status === 0) {
+                            swal(
+                                '审核成功',
+                                '审核报账记录成功',
+                                'success'
+                            );
+                            init_data()
+                        } else {
+                            swal(
+                                '审核失败',
+                                data.message,
+                                'error'
+                            )
+                        }
+                    })
+            }
         }
 
 // 物料入库页
@@ -958,33 +976,42 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/materi
 
 // 新增入库记录
         $('#add-one-store').click(function () {
-            let newStore = {};
-            newStore.pid = $("#add_store_num").val();
-            newStore.time = $("#add_store_date").val();
-            newStore.num = $("#add_store_number").val();
-            newStore.remark = $("#add_store_note").val();
-            newStore.tname = tname;
-            api.save.addSave(newStore)
-                .done(function (data) {
-                    $("#add_store_num").val("");
-                    $("#add_store_date").val("");
-                    $("#add_store_number").val("");
-                    $("#add_store_note").val("");
-                    if (data.status === 0) {
-                        swal(
-                            '添加成功',
-                            '新增入库记录成功',
-                            'success'
-                        );
-                        init_data();
-                    } else {
-                        swal(
-                            '添加失败',
-                            '新增入库记录失败，请重试！',
-                            'error'
-                        );
-                    }
-                })
+            if(tname===""){
+                swal(
+                    '添加失败',
+                    '请重新登录再试',
+                    'error'
+                );
+            }
+            else{
+                let newStore = {};
+                newStore.pid = $("#add_store_num").val();
+                newStore.time = $("#add_store_date").val();
+                newStore.num = $("#add_store_number").val();
+                newStore.remark = $("#add_store_note").val();
+                newStore.tname = tname;
+                api.save.addSave(newStore)
+                    .done(function (data) {
+                        $("#add_store_num").val("");
+                        $("#add_store_date").val("");
+                        $("#add_store_number").val("");
+                        $("#add_store_note").val("");
+                        if (data.status === 0) {
+                            swal(
+                                '添加成功',
+                                '新增入库记录成功',
+                                'success'
+                            );
+                            init_data();
+                        } else {
+                            swal(
+                                '添加失败',
+                                '新增入库记录失败，请重试！',
+                                'error'
+                            );
+                        }
+                    })
+            }
         });
     });
 });
