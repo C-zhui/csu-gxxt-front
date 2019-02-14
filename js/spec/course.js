@@ -1,15 +1,27 @@
-require(['jquery', 'lodash', 'api/apiobj', 'config/global', 'config/config-course-schedule', 'api/student', 'api/experiment'], function
+require(['jquery', 'lodash', 'api/apiobj', 'config/global', 'config/config-course-schedule', 'api/student', 'api/experiment', 'api/user'], function
   ($, _, api, g, ccs) {
-  api.student.getMyInfo(null, null)
-    .done(function (data) {
-      if (data.status === 0) {
-        console.log(data)
-        get_fill_class_table(data.data.sid)
-      } else {
-        g.fetch_err(data)
-      }
-    })
-    .fail(g.net_err)
+
+  api.user.getInfo()
+  .done(function (data) {
+    if (data.status === 0) {
+      console.log(data)
+      get_fill_class_table(data.data.id)
+    } else {
+      g.fetch_err(data)
+    }
+  })
+  .fail(g.net_err)
+
+  // api.student.getMyInfo(null, null)
+  //   .done(function (data) {
+  //     if (data.status === 0) {
+  //       console.log(data)
+  //       get_fill_class_table(data.data.sid)
+  //     } else {
+  //       g.fetch_err(data)
+  //     }
+  //   })
+  //   .fail(g.net_err)
 
   function get_fill_class_table(sid) {
     console.log(sid)
