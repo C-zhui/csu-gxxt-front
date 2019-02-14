@@ -18,6 +18,9 @@ function CutPage(tableID, psize) {
         this.totalPage=parseInt(this.totalRows/this.pageSize)+1;
     }
 
+    let table = $('#' + tableID);
+    table.wrap('<div class="table-responsive" id="' + tableID + 'table-responsive"></div>');
+
     html = '<div class="barcon clearfix" id="' + tableID + 'barcon">' +
         '<div id="'+tableID+'barcon1" class="barcon1"></div>' +
         '<div class="barcon2">' +
@@ -37,9 +40,8 @@ function CutPage(tableID, psize) {
         '</ul>' +
         '</div>' +
         '</div>';
-    let table=$('#'+tableID);
     if ($('#' + this.tableID + 'barcon').length < 1) {
-        table.after(html);
+        $('#' + tableID + 'table-responsive').after(html);
     }
     $('#'+this.tableID+'jumpPage').click(this.lazyJumpPage(this));
     this.goPage(1);
