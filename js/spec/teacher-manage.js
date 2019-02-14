@@ -1,8 +1,9 @@
-require(['jquery', 'lodash', 'api/apiobj', 'config/global', 'api/group', 'api/proced', 'api/admin', 'api/teacher', 'api/user', 'util/md5'], function ($, _, api, g) {
+require(['jquery', 'lodash', 'api/apiobj','util/cut_page3', 'config/global', 'api/group', 'api/proced', 'api/admin', 'api/teacher', 'api/user', 'util/md5'], function ($, _, api, CutPage,g) {
 
 
   var base_url = g.base_url;
   var X1 = "选择教师组";
+  const pageSize = 5; //分页每页行数
 
   function boot_grouper() {
     $('.grouper').on('click', '.toggle-btn', function () {
@@ -402,8 +403,8 @@ require(['jquery', 'lodash', 'api/apiobj', 'config/global', 'api/group', 'api/pr
       $cloneTemp.find('.overtime_privilege').text(overtime_privileges[teacher.overtime_privilege])
       $cloneTemp.appendTo($tbody);
     });
-    // 初始化分页
-    // goPage(1, 10);   // 当前页数为1，每页10条数据
+    // 分页
+    CutPage.cutPage('teacher_table', pageSize);
   }
 
 

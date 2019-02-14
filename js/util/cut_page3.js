@@ -22,9 +22,8 @@ define(['jquery'], function ($) {
             table.wrap('<div class="table-responsive" id="' + tableID + 'table-responsive"></div>');
         }
 
-        html = '<div class="barcon clearfix" id="' + tableID + 'barcon">' +
-            '<div id="' + tableID + 'barcon1" class="barcon1"></div>' +
-            '<div class="barcon2">' +
+        html = '<div class="barcon" id="' + tableID + 'barcon">' +
+            '<div class="barcon2 clearfix">' +
             '<ul>' +
             '<li>' +
             '<a href="###" id="' + tableID + 'firstPage" class="btn btn-sm btn-outline">首页</a></li>' +
@@ -35,9 +34,9 @@ define(['jquery'], function ($) {
             '<li>' +
             '<a href="###" id="' + tableID + 'lastPage" class="btn btn-sm btn-outline">尾页</a></li>' +
             '<li>' +
-            '<input type="text" id="' + tableID + 'jumpWhere" class="jumpWhere">' +
+            '<span id="'+tableID+'barcon1" class="barcon1"></span><input type="text" id="' + tableID + 'jumpWhere" class="jumpWhere">' +
             '</li>' +
-            '<li><a href="###" id="' + tableID + 'jumpPage" class="btn btn-sm btn-outline">跳转</a></li>' +
+            '<li><a href="###" id="' + tableID + 'jumpPage" class="btn btn-sm btn-background2">跳转</a></li>' +
             '</ul>' +
             '</div>' +
             '</div>';
@@ -53,8 +52,8 @@ define(['jquery'], function ($) {
             targetPage = this.currentPage + offset;
         }
         this.currentPage = targetPage;
-
-        let tempStr = "共" + this.totalRows + "条记录 | 分" + this.totalPage + "页 | 当前第" + targetPage + "页";
+        let tempStr = "第"+"<span class='text-page'>"+targetPage+"</span>/"+"<span class='text-page'>"+ this.totalPage+"</span>页，跳转到";
+        // let tempStr = "共" + this.totalRows + "条记录 | 分" + this.totalPage + "页 | 当前第" + targetPage + "页";
         // ================================================= barcon1 部分
         $('#' + this.tableID + 'barcon1').html(tempStr);
 

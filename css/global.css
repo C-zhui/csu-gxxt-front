@@ -306,6 +306,14 @@ input[name=btSelectAll] {
   height: 20px;
   cursor: pointer;
 }
+.content-card main .row-image-lg {
+  width: 19px;
+  height: 19px;
+}
+.content-card main .row-image-sm {
+  width: 17px;
+  height: 17px;
+}
 .content-card main .center {
   text-align: center;
 }

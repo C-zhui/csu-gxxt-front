@@ -1,5 +1,5 @@
 <div id="body">
-	<link rel="stylesheet" href="./css/spec/teacher-manage.css">
+	<link rel="stylesheet" href="../../css/spec/teacher-manage.css">
 
 
 	<!-- 模板代码 -->
@@ -8,10 +8,10 @@
 		<ul id="t_group_data">
 			<li class="group t_group_data">
 				<div class="group-summury">
-					<button class="toggle-btn btn btn-outline-info t_group_name"></button>
-					<button class="btn btn-sm new_proced_entry"><i class="fa fa-plus"></i>添加工序</button>
-					<button class="btn btn-sm edit_t_group_entry"><i class="fa fa-edit"></i>编辑教师组</button>
-					<button class="btn btn-sm delete_t_group_entry"><i class="fa fa-trash"></i>删除教师组</button>
+					<button class="toggle-btn btn btn-manage t_group_name">hhh</button>
+					<button class="btn btn-sm delete_t_group_entry right"><img class="row-image-lg" src="../../icon/delete.svg"></button>
+					<button class="btn btn-sm edit_t_group_entry right"><img class="row-image-lg" src="../../icon/edit.svg"></button>
+					<button class="btn btn-sm new_proced_entry right"><img class="row-image-lg" src="../../icon/add.svg"></button>
 				</div>
 				<ul class="group-detail d-none">
 				</ul>
@@ -20,27 +20,27 @@
 
 		<ul id="proced_data">
 			<li class="proced_data">
-				<button class="btn btn-outline-info pro_name"></button>
-				<button class="btn btn-sm edit_proced_entry"><i class="fa fa-edit"></i>编辑工序</button>
-				<button class="btn btn-sm delete_proced_entry"><i class="fa fa-trash"></i>删除工序</button>
+				<button class="btn btn-outline-info pro_name t_group_name" disabled></button>
+				<button class="btn btn-sm edit_proced_entry"><img src="../../icon/edit.svg" class="row-image-sm"></button>
+				<button class="btn btn-sm delete_proced_entry"><img src="../../icon/delete.svg" class="row-image-sm"></button>
 			</li>
 		</ul>
 
 		<table>
 			<tbody id="teacher_list_item_data">
 				<tr class="teacher_list_item_data">
-					<td><input type="checkbox" class="batch_op"></td>
 					<td class="tid"></td>
 					<td class="tname"> </td>
 					<td class="all_group"> </td>
 					<td class="role"></td>
 					<td class="material_privilege"></td>
 					<td class="overtime_privilege"></td>
-					<td class="operations">
-						<button class="btn btn-sm edit_teacher_entry"><i class="fa fa-edit"></i>编辑</button>
-						<button class="btn btn-sm reset_teacher_entry"><i class="fa fa-refresh"></i>重置密码</button>
-						<button class="btn btn-sm del_teacher_entry"><i class="fa fa-trash"></i>删除</button>
+					<td class="operations" style="width: 182px">
+						<button class="btn btn-sm edit_teacher_entry"><img src="../../icon/edit.svg" class="row-image-sm"></button>
+						<button class="btn btn-sm del_teacher_entry"><img src="../../icon/delete.svg" class="row-image-sm"></button>
+						<button class="btn btn-sm reset_teacher_entry"><img src="../../icon/reset.svg" class="row-image-sm">重置密码</button>
 					</td>
+					<td><input type="checkbox" class="batch_op"></td>
 				</tr>
 			</tbody>
 		</table>
@@ -57,12 +57,13 @@
 		</header>
 
 		<main>
-			<button class="btn btn-success" data-toggle="modal" data-target="#add_teacher_groupModal">添加新教师组</button>
+			<div class="content-body">
+				<ul class="grouper teachear-manage-list" id="teachergroup_proced_list">
 
-			<ul class="list grouper" id="teachergroup_proced_list">
+				</ul>
+				<button class="btn btn-sm btn-background3 btn-single" data-toggle="modal" data-target="#add_teacher_groupModal">添加新教师组</button>
 
-			</ul>
-
+			</div>
 		</main>
 	</div>
 	<!-- 教师组管理结束 -->
@@ -76,42 +77,53 @@
 		</header>
 
 		<main>
+			<div class="content-body clearfix">
+				<div class="row select-top title">
+					<div class="col-xs-3 col-sm-3">审核状态：</div>
+					<div class="col-xs-3 col-sm-3">选择角色：</div>
+					<div class="col-xs-3 col-sm-3">物料权限：</div>
+					<div class="col-xs-3 col-sm-3">开放权限：</div>
+				</div>
+				<div class="row teacher-list select-top">
+					<div class="col-xs-3 col-sm-3">
+						<select class="custom-select custom-select-sm teacher_group_selector"
+								id="teacher_list_teacher_groups">
+						</select>
+					</div>
+					<div class="col-xs-3 col-sm-3">
+						<select class="custom-select custom-select-sm" id="teacher_list_role">
+							<option>选择角色</option>
+							<option>管理员</option>
+							<option>实训教师</option>
+						</select>
+					</div>
+					<div class="col-xs-3 col-sm-3">
+						<select class="custom-select custom-select-sm" id="teacher_list_material_privilege">
+							<option>物料权限</option>
+							<option>无</option>
+							<option>物料申购</option>
+							<option>物料登记</option>
+						</select>
+					</div>
+					<div class="col-xs-3 col-sm-3">
+						<select class="custom-select custom-select-sm" id="teacher_list_overwork_privilege">
+							<option>开放权限</option>
+							<option>无</option>
+							<option>开放管理</option>
+						</select>
+					</div>
+				</div>
+				<div class="row select-top title">
+					<div class="col-xs-5 col-sm-5 offset-7 no-padding">
+						<button class="add btn btn-sm btn-background3 btn-multi btn-cyan right no-margin" data-toggle="modal" data-target="#teacherManage-button-addModal">添加</button>
+						<button class="btn btn-sm btn-outline btn-multi query right" id="query_teacher_with_options">查询</button>
+					</div>
+				</div>
 
-			<div class="row teacher-list">
-				<select class="form-control custom-select col-xs-2 col-sm-2 teacher_group_selector"
-					id="teacher_list_teacher_groups">
-				</select>
-
-				<select class="form-control custom-select col-xs-2 col-sm-2" id="teacher_list_role">
-					<option>选择角色</option>
-					<option>管理员</option>
-					<option>实训教师</option>
-				</select>
-
-				<select class="form-control custom-select col-xs-2 col-sm-2" id="teacher_list_material_privilege">
-					<option>物料权限</option>
-					<option>无</option>
-					<option>物料申购</option>
-					<option>物料登记</option>
-				</select>
-
-				<select class="form-control custom-select col-xs-2 col-sm-2" id="teacher_list_overwork_privilege">
-					<option>开放权限</option>
-					<option>无</option>
-					<option>开放管理</option>
-				</select>
-
-				<button class="btn btn-outline-primary query" id="query_teacher_with_options">查 询</button>
-				<button class="add btn btn-cyan " data-toggle="modal" data-target="#teacherManage-button-addModal"
-					style="float: right;">添&emsp;加</button>
-			</div>
-
-
-			<div class="clearfix">
-				<table class="table">
-					<thead>
+				<div class="clearfix">
+					<table class="table table-bordered" id="teacher_table">
+						<thead>
 						<tr>
-							<th></th>
 							<th>用户名</th>
 							<th>姓名</th>
 							<th>教师组</th>
@@ -119,53 +131,21 @@
 							<th>物料</th>
 							<th>开放</th>
 							<th>操作</th>
+							<th></th>
 						</tr>
-					</thead>
+						</thead>
 
-					<tbody id="teacher_list_table">
+						<tbody id="teacher_list_table">
 
-					</tbody>
-				</table>
+						</tbody>
+					</table>
 
-				<!-- 分页功能部分 -->
-				<div id="barcon" class="barcon clearfix">
-					<div id="barcon1" class="barcon1"></div>
-					<div id="barcon2" class="barcon2">
-						<ul>
-							<li>
-								<a href="###" id="firstPage" class="btn btn-sm">首页</a></li>
-							<li>
-								<a href="###" id="prePage" class="btn btn-sm">上一页</a></li>
-							<li>
-								<a href="###" id="nextPage" class="btn btn-sm">下一页</a></li>
-							<li>
-								<a href="###" id="lastPage" class="btn btn-sm">尾页</a></li>
-							<li>
-								<!-- <select id="jumpWhere"></select> -->
-								<input type="text" id="jumpWhere">
-							</li>
-							<li><a href="###" id="jumpPage" onclick="jumpPage()" class="btn btn-sm btn-primary">跳转</a></li>
-						</ul>
-					</div>
-				</div>
-
-				<div class="operaten">
-					<button class="btn btn-danger deleten" id="delete_selected_teacher">删&emsp;除</button>
-					<span class="clearfix"></span>
+					<button class="btn btn-background3 btn-sm btn-single right" id="delete_selected_teacher">删除</button>
 				</div>
 			</div>
+
 		</main>
 	</div>
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -177,7 +157,7 @@
 		<!-- 添加新教师组 Modal -->
 		<div class="modal fade" id="add_teacher_groupModal" tabindex="-1" role="dialog"
 			aria-labelledby="add_teacher_groupModalTitle" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-dialog modal-dialog-centered" role="document" style="width: 620px">
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title" id="add_teacher_groupModal">添加新教师组</h5>
@@ -196,8 +176,8 @@
 						</form>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-						<button type="button" class="btn btn-primary" id="add_new_teachergroup_ensure"
+						<button type="button" class="btn btn-sm btn-outline btn-multi" data-dismiss="modal">关闭</button>
+						<button type="button" class="btn btn-sm btn-background3 btn-multi" id="add_new_teachergroup_ensure"
 							data-dismiss="modal">确定</button>
 					</div>
 				</div>
@@ -207,11 +187,10 @@
 
 
 
-
 		<!-- 添加新工序 Modal -->
 		<div class="modal fade" id="add_teacher_proced_Modal" tabindex="-1" role="dialog"
 			aria-labelledby="add_teacher_proced_ModalTitle" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-dialog modal-dialog-centered" role="document" style="width: 600px">
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title" id="add_teacher_proced_ModalTitle">添加新工序</h5>
@@ -236,8 +215,8 @@
 						</form>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-						<button type="button" class="btn btn-primary" id="add_proced_ensure" data-dismiss="modal">确定</button>
+						<button type="button" class="btn btn-sm btn-outline btn-multi" data-dismiss="modal">关闭</button>
+						<button type="button" class="btn btn-sm btn-background3 btn-multi" id="add_proced_ensure" data-dismiss="modal">确定</button>
 					</div>
 				</div>
 			</div>
@@ -246,13 +225,10 @@
 
 
 
-
-
-
 		<!-- 编辑工序 Modal -->
 		<div class="modal fade" id="editOneProcessModal" tabindex="-1" role="dialog"
 			aria-labelledby="editOneProcessModalTitle" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-dialog modal-dialog-centered" role="document" style="width: 600px;">
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title" id="editOneProcessModalTitle">修改工序名</h5>
@@ -283,8 +259,8 @@
 						</form>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-						<button type="button" class="btn btn-primary" id="edit_proced_ensure" data-dismiss="modal">确定</button>
+						<button type="button" class="btn btn-sm btn-outline btn-multi" data-dismiss="modal">关闭</button>
+						<button type="button" class="btn btn-sm btn-background3 btn-multi" id="edit_proced_ensure" data-dismiss="modal">确定</button>
 					</div>
 				</div>
 			</div>
@@ -293,12 +269,10 @@
 
 
 
-
-
 		<!-- 修改教师组 Modal -->
 		<div class="modal fade" id="editTeacherGroupModal" tabindex="-1" role="dialog"
 			aria-labelledby="editTeacherGroupModalTitle" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-dialog modal-dialog-centered" role="document" style="width: 620px">
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title" id="editTeacherGroupModalTitle">修改教师组</h5>
@@ -323,8 +297,8 @@
 						</form>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-						<button type="button" class="btn btn-primary" id="edit_tgroup_ensure" data-dismiss="modal">确定</button>
+						<button type="button" class="btn btn-sm btn-outline btn-multi" data-dismiss="modal">关闭</button>
+						<button type="button" class="btn btn-sm btn-background3 btn-multi" id="edit_tgroup_ensure" data-dismiss="modal">确定</button>
 					</div>
 				</div>
 			</div>
@@ -338,7 +312,7 @@
 		<!-- 添加教师 modal -->
 		<div class="modal fade" id="teacherManage-button-addModal" tabindex="-1" role="dialog"
 			aria-labelledby="teacherManage-button-addModalTitle" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+			<div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="width: 780px">
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title" id="teacherManage-button-addModalTitle">添加教师</h5>
@@ -348,34 +322,54 @@
 					</div>
 					<div class="modal-body">
 						<div class="container-fluid">
-							<div class="row">
-								<input type="text" class="form-control col-md-3" id="teach-nickname-add" placeholder="学工号">
-								<input type="text" class="form-control col-md-3" id="teach-name-add" placeholder="姓名">
-								<select class="custom-select form-control col-md-3 teacher_group_selector" id="add_modal_teacher_group">
-									<!-- <option>选择教师组</option> -->
-								</select>
+
+							<div class="row edit-row">
+								<div class="form-group  col-md-4">
+									<label for="teach_nickname_add">学工号：</label>
+									<input type="text" class="form-control " id="teach-nickname-add" placeholder="学工号">
+								</div>
+								<div class="form-group col-md-4">
+									<label for="teach_name_add">姓名：</label>
+									<input type="text" class="form-control" id="teach-name-add" placeholder="姓名">
+								</div>
+								<div class="form-group col-md-4">
+									<label for="teach_name_add">教师组：</label>
+									<select class="custom-select teacher_group_selector" id="add_modal_teacher_group">
+										<!-- <option>选择教师组</option> -->
+									</select>
+								</div>
+
 							</div>
-							<br>
-							<div class="row">
-								<select class="form-control custom-select col-md-3" id="teach-role-add">
-									<option>管理员</option>
-									<option>实训教师</option>
-								</select>
-								<select class="form-control custom-select col-md-3" id="teach-material_privilege-add">
-									<option>物料登记</option>
-									<option>物料申购</option>
-									<option>无</option>
-								</select>
-								<select class="form-control custom-select col-md-3" id="teach-overtime_privilege-add">
-									<option>开放管理</option>
-									<option>无</option>
-								</select>
+
+							<div class="row edit_row">
+								<div class="form-group  col-md-4">
+									<label for="teach_nickname_add">教师角色：</label>
+									<select class="custom-select" id="teach-role-add">
+										<option>管理员</option>
+										<option>实训教师</option>
+									</select>
+								</div>
+								<div class="form-group col-md-4">
+									<label for="teach_name_add">物料权限：</label>
+									<select class="custom-select" id="teach-material_privilege-add">
+										<option>物料登记</option>
+										<option>物料申购</option>
+										<option>无</option>
+									</select>
+								</div>
+								<div class="form-group col-md-4">
+									<label for="teach_name_add">开放权限：</label>
+									<select class="custom-select" id="teach-overtime_privilege-add">
+										<option>开放管理</option>
+										<option>无</option>
+									</select>
+								</div>
 							</div>
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-						<button type="button" class="btn btn-primary" id="add_teacher_ensure" data-dismiss="modal">确定</button>
+						<button type="button" class="btn btn-sm btn-outline btn-multi" data-dismiss="modal">关闭</button>
+						<button type="button" class="btn btn-sm btn-background3 btn-multi" id="add_teacher_ensure" data-dismiss="modal">确定</button>
 					</div>
 				</div>
 			</div>
@@ -387,7 +381,7 @@
 		<!-- 编辑教师信息 modal -->
 		<div class="modal fade" id="teacherManage-button-editModal" tabindex="-1" role="dialog"
 			aria-labelledby="teacherManage-button-editModalTitle" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+			<div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="width: 780px">
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title" id="teacherManage-button-editModalTitle">教师信息修改</h5>
@@ -398,15 +392,15 @@
 					<div class="modal-body">
 						<div class="container-fluid">
 							<div class="row edit-row">
-								<div class="form-group  col-md-3">
+								<div class="form-group  col-md-4">
 									<label for="teach_nickname_add">学工号：</label>
 									<input type="text" class="form-control" id="teach_nickname_add" disabled placeholder="学工号">
 								</div>
-								<div class="form-group col-md-3">
+								<div class="form-group col-md-4">
 									<label for="teach_name_add">姓名：</label>
 									<input type="text" class="form-control" id="teach_name_add" placeholder="姓名">
 								</div>
-								<div class="form-group col-md-3">
+								<div class="form-group col-md-4">
 									<label for="teach_name_add">教师组：</label>
 									<select class="form-control teacher_group_selector" id="teachGroupFormControlSelect">
 									</select>
@@ -414,14 +408,14 @@
 							</div>
 
 							<div class="row edit-row">
-								<div class="form-group  col-md-3">
+								<div class="form-group  col-md-4">
 									<label for="teach_role_add">教师角色：</label>
 									<select class="form-control custom-select" id="teach_role_add">
 										<option>管理员</option>
 										<option>实训教师</option>
 									</select>
 								</div>
-								<div class="form-group  col-md-3">
+								<div class="form-group  col-md-4">
 									<label for="teach_material_privilege_add">物料权限：</label>
 									<select class="form-control custom-select" id="teach_material_privilege_add">
 										<option>物料登记</option>
@@ -429,7 +423,7 @@
 										<option>无</option>
 									</select>
 								</div>
-								<div class="form-group  col-md-3">
+								<div class="form-group  col-md-4">
 									<label for="teach_overwork_privilege_add">开放权限：</label>
 									<select class="form-control custom-select" id="teach_overwork_privilege_add">
 										<option>开放管理</option>
@@ -440,8 +434,8 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-						<button type="button" class="btn btn-primary" id="edit_teacher_ensure" data-dismiss="modal">确定</button>
+						<button type="button" class="btn btn-sm btn-outline btn-multi" data-dismiss="modal">关闭</button>
+						<button type="button" class="btn btn-sm btn-background3 btn-multi" id="edit_teacher_ensure" data-dismiss="modal">确定</button>
 					</div>
 				</div>
 			</div>
