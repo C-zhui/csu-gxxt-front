@@ -5,8 +5,8 @@
         <a href="#Section1" data-toggle="tab" role="tab" class="nav-item nav-link active"
            aria-selected="true">库存</a></a>
         <a href="#Section2" data-toggle="tab" role="tab" class="nav-item nav-link " aria-selected="false">物料申购</a></a>
-        <a href="#Section3" data-toggle="tab" role="tab" class="nav-item nav-link " aria-selected="false">物料采购</a></a>
-        <a href="#Section4" data-toggle="tab" role="tab" class="nav-item nav-link " aria-selected="false">物料入库</a></a>
+        <a href="#Section3" id="materal-purchase" data-toggle="tab" role="tab" class="nav-item nav-link " aria-selected="false">物料采购</a></a>
+        <a href="#Section4" id="materal-store" data-toggle="tab" role="tab" class="nav-item nav-link " aria-selected="false">物料入库</a></a>
 
         <div class="nav-item space-holder">&emsp;</div>
     </div>
@@ -23,16 +23,16 @@
                 </header>
                 <main>
                     <!-- 表格主体部分 -->
-                    <table class="table table-striped" id="inventory-table">
+                    <table class="table table-striped table-bordered" id="inventory-table">
                         <thead>
                         <tr>
-                            <th>物料种类（名称-型号-材质）&emsp;<a class="fa fa-plus-square-o" data-toggle="modal"
+                            <th>物料种类（名称-型号-材质）&emsp;<a class="fa fa-plus-square-o material_manage_operate" data-toggle="modal"
                                                        data-target="#add_meterialModel"></a></th>
 
                             <!-- 添加物料 Modal -->
                             <div class="modal fade" id="add_meterialModel" tabindex="-1" role="dialog"
                                  aria-labelledby="add_meterialModelTitle" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-dialog modal-dialog-centered" role="document" style="width: 600px">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="add_meterialModelTitle">添加物料种类</h5>
@@ -53,9 +53,9 @@
                                             </form>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭
+                                            <button type="button" class="btn btn-sm btn-outline btn-multi" data-dismiss="modal">关闭
                                             </button>
-                                            <button type="button" class="btn btn-primary" id="add-one-material"
+                                            <button type="button" class="btn btn-sm btn-background3 btn-multi" id="add-one-material"
                                                     data-dismiss="modal">确定
                                             </button>
                                         </div>
@@ -65,7 +65,7 @@
                             <!-- /.modal -->
 
                             <th>存量</th>
-                            <th>操作</th>
+                            <th class="material_manage_operate">操作</th>
                         </tr>
                         </thead>
                         <tbody id="inventory-table-body"></tbody>
@@ -136,39 +136,37 @@
                     </div>
 
                     <!-- 表格主体部分 -->
-                    <div class="table-responsive">
-                        <table id="jadminTbody" data-checkbox="true" class="table table-striped table-no-bordered"
-                               style="min-width: 1400px">
-                            <thead>
-                            <tr>
-                                <th><input type="checkbox"></th>
-                                <th class="table_id" data-field="purchaseId">申购编号</th>
-                                <th class="table_time" data-field="applyTime">申购时间</th>
-                                <th class="table_people" data-field="applyName">申购人</th>
-                                <th class="table_material" data-field="clazz">物料种类</th>
-                                <th class="table_num" data-field="applyNum">申购数量</th>
-                                <th class="table_note" data-field="applyRemark">申购备注</th>
-                                <th class="table_status" data-field="applyVertify">审核状态</th>
-                                <th class="table_people" data-field="applyVertTname">审核人</th>
-                                <th class="table_num" data-field="purNum">采购数量</th>
-                                <th class="table_num" data-field="remibNum">报账数量</th>
-                                <th class="table_people" data-field="purTname">采购人</th>
-                                <th class="table_num" data-field="saveNum">入库数量</th>
-                            </tr>
-                            </thead>
-                        </table>
-                    </div>
+                    <table id="jadminTbody" data-checkbox="true" class="table table-striped table-no-bordered table-responsive"
+                           style="min-width: 100%">
+                        <thead>
+                        <tr>
+                            <th><input type="checkbox"></th>
+                            <th class="table_id" data-field="purchaseId">申购编号</th>
+                            <th class="table_time" data-field="applyTime">申购时间</th>
+                            <th class="table_people" data-field="applyName">申购人</th>
+                            <th class="table_material" data-field="clazz">物料种类</th>
+                            <th class="table_num" data-field="applyNum">申购数量</th>
+                            <th class="table_note" data-field="applyRemark">申购备注</th>
+                            <th class="table_status" data-field="applyVertify">审核状态</th>
+                            <th class="table_people" data-field="applyVertTname">审核人</th>
+                            <th class="table_num" data-field="purNum">采购数量</th>
+                            <th class="table_num" data-field="remibNum">报账数量</th>
+                            <th class="table_people" data-field="purTname">采购人</th>
+                            <th class="table_num" data-field="saveNum">入库数量</th>
+                        </tr>
+                        </thead>
+                    </table>
 
                     <!-- 操作按钮组 -->
                     <div class="btn-group right" role="group" aria-label="...">
                         <button type="button" class="btn btn-sm btn-outline" id="export-apply">生成申购单</button>
-                        <button type="button" class="btn btn-sm btn-outline" data-toggle="modal"
+                        <button type="button" class="btn btn-sm btn-outline material_add_apply_operate" data-toggle="modal"
                                 data-target="#add_apply">新增申购申请
                         </button>
                         <!-- 新增申购申请 Modal -->
                         <div class="modal fade" id="add_apply" tabindex="-1" role="dialog"
                              aria-labelledby="add_applyTitle" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-dialog modal-dialog-centered" role="document" style="width: 600px">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="add_applyTitle">新增物料申购</h5>
@@ -207,8 +205,8 @@
                                         </form>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-                                        <button type="button" class="btn btn-primary" id="add-one-apply"
+                                        <button type="button" class="btn btn-sm btn-outline btn-multi" data-dismiss="modal">关闭</button>
+                                        <button type="button" class="btn btn-sm btn-background3 btn-multi" id="add-one-apply"
                                                 data-dismiss="modal">确定
                                         </button>
                                     </div>
@@ -225,7 +223,7 @@
             <!--申购记录结束-->
 
             <!-- 申购审核 sadminTbody -->
-            <div class="content-card">
+            <div class="content-card materal_add_apply_verify">
                 <header>
                     <div class="header-title">
                         申购审核
@@ -277,24 +275,22 @@
                     </div>
 
                     <!-- 表格主体部分 -->
-                    <div class="table-responsive">
-                        <table class="table table-striped" id="s-admin-table" style="min-width: 1200px;">
-                            <thead>
-                            <tr>
-                                <th class="table_id">申购编号</th>
-                                <th class="table_time">申购日期</th>
-                                <th class="table_people">申购人</th>
-                                <th class="table_material">物料种类</th>
-                                <th class="table_note">申购备注</th>
-                                <th class="table_status">审核状态</th>
-                                <th class="table_num">申购数量</th>
-                                <th class="table_people">采购人</th>
-                                <th class="table_operate">审核操作</th>
-                            </tr>
-                            </thead>
-                            <tbody class="vertical-middle" id="sadminTbody"></tbody>
-                        </table>
-                    </div>
+                    <table class="table table-striped table-responsive" id="s-admin-table" style="min-width: 100%">
+                        <thead>
+                        <tr>
+                            <th class="table_id">申购编号</th>
+                            <th class="table_time">申购日期</th>
+                            <th class="table_people">申购人</th>
+                            <th class="table_material">物料种类</th>
+                            <th class="table_note">申购备注</th>
+                            <th class="table_status">审核状态</th>
+                            <th class="table_num">申购数量</th>
+                            <th class="table_people">采购人</th>
+                            <th class="table_operate">审核操作</th>
+                        </tr>
+                        </thead>
+                        <tbody class="vertical-middle" id="sadminTbody"></tbody>
+                    </table>
                     <div class="clearfix"></div>
                 </main>
             </div>
@@ -305,7 +301,7 @@
         <!-- 物料采购 cadminTbody badminTbody hadminTbody-->
         <div role="tabpanel" class="tab-pane fade" id="Section3">
             <!-- 采购记录 cadminTbody-->
-            <div class="content-card">
+            <div class="content-card materal_purchase_operate">
                 <header>
                     <div class="header-title">
                         采购记录
@@ -355,22 +351,20 @@
                     </div>
 
                     <!-- 表格主体部分 -->
-                    <div class="table-responsive">
-                        <table id="cadminTbody" data-checkbox="true" class="table table-striped table-no-bordered"
-                               style="min-width: 1000px">
-                            <thead>
-                            <tr>
-                                <th><input type="checkbox"></th>
-                                <th class="table_id" data-field="purchaseId">申购编号</th>
-                                <th class="table_time" data-field="purTime">采购日期</th>
-                                <th class="table_people" data-field="purTname">采购人</th>
-                                <th class="table_material" data-field="clazz">物料种类</th>
-                                <th class="table_num" data-field="purNum">采购数量</th>
-                                <th class="table_note" data-field="purRemark">采购备注</th>
-                            </tr>
-                            </thead>
-                        </table>
-                    </div>
+                    <table id="cadminTbody" data-checkbox="true" class="table table-striped table-no-bordered table-responsive"
+                           style="min-width: 100%">
+                        <thead>
+                        <tr>
+                            <th><input type="checkbox"></th>
+                            <th class="table_id" data-field="purchaseId">申购编号</th>
+                            <th class="table_time" data-field="purTime">采购日期</th>
+                            <th class="table_people" data-field="purTname">采购人</th>
+                            <th class="table_material" data-field="clazz">物料种类</th>
+                            <th class="table_num" data-field="purNum">采购数量</th>
+                            <th class="table_note" data-field="purRemark">采购备注</th>
+                        </tr>
+                        </thead>
+                    </table>
 
                     <!-- 操作按钮组 -->
                     <div class="btn-group right" role="group" aria-label="...">
@@ -381,7 +375,7 @@
                         <!-- 新增采购记录 Modal -->
                         <div class="modal fade" id="add_purchase" tabindex="-1" role="dialog"
                              aria-labelledby="add_purchaseTitle" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-dialog modal-dialog-centered" role="document" style="width: 600px">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="add_purchaseTitle">新增采购记录</h5>
@@ -427,8 +421,8 @@
                                         </form>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-                                        <button type="button" class="btn btn-primary" id="add-one-purchase"
+                                        <button type="button" class="btn btn-sm btn-outline btn-multi" data-dismiss="modal">关闭</button>
+                                        <button type="button" class="btn btn-sm btn-background3 btn-multi" id="add-one-purchase"
                                                 data-dismiss="modal">确定
                                         </button>
                                     </div>
@@ -444,7 +438,7 @@
             <!--采购记录结束-->
 
             <!-- 采购报账记录 badminTbody -->
-            <div class="content-card">
+            <div class="content-card materal_remib_operate">
                 <header>
                     <div class="header-title">
                         采购报账记录
@@ -504,35 +498,33 @@
                     </div>
 
                     <!-- 表格主体部分 -->
-                    <div class="table-responsive">
-                        <table id="badminTbody" data-checkbox="true" class="table table-striped table-no-bordered"
-                               style="min-width: 1200px;">
-                            <thead>
-                            <tr>
-                                <th><input type="checkbox"></th>
-                                <th class="table_id" data-field="purchaseId">申购编号</th>
-                                <th class="table_time" data-field="remibTime">新增报账申请日期</th>
-                                <th class="table_people" data-field="purTname">采购人</th>
-                                <th class="table_material" data-field="clazz">物料种类</th>
-                                <th class="table_num" data-field="remibNum">报账数量</th>
-                                <th class="table_status" data-field="remibVertify">审核状态</th>
-                                <th class="table_people" data-field="remibVerbTname">审核人</th>
-                                <th class="table_note" data-field="remibRemark">报账备注</th>
-                            </tr>
-                            </thead>
-                        </table>
-                    </div>
+                    <table id="badminTbody" data-checkbox="true" class="table table-striped table-no-bordered table-responsive"
+                           style="min-width: 100%">
+                        <thead>
+                        <tr>
+                            <th><input type="checkbox"></th>
+                            <th class="table_id" data-field="purchaseId">申购编号</th>
+                            <th class="table_time" data-field="remibTime">新增报账申请日期</th>
+                            <th class="table_people" data-field="purTname">采购人</th>
+                            <th class="table_material" data-field="clazz">物料种类</th>
+                            <th class="table_num" data-field="remibNum">报账数量</th>
+                            <th class="table_status" data-field="remibVertify">审核状态</th>
+                            <th class="table_people" data-field="remibVerbTname">审核人</th>
+                            <th class="table_note" data-field="remibRemark">报账备注</th>
+                        </tr>
+                        </thead>
+                    </table>
 
                     <!-- 操作按钮组 -->
                     <div class="btn-group right" role="group" aria-label="...">
                         <button type="button" class="btn btn-sm btn-outline" id="export-remi">生成报账单</button>
-                        <button type="button" class="btn btn-sm btn-outline" data-toggle="modal"
+                        <button type="button" class="btn btn-sm btn-outline materal_add_remib_operate" data-toggle="modal"
                                 data-target="#add_remiburse">新增报账申请
                         </button>
                         <!-- 新增采购报账记录 Modal -->
                         <div class="modal fade" id="add_remiburse" tabindex="-1" role="dialog"
                              aria-labelledby="add_remiburseTitle" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-dialog modal-dialog-centered" role="document" style="width: 600px">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="add_remiburseTitle">新增采购报账</h5>
@@ -569,8 +561,8 @@
                                         </form>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-                                        <button type="button" class="btn btn-primary" id="add-one-remiburse"
+                                        <button type="button" class="btn btn-outline btn-sm btn-multi" data-dismiss="modal">关闭</button>
+                                        <button type="button" class="btn btn-background3 btn-sm btn-mutli" id="add-one-remiburse"
                                                 data-dismiss="modal">确定
                                         </button>
                                     </div>
@@ -587,7 +579,7 @@
             <!--采购报账记录结束-->
 
             <!-- 采购报账审核 hadminTbody -->
-            <div class="content-card">
+            <div class="content-card materal_remib_verify_operate">
                 <header>
                     <div class="header-title">
                         采购报账审核
@@ -639,23 +631,21 @@
                     </div>
 
                     <!-- 表格主体部分 -->
-                    <div class="table-responsive">
-                        <table class="table table-striped" id="h-admin-table" style="min-width: 1200px">
-                            <thead>
-                            <tr>
-                                <th class="table_id">申购编号</th>
-                                <th class="table_time">新增报账申请日期</th>
-                                <th class="table_people">采购人</th>
-                                <th class="table_material">物料种类</th>
-                                <th class="table_num">报账数量</th>
-                                <th class="table_status">审核状态</th>
-                                <th class="table_note">报账备注</th>
-                                <th class="table_operate">采购操作</th>
-                            </tr>
-                            </thead>
-                            <tbody id="hadminTbody"></tbody>
-                        </table>
-                    </div>
+                    <table class="table table-striped table-responsive" id="h-admin-table" style="min-width: 100%">
+                        <thead>
+                        <tr>
+                            <th class="table_id">申购编号</th>
+                            <th class="table_time">新增报账申请日期</th>
+                            <th class="table_people">采购人</th>
+                            <th class="table_material">物料种类</th>
+                            <th class="table_num">报账数量</th>
+                            <th class="table_status">审核状态</th>
+                            <th class="table_note">报账备注</th>
+                            <th class="table_operate">采购操作</th>
+                        </tr>
+                        </thead>
+                        <tbody id="hadminTbody"></tbody>
+                    </table>
 
                     <div class="clearfix"></div>
                 </main>
@@ -665,7 +655,7 @@
         </div>
 
         <!-- 物料入库 radminTbody-->
-        <div role="tabpanel" class="tab-pane fade" id="Section4">
+        <div role="tabpanel" class="tab-pane fade materal_store_operate" id="Section4">
             <div class="content-card">
                 <header>
                     <div class="header-title">
@@ -717,21 +707,19 @@
                     </div>
 
                     <!-- 表格主体部分 -->
-                    <div class="table-responsive">
-                        <table id="radminTbody" data-checkbox="false" class="table table-striped table-no-bordered"
-                               style="min-width: 950px">
-                            <thead>
-                            <tr>
-                                <th class="table_id" data-field="purchaseId">申购编号</th>
-                                <th class="table_time" data-field="saveTime">入库日期</th>
-                                <th class="table_material" data-field="clazz">物料种类</th>
-                                <th class="table_num" data-field="saveNum">入库数量</th>
-                                <th class="table_people" data-field="saveTname">入库人</th>
-                                <th class="table_note" data-field="saveRemark">入库备注</th>
-                            </tr>
-                            </thead>
-                        </table>
-                    </div>
+                    <table id="radminTbody" data-checkbox="false" class="table table-striped table-no-bordered table-responsive"
+                           style="min-width: 100%">
+                        <thead>
+                        <tr>
+                            <th class="table_id" data-field="purchaseId">申购编号</th>
+                            <th class="table_time" data-field="saveTime">入库日期</th>
+                            <th class="table_material" data-field="clazz">物料种类</th>
+                            <th class="table_num" data-field="saveNum">入库数量</th>
+                            <th class="table_people" data-field="saveTname">入库人</th>
+                            <th class="table_note" data-field="saveRemark">入库备注</th>
+                        </tr>
+                        </thead>
+                    </table>
                     <!-- 操作按钮组 -->
                     <div class="btn-group right" role="group" aria-label="...">
                         <button type="button" class="btn btn-sm btn-outline" data-toggle="modal"
@@ -740,7 +728,7 @@
                         <!-- 新增入库记录 Modal -->
                         <div class="modal fade" id="add_store" tabindex="-1" role="dialog"
                              aria-labelledby="add_storeTitle" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-dialog modal-dialog-centered" role="document" style="width: 600px">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="add_storeTitle">新增入库记录</h5>
@@ -786,8 +774,8 @@
                                         </form>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-                                        <button type="button" class="btn btn-primary" id="add-one-store"
+                                        <button type="button" class="btn btm-sm btn-outline btn-multi" data-dismiss="modal">关闭</button>
+                                        <button type="button" class="btn btn-sm btn-background3 btn-multi" id="add-one-store"
                                                 data-dismiss="modal">确定
                                         </button>
                                     </div>

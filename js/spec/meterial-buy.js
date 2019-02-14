@@ -6,18 +6,49 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'api/material', 'api/applyFPc
     let optionsForPurchaserText = ""; //用来存放采购人选项html文本
     let selectedPurPurchase = []; //定义采购表格中选中的行id
     let selectedRemi = []; //定义报账记录中的行id
+    let user = {}; //记录当前用户信息
     const pageSize = 5; //分页每页行数
     let tname = "";
     $(function () {
         init_data();
         api.user.getInfo().done(function (data) {
             if (data.status === 0) {
+                user = data.data;
                 tname = data.data["姓名"];
                 console.log(tname);
+                setPage();
             }
         });
 
-
+// 根据权限设置界面
+        function setPage() {
+            if(user["角色"]!=="管理员"){
+                console.log(233)
+                $(".material_manage_operate").css("display","none");
+                $(".material_add_apply_operate").css("display","none");
+                $(".materal_add_apply_verify").css("display","none");
+                $("#materal-purchase").css("display","none");
+                $("#materal-store").css("display","none");
+                $(".materal_purchase_operate").css("display","none");
+                $(".materal_remib_operate").css("display","none");
+                $(".materal_add_remib_operate").css("display","none");
+                $(".materal_remib_verify_operate").css("display","none");
+                $(".materal_store_operate").css("display","none");
+                switch (user["物料权限"]){
+                    case "1":$(".material_add_apply_operate").css("display","block");
+                        break;  //申请购买物料权限
+                    case "2":$("#materal-purchase").css("display","block");
+                        $(".materal_purchase_operate").css("display","block");
+                        $(".materal_remib_operate").css("display","block");
+                        $(".materal_add_remib_operate").css("display","block");
+                        break;  //采购权限
+                    case "3":$("#materal-store").css("display","block");
+                        $(".materal_store_operate").css("display","block");
+                        break;  //入库权限
+                    case "0":break;
+                }
+            }
+        }
 // 初始化页面数据
         function init_data() {
             // 刷新库存列表
@@ -40,6 +71,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'api/material', 'api/applyFPc
             getRemiVerify();
             // 获取所有入库记录
             getSaveBy5();
+            // 根据权限设置页面
         }
 
 
@@ -57,7 +89,8 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'api/material', 'api/applyFPc
                         $('<td></td>').text(data_arr[i].clazz).appendTo(tr);
                         $('<td></td>').text(data_arr[i].num).appendTo(tr);
                         let deleteImage = $('<img class="delete-image" src="../../icon/delete-item.svg">').data('id', data_arr[i].clazz).click(deleteOneMateral);
-                        $('<td></td>').append(deleteImage).appendTo(tr);
+                        if(user["身份"]==="管理员")
+                            $('<td></td>').append(deleteImage).appendTo(tr);
                         tableBody.append(tr);
                         material_class.push(data_arr[i].clazz);
                     }

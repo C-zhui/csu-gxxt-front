@@ -12,14 +12,13 @@ function CutPage(tableID, psize) {
     this.currentPage=1;
     this.totalPage=null;
     this.totalRows=$('#'+tableID+' tbody tr').length;
-    if(this.totalRows/this.pageSize>parseInt(this.totalRows/this.pageSize)){
-        this.totalPage=parseInt(this.totalRows/this.pageSize)+1;
+    if(this.totalRows%this.pageSize===0){
+        this.totalPage=parseInt(this.totalRows/this.pageSize);
     }else{
         this.totalPage=parseInt(this.totalRows/this.pageSize)+1;
     }
 
-    html = '<div class="barcon clearfix" id="' + tableID + 'barcon">' +
-        '<div id="'+tableID+'barcon1" class="barcon1"></div>' +
+    html = '<div class="barcon" id="' + tableID + 'barcon">' +
         '<div class="barcon2">' +
         '<ul>' +
         '<li>' +
@@ -31,9 +30,9 @@ function CutPage(tableID, psize) {
         '<li>' +
         '<a href="###" id="' + tableID + 'lastPage" class="btn btn-sm btn-outline">尾页</a></li>' +
         '<li>' +
-        '<input type="text" id="'+tableID+'jumpWhere" class="jumpWhere">' +
+        '<span id="'+tableID+'barcon1" class="barcon1"></span><input type="text" id="'+tableID+'jumpWhere" class="jumpWhere">' +
         '</li>' +
-        '<li><a href="###" id="' + tableID + 'jumpPage" class="btn btn-sm btn-outline">跳转</a></li>' +
+        '<li><a href="###" id="' + tableID + 'jumpPage" class="btn btn-sm btn-background2">跳转</a></li>' +
         '</ul>' +
         '</div>' +
         '</div>';
@@ -46,12 +45,15 @@ function CutPage(tableID, psize) {
 }
 
 CutPage.prototype.goPage = function (targetPage, offset = null) {
+    console.log(this.currentPage)
+    console.log(offset)
     if(offset!==null){
         targetPage=this.currentPage+offset;
     }
     this.currentPage=targetPage;
 
-    let tempStr = "共"+this.totalRows+"条记录 | 分"+this.totalPage+"页 | 当前第"+targetPage+"页";
+    let tempStr = "第"+"<span class='text-page'>"+targetPage+"</span>/"+"<span class='text-page'>"+ this.totalPage+"</span>页，跳转到";
+    // let tempStr = "第"+this.totalRows+"条记录 | 分"+this.totalPage+"页 | 当前第"+targetPage+"页";
     // ================================================= barcon1 部分
     $('#'+this.tableID+'barcon1').html(tempStr);
 
