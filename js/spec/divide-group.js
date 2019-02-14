@@ -1,4 +1,4 @@
-require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_page3','util/date_format_transform', 'config/config-course-schedule', 'api/experiment', 'api/batch', 'api/proced', 'api/studentGroup', 'api/student', 'api/specialScore'], function ($, _, swal, api, g, CutPage,dft, ccs) {
+require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_page3', 'util/date_format_transform', 'config/config-course-schedule', 'api/experiment', 'api/batch', 'api/proced', 'api/studentGroup', 'api/student', 'api/specialScore'], function ($, _, swal, api, g, CutPage, dft, ccs) {
 
   const pageSize = 5;//设置分页页数
   $(document).ready(function () {
@@ -412,23 +412,6 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
     }
   });
 
-  // function parse_time_quant(time_quant_string) {
-  //   var s = time_quant_string;
-  //   if (typeof s != 'string')
-  //     throw 'time_quant error' + time_quant_string
-  //   var week = s.slice(0, 2);
-  //   if (week[0] === '0') week = week[1]
-  //   var day = s.slice(2, 3);
-  //   var time = s.slice(3, 4);
-  //   var time_quant_arr = [week, day, time];
-  //   return time_quant_arr;
-  // }
-
-  function time_quant_formated(time_quant) {
-    var index_time = parseInt(time_quant.slice(-2));
-    var time = ccs.timeRange[index_time]
-    return time_quant.slice(0, -3) + '(' + _.range(time, time + ccs.timeRangeStep) + '节)'
-  }
 
   function displayResultByBatch(data) {
     var grouped_data = _.groupBy(data, 'class_time') // 使用class_time分组的数据
@@ -453,7 +436,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
       $tr = $('<tr>') // 需要计算出课时对应的时间
       var time_quant = group_data[0].time_quant;
       // var time_quant_arr = parse_time_quant(time_quant);
-      $('<td>').text('' + class_time + "->" + time_quant_formated(time_quant)).appendTo($tr)
+      $('<td>').text('' + class_time + "->" + ccs.time_quant_formated(time_quant)).appendTo($tr)
       var td_datas = []
       td_datas.length = s_groups.length;
       _.each(group_data, function (data, i) {
@@ -528,7 +511,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
     _.each(data, function (class_group, class_time) {
       var time_quant = class_group[0].time_quant;
       $tr = $('<tr>');
-      $('<td>').text('' + class_time + "->" + time_quant_formated(time_quant)).appendTo($tr);
+      $('<td>').text('' + class_time + "->" + ccs.time_quant_formated(time_quant)).appendTo($tr);
 
       var proced_groups = _.groupBy(class_group, 'pro_name');
       // console.log(proced_groups);
@@ -669,7 +652,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
       btn_td.appendTo($tr);
       $tr.appendTo($table_body);
     })
-      CutPage.cutPage('student-grouped-table', pageSize);
+    CutPage.cutPage('student-grouped-table', pageSize);
   }
 
   $('#student-group-result').on('click', 'button.switch-sgroup', function () {
@@ -744,10 +727,10 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
             console.log(data);
             var data_arr = data.data;
             var $table_body = $('#search_stu_tbody').empty();
-            data_arr = _.sortBy(data_arr, 'class_time');
+            data_arr = _.sortBy(data_arr, 'time_quant');
             _.each(data_arr, function (val, i) {
               var $tr = $('<tr>');
-              $('<td>').text(val.class_time + "->" + time_quant_formated(val.time_quant)).appendTo($tr);
+              $('<td>').text((val.class_time || (i + 1)) + "->" + ccs.time_quant_formated(val.time_quant)).appendTo($tr);
               $('<td>').text(val.pro_name).appendTo($tr);
               $('<td>').text(val.batch_name).appendTo($tr);
               $('<td>').text(val.s_group_id).appendTo($tr);
@@ -900,7 +883,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
       $('<td class="center"><input type="checkbox" class="batch_op"></td>').appendTo($tr);
       $tr.appendTo($table);
     });
-      CutPage.cutPage('special-table', pageSize);
+    CutPage.cutPage('special-table', pageSize);
   }
 
   // 删除一个特殊学生
@@ -972,6 +955,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
   });
 
 
+  // 查看、编辑课表
   $('#query-spstudent-result').on('click', 'img.lookup-course', function () {
     console.log(this)
     var input = $(this);
@@ -1013,6 +997,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
       .fail(g.net_err)
   }
 
+  // 填充
   function fill_selected_course(selected_course) {
     var $tbody = $('#spec-selected-course-table tbody').empty();
     var $temp = $('#for_selected_course').children();
@@ -1020,11 +1005,11 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
     _.each(time_data_s, function (time_data, i) {
       var $cloneTemp = $temp.clone();
       $cloneTemp.attr('time_quant', time_data[0])
-        .find('.time').text(time_data[0]).end()
+        .find('.time').text(ccs.time_quant_formated(time_data[0])).end()
         .find('.proced').text(time_data[1].pro_name);
       $cloneTemp.appendTo($tbody)
     })
-      CutPage.cutPage('spec-selected-course-table', pageSize);
+    CutPage.cutPage('spec-selected-course-table', pageSize);
   }
 
   var $spec_student_batch_selector = $('#spec-student-batch-selector');
@@ -1054,7 +1039,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
     var $temp = $('#for_spec_batch_course').children();
     _.each(sorted_time_groups, function (time_group, i) {
       var $cloneTemp = $temp.clone().attr('i', i);
-      var $proceds = $cloneTemp.find('.time').text(time_group[0]).end().find('.proceds');
+      var $proceds = $cloneTemp.find('.time').text(ccs.time_quant_formated(time_group[0])).end().find('.proceds');
       _.each(time_group[1], function (course, j) {
         $proceds.append($('<button class="btn btn-sm btn-outline for-add"></button>').text(course.pro_name).attr('j', j))
       });
@@ -1077,7 +1062,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
       // 不需要添加原有数据
       delete new_courses[time];
     }
-    if (selected_course[time].pro_name !== operator_courses[time].pro_name) { // 被添加的数据不是原来的数据
+    if (selected_course[time] && operator_courses[time] && selected_course[time].pro_name !== operator_courses[time].pro_name) { // 被添加的数据不是原来的数据
       del_selected_courses[time] = {
         id: selected_course[time].sp_scoreid,
         course: selected_course[time]
@@ -1092,9 +1077,8 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
     // console.log("$('#spec-selected-course-table').on('click')")
     var $this = $(this);
     var time = $this.parents('tr.time-quant').attr('time_quant');
-    // console.log(time)
+    delete new_courses[time];
     delete operator_courses[time];
-    // console.log(operator_courses)
     if (selected_course[time]) {
       del_selected_courses[time] = {
         id: selected_course[time].sp_scoreid,
@@ -1104,10 +1088,21 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
     fill_selected_course(operator_courses);
   });
 
-
+  // 打印更改
   $('#log-data').click(function () {
-    console.log('del', _.map(del_selected_courses, 'course'));
-    console.log('new', _.map(new_courses));
+    // console.log('del', _.map(del_selected_courses, 'course'));
+    // console.log('new', _.map(new_courses));
+    var for_del = _.map(del_selected_courses, function (d) {
+      return ccs.time_quant_formated(d.course.time_quant) + ":" + d.course.pro_name;
+    });
+
+    var for_new = _.map(new_courses, function (n) {
+      return ccs.time_quant_formated(n.time_quant) + ':' + n.pro_name;
+    });
+    swal(
+      '提示更改',
+      '将删除 \n' + for_del.join('\n') + '\n' + '将添加\n' + for_new.join('\n')
+    );
   });
 
   $('#spec_save_change').click(function () {
@@ -1140,5 +1135,4 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
         }
       }).fail(g.net_err);
   });
-
 });
