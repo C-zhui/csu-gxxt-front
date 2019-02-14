@@ -1,7 +1,7 @@
 <div id="body">
 	<link rel="stylesheet" type="text/css" href="./css/extra-select.css">
-	<script src="./js/color.js"></script>
-	<script src="./js/scroll.js"></script>
+	<!-- <script src="./js/color.js"></script>
+	<script src="./js/scroll.js"></script> -->
 
 	<!-- 新增开放申请 -->
 	<div class="content-card">
@@ -29,7 +29,7 @@
 						<textarea class="form-control" rows="3" id="request_extra_reason"></textarea>
 					</div>
 					<div class="float-right">
-						<input type="button" name="" class="btn btn-outline-danger float-right" value="确认" onclick="addOverworkApply()">
+						<input type="button" name="" class="btn btn-outline-danger float-right" value="确认" id="add_overwork_apply" >
 					</div>
 				</div>
 
@@ -116,33 +116,31 @@
 		</div>
 		<script>
 
-			(function addScroll() {
-				if ($.fn.myScroll) {
-					console.log('myScroll')
-					$("div.list_lh").myScroll({
-						speed: 40, //数值越大，速度越慢
-						rowHeight: 30 //li的高度
-					});
+			// (function addScroll() {
+			// 	if ($.fn.myScroll) {
+			// 		console.log('myScroll')
+			// 		$("div.list_lh").myScroll({
+			// 			speed: 40, //数值越大，速度越慢
+			// 			rowHeight: 30 //li的高度
+			// 		});
 
-					$('.list_lh li:even').addClass('lieven');
+			// 		$('.list_lh li:even').addClass('lieven');
 
-					$('.list_lh ul li a').myLink({
-						'color': '#111',
-						'fontSize': '13px'
-					})
-				} else {
-					setTimeout(() => {
-						addScroll()
-					}, 500);
-				}
-			})()
+			// 		$('.list_lh ul li a').myLink({
+			// 			'color': '#111',
+			// 			'fontSize': '13px'
+			// 		})
+			// 	} else {
+			// 		setTimeout(() => {
+			// 			addScroll()
+			// 		}, 500);
+			// 	}
+			// })()
 
 		</script>
 		<!-- 主体部分结束 -->
 		<!-- 主体部分结束 -->
-		<script>
-			$(".mycalendar").flatpickr();
-		</script>
+ 
 		<script src="../js/spec/extra-request.js"></script>
 		<!-- 分页开始 -->
 		<script src="../js/cut_page.js"></script>
