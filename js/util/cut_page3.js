@@ -18,7 +18,9 @@ define(['jquery'], function ($) {
         }
 
         let table = $('#' + tableID);
-        table.wrap('<div class="table-responsive" id="' + tableID + 'table-responsive"></div>');
+        if ($('#' + tableID + 'table-responsive').length < 1) {
+            table.wrap('<div class="table-responsive" id="' + tableID + 'table-responsive"></div>');
+        }
 
         html = '<div class="barcon" id="' + tableID + 'barcon">' +
             '<div class="barcon2 clearfix">' +
