@@ -1,4 +1,4 @@
-require(['jquery', 'swal', 'api/apiobj', 'api/material', 'flatpickr', 'util/cut_page3'], function ($, swal, api) {
+require(['jquery', 'swal', 'api/apiobj', 'util/cut_page3', 'api/material', 'flatpickr'], function ($, swal, api, CutPage) {
     'use strict';
 
     //分页每页的行数
@@ -35,7 +35,7 @@ require(['jquery', 'swal', 'api/apiobj', 'api/material', 'flatpickr', 'util/cut_
                         select.append(option.clone());
                     }
                     //设置分页
-                    new CutPage('material-record-table', pageSize);
+                    CutPage.cutPage('material-record-table', pageSize);
 
                 }
             })
@@ -99,7 +99,7 @@ require(['jquery', 'swal', 'api/apiobj', 'api/material', 'flatpickr', 'util/cut_
                         $('<td></td>').text(data_arr[i].tid).appendTo(tr);
                         tableBody.append(tr);
                     }
-                    new CutPage('receive-materiel-table', pageSize);
+                    CutPage.cutPage('receive-materiel-table', pageSize);
                 } else {
                     console.log(data);
                 }

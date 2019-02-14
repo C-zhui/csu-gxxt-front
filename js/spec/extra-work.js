@@ -1,4 +1,4 @@
-require(['jquery', 'lodash', 'swal', 'api/apiobj', 'api/group', 'api/admin', 'api/overwork', 'flatpickr', 'util/cut_page3'], function ($, _, swal, api) {
+require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/group', 'api/admin', 'api/overwork', 'flatpickr'], function ($, _, swal, api, CutPage) {
     'use strict';
 
     $(function () {
@@ -125,7 +125,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'api/group', 'api/admin', 'ap
                         tableBody.append(tr);
                     }
                 }
-                new CutPage('student-open-apply-table', 5);
+                CutPage.cutPage('student-open-apply-table', 5);
             });
         }
 
@@ -210,7 +210,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'api/group', 'api/admin', 'ap
                     }
 
                     // 教师值班记录分页初始化
-                    new CutPage('teacher-table', 5);
+                    CutPage.cutPage('teacher-table', 5);
                 }
 
             });

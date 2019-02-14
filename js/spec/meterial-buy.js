@@ -1,4 +1,4 @@
-require(['jquery', 'lodash', 'swal', 'api/apiobj', 'api/material', 'api/applyFPchse', 'api/purchase', 'api/reim', 'api/save', 'api/user', 'util/cut_page3', 'bootstrapTable', 'flatpickr'], function ($, _, swal, api) {
+require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/material', 'api/applyFPchse', 'api/purchase', 'api/reim', 'api/save', 'api/user', 'bootstrapTable', 'flatpickr'], function ($, _, swal, api, CutPage) {
     'use strict';
     let string_array = ["j", "s", "c", "b", "h", "r"]; //定义各功能模块名称字母代表
     let selectedPurchase = []; //定义申购表格中选中的行申购编号
@@ -104,7 +104,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'api/material', 'api/applyFPc
                     for (let k = 0; k < 6; k++)
                         $('#' + string_array[k] + 'material').html(html2);
                     $("#add_apply_material").html(html2);
-                    new CutPage('inventory-table', pageSize);
+                    CutPage.cutPage('inventory-table', pageSize);
                 });
         }
 
@@ -311,7 +311,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'api/material', 'api/applyFPc
 
                 });
                 // 分页初始化
-                new CutPage('jadminTbody', pageSize);
+                CutPage.cutPage('jadminTbody', pageSize);
                 // goPageBT("j", 1, 5)
 
             }
@@ -424,7 +424,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'api/material', 'api/applyFPc
                 tableBody.append(tr);
             }
             // 分页初始化
-            new CutPage('s-admin-table', pageSize);
+            CutPage.cutPage('s-admin-table', pageSize);
         }
 
 // 删除申购记录
@@ -596,7 +596,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'api/material', 'api/applyFPc
 
                 });
                 // 分页初始化
-                new CutPage('cadminTbody', pageSize);
+                CutPage.cutPage('cadminTbody', pageSize);
             }
         }
 
@@ -725,7 +725,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'api/material', 'api/applyFPc
 
                 })
                 // 分页初始化
-                new CutPage('badminTbody', pageSize);
+                CutPage.cutPage('badminTbody', pageSize);
             }
         }
 
@@ -838,7 +838,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'api/material', 'api/applyFPc
                 tableBody.append(tr);
             }
             // 分页初始化
-            new CutPage('h-admin-table', pageSize);
+            CutPage.cutPage('h-admin-table', pageSize);
         }
 
 // 删除报账记录
@@ -968,7 +968,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'api/material', 'api/applyFPc
                     fixedNumber: 4,
                 });
                 // 分页初始化
-                new CutPage('radminTbody', pageSize);
+                CutPage.cutPage('radminTbody', pageSize);
             }
         }
 
