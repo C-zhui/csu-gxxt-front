@@ -1,0 +1,75 @@
+<div id="body">
+    <link rel="stylesheet" type="text/css" href="../css/spec/teach-schedule.css">
+
+    <!-- 给学生评分 -->
+    <div class="content-card">
+        <header>
+            <div class="header-title">
+                学生列表
+            </div>
+        </header>
+        <main>
+            <div class="row">
+                <select class="form-control custom-select col-xs-2 col-sm-2 stu-divide-search" id="student-list-batch">
+                    <option>选择批次</option>
+                </select>
+                <select class="form-control custom-select col-xs-2 col-sm-2 stu-divide-search" id="student-list-group">
+                    <option>选择组号</option>
+                </select>
+                <input type="text" name="" class="form-control col-sm-2 col-xs-2 stu-divide-search" placeholder="请输入学号"
+                       id="sid">
+                <input type="text" name="" class="form-control col-sm-2 col-xs-2 stu-divide-search" placeholder="请输入姓名"
+                       id="sname">
+                <input type="button" name="" value="查&emsp;询" class="btn btn-outline-success stu-divide-search"
+                       id="get-score">
+            </div>
+            <div>
+                <table class="table table-bordered" id="student-list-table"></table>
+            </div>
+            <br>
+            <input type="button" name="" value="提交" class="btn btn-danger float-right" id="submit-score">
+
+            <div class="clearfix"></div>
+            <div class="row input-score">
+                <div class="col-xs-2 col-sm-2 inline-block"></div>
+                <input type="number" name="" class="col-sm-2 col-xs-2 form-control" placeholder="请输入成绩" id="score">
+                <input type="button" name="" value="确认" class="btn btn-outline-danger" id="set-score">
+            </div>
+        </main>
+        <!-- 给学生评分结束 -->
+
+        <!-- 成绩批量导入 -->
+        <div class="content-card input-socre-excel">
+
+            <header>
+                <div class="header-title">
+                    成绩批量导入
+                </div>
+            </header>
+
+            <main>
+                <h5 class="card-title">从Excel文件导入：
+                    <small class="download-excel">
+                        <button id="download-file" class="btn btn-outline-success">标准模版下载</button>
+                    </small>
+                </h5>
+                <div class="row choose-line">
+                    <p>成绩批量导入：</p>
+                    <input type="file" name="choose-file" class="form-control-file col-md-3 col-xs-3" id="file">
+                    <select class="form-control custom-select col-md-2 col-xs-2" id="score-import-batch">
+                        <option>选择批次</option>
+                    </select>
+                    <select class="form-control custom-select col-md-2 ol-xs-2" id="score-import-proced">
+                        <option>选择打分项</option>
+                    </select>
+
+                    <button class="btn btn-danger" id="import-score">开始导入</button>
+                </div>
+            </main>
+        </div>
+        <!-- 成绩批量导入结束 -->
+
+        <!-- 主体部分结束 -->
+    </div>
+    <script type="text/javascript" src="../js/spec/operate-score.js"></script>
+</div>
