@@ -1,5 +1,9 @@
-require(['jquery', 'lodash', 'api/apiobj', 'config/global', 'config/config-course-schedule', 'api/student', 'api/experiment'], function
+require(['jquery', 'lodash', 'api/apiobj', 'config/global', 'config/config-course-schedule', 'api/student', 'api/experiment', 'api/user'], function
   ($, _, api, g, ccs) {
+
+  api.user.getInfo()
+    .done(console.log)
+
   api.student.getMyInfo(null, null)
     .done(function (data) {
       if (data.status === 0) {
