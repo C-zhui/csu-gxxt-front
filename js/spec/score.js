@@ -1,4 +1,4 @@
-require(['jquery', 'swal', 'lodash', 'api/apiobj', 'api/batch', 'api/proced', 'api/student', 'api/teacher', 'api/score', 'bootstrapTable'], function ($, swal, _, api) {
+require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'api/batch', 'api/proced', 'api/student', 'api/teacher', 'api/score', 'bootstrapTable'], function ($, swal, _, api, g) {
     require(['bootstrapTableFixedColumns'], function () {
         //批次对应的工序列表
         var processes = [];
@@ -795,11 +795,11 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'api/batch', 'api/proced', 'a
 //下载模板文件
             $('#download-score-file').click(function () {
                 // 创建a标签，设置属性，并触发点击下载
-                var $a = $("<a>");
-                $a.attr("href", base_url + '/admin/downloadScore');
-                $("body").append($a);
-                $a[0].click();
-                $a.remove();
+                var a = $("<a>");
+                a.attr("href", g.base_url + '/admin/downloadScore');
+                $("body").append(a);
+                a[0].click();
+                a.remove();
             });
 
 //根据批次的变化查询对应的工序
