@@ -24,30 +24,30 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'api/material', 'api/applyFPc
 // 根据权限设置界面
         function setPage() {
             if(user["角色"]!=="管理员"){
-                console.log(233)
-                $(".material_manage_operate").css("display","none");
-                $(".material_add_apply_operate").css("display","none");
-                $(".materal_add_apply_verify").css("display","none");
-                $("#materal-purchase").css("display","none");
-                $("#materal-store").css("display","none");
-                $(".materal_purchase_operate").css("display","none");
-                $(".materal_remib_operate").css("display","none");
-                $(".materal_add_remib_operate").css("display","none");
-                $(".materal_remib_verify_operate").css("display","none");
-                $(".materal_store_operate").css("display","none");
-                switch (user["物料权限"]){
-                    case "1":$(".material_add_apply_operate").css("display","block");
-                        break;  //申请购买物料权限
-                    case "2":$("#materal-purchase").css("display","block");
-                        $(".materal_purchase_operate").css("display","block");
-                        $(".materal_remib_operate").css("display","block");
-                        $(".materal_add_remib_operate").css("display","block");
-                        break;  //采购权限
-                    case "3":$("#materal-store").css("display","block");
-                        $(".materal_store_operate").css("display","block");
-                        break;  //入库权限
-                    case "0":break;
-                }
+                // console.log(233)
+                // $(".material_manage_operate").css("display","none");
+                // $(".material_add_apply_operate").css("display","none");
+                // $(".materal_add_apply_verify").css("display","none");
+                // $("#materal-purchase").css("display","none");
+                // $("#materal-store").css("display","none");
+                // $(".materal_purchase_operate").css("display","none");
+                // $(".materal_remib_operate").css("display","none");
+                // $(".materal_add_remib_operate").css("display","none");
+                // $(".materal_remib_verify_operate").css("display","none");
+                // $(".materal_store_operate").css("display","none");
+                // switch (user["物料权限"]){
+                //     case "1":$(".material_add_apply_operate").css("display","block");
+                //         break;  //申请购买物料权限
+                //     case "2":$("#materal-purchase").css("display","block");
+                //         $(".materal_purchase_operate").css("display","block");
+                //         $(".materal_remib_operate").css("display","block");
+                //         $(".materal_add_remib_operate").css("display","block");
+                //         break;  //采购权限
+                //     case "3":$("#materal-store").css("display","block");
+                //         $(".materal_store_operate").css("display","block");
+                //         break;  //入库权限
+                //     case "0":break;
+                // }
             }
         }
 // 初始化页面数据
@@ -90,8 +90,8 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'api/material', 'api/applyFPc
                         $('<td></td>').text(data_arr[i].clazz).appendTo(tr);
                         $('<td></td>').text(data_arr[i].num).appendTo(tr);
                         let deleteImage = $('<img class="delete-image" src="../../icon/delete-item.svg">').data('id', data_arr[i].clazz).click(deleteOneMateral);
-                        if(user["身份"]==="管理员")
-                            $('<td></td>').append(deleteImage).appendTo(tr);
+                        // if(user["身份"]==="管理员")
+                            $('<td class="table-operate-img"></td>').append(deleteImage).appendTo(tr);
                         tableBody.append(tr);
                         material_class.push(data_arr[i].clazz);
                     }

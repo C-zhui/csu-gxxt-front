@@ -7,9 +7,6 @@
 	text-align: center;
 }
 
-.select-worktype {
-	margin-left: 50px;
-}
 
 .float-right {
 	margin-left: 100px;
@@ -19,19 +16,12 @@
 	margin-left: 20px;
 }
 
-table {
-	margin-top: 40px;
-}
 
-th, td {
-	text-align: center;
+/*调整表格与上方间距*/
+#student-open-apply-table,#teacher-table{
+	margin-top: 28px;
 }
-
-.last-time {
-	margin-left: 50px;
-}
-
-.tips {
-	clear: both;
-	color: green;
+form{
+	margin-top: 20px;
+	margin-bottom: 1.5rem;
 }

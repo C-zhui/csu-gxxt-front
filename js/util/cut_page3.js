@@ -45,8 +45,6 @@ function CutPage(tableID, psize) {
 }
 
 CutPage.prototype.goPage = function (targetPage, offset = null) {
-    console.log(this.currentPage)
-    console.log(offset)
     if(offset!==null){
         targetPage=this.currentPage+offset;
     }
