@@ -89,7 +89,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/materi
                         let tr = $('<tr></tr>');
                         $('<td></td>').text(data_arr[i].clazz).appendTo(tr);
                         $('<td></td>').text(data_arr[i].num).appendTo(tr);
-                        let deleteImage = $('<img class="delete-image" src="../../icon/delete-item.svg">').data('id', data_arr[i].clazz).click(deleteOneMateral);
+                        let deleteImage = $('<img class="delete-image" src="../../icon/delete-item.svg">').attr("id", data_arr[i].clazz).click(deleteOneMateral);
                         // if(user["身份"]==="管理员")
                             $('<td class="table-operate-img"></td>').append(deleteImage).appendTo(tr);
                         tableBody.append(tr);
@@ -110,39 +110,36 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/materi
 
 // 删除一种物料
         function deleteOneMateral(obj) {
+            // console.log(obj.data.id)
             swal({
-                title: "真的删除该种物料吗？",
-                type: "info",
-                showCancelButton: true,
-                confirmButtonText: "确认",
-                cancelButtonText: "取消"
-            }).then(function (isConfirm) {
-                if (isConfirm.value) {
-                    let clazz = obj.data('id');
-                    api.material.deletePurchase(clazz)
-                        .done(function (data) {
-                            if (data.status === 0) {
-                                swal(
-                                    '删除成功',
-                                    '删除物料成功',
-                                    'success'
-                                );
-                                getAllMaterial();
-                            } else {
-                                swal(
-                                    '删除失败',
-                                    '删除物料失败，请重试！',
-                                    'error'
-                                );
-                            }
-                        })
-                } else {
-                    swal({
-                        title: "已取消",
-                        type: "error"
+                title: '请确认',
+                text: '将删除物料',
+                icon: 'warning',
+                buttons: ["取消", '确定'],
+                dangerMode: true
+            }).then(function (ensure) {
+                if (!ensure) return;
+
+                let clazz = obj.currentTarget.id;
+                api.material.deletePurchase(clazz)
+                    .done(function (data) {
+                        if (data.status === 0) {
+                            swal(
+                                '删除成功',
+                                '删除物料成功',
+                                'success'
+                            );
+                            getAllMaterial();
+                        } else {
+                            swal(
+                                '删除失败',
+                                '删除物料失败，请重试！',
+                                'error'
+                            );
+                        }
                     })
-                }
-            })
+                    .fail(g.net_err)
+            });
         }
 
 // 添加一种新的物料
@@ -430,40 +427,34 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/materi
 // 删除申购记录
         function deleteOneApply(data) {
             swal({
-                title: "真的删除该记录吗？",
-                type: "info",
-                showCancelButton: true,
-                confirmButtonText: "确认",
-                cancelButtonText: "取消"
-            }).then(function (isConfirm) {
-                if (isConfirm.value) {
-                    let id = data.id.substring(6, data.id.length)
-                    api.applyFPchse.deleteApplyFPchse(id)
-                        .done(function (returndata) {
-                            // console.log(returndata)
-                            if (returndata.status === 0) {
-                                swal({
-                                    title: "删除成功!",
-                                    type: "success"
-                                }).then(function () {
-                                    init_data()
-                                })
-                            } else {
-                                swal({
-                                    title: "删除失败!",
-                                    type: "error"
-                                })
-                            }
+                title: '请确认',
+                text: '将删除申购记录',
+                icon: 'warning',
+                buttons: ["取消", '确定'],
+                dangerMode: true
+            }).then(function (ensure) {
+                if (!ensure) return;
+                let id = data.id.substring(6, data.id.length)
+                api.applyFPchse.deleteApplyFPchse(id)
+                    .done(function (returndata) {
+                        // console.log(returndata)
+                        if (returndata.status === 0) {
+                            swal({
+                                title: "删除成功!",
+                                type: "success"
+                            }).then(function () {
+                                init_data()
+                            })
+                        } else {
+                            swal({
+                                title: "删除失败!",
+                                type: "error"
+                            })
+                        }
 
-                        })
-                } else {
-                    swal({
-                        title: "已取消",
-                        type: "error"
                     })
-                }
-            })
-
+                    .fail(g.net_err)
+            });
 
         }
 
@@ -844,41 +835,36 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/materi
 // 删除报账记录
         function deleteOneRemi(data) {
             swal({
-                title: "真的删除该记录吗？",
-                type: "info",
-                showCancelButton: true,
-                confirmButtonText: "确认",
-                cancelButtonText: "取消"
-            }).then(function (isConfirm) {
-                if (isConfirm.value) {
-                    let id = data.id.substring(6, data.id.length)
-                    let ids = [].concat(id)
-                    api.reim.deleteRemi(ids)
-                        .done(function (data) {
-                            if (data.status === 0) {
-                                swal({
-                                    title: "删除成功!",
-                                    type: "success"
-                                }).then(function () {
-                                    init_data()
-                                })
+                title: '请确认',
+                text: '将删除该条记录' ,
+                icon: 'warning',
+                buttons: ["取消", '确定'],
+                dangerMode: true
+            }).then(function (ensure) {
+                if (!ensure) return;
 
-                            } else {
-                                swal({
-                                    title: "删除失败!",
-                                    type: "error"
-                                })
-                            }
+                let id = data.id.substring(6, data.id.length)
+                let ids = [].concat(id)
+                api.reim.deleteRemi(ids)
+                    .done(function (data) {
+                        if (data.status === 0) {
+                            swal({
+                                title: "删除成功!",
+                                type: "success"
+                            }).then(function () {
+                                init_data()
+                            })
 
-                        })
-                } else {
-                    swal({
-                        title: "已取消",
-                        type: "error"
+                        } else {
+                            swal({
+                                title: "删除失败!",
+                                type: "error"
+                            })
+                        }
+
                     })
-                }
-            })
-
+                    .fail(g.net_err)
+            });
 
         }
 
@@ -904,8 +890,6 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/materi
             postdata.id = id;
             postdata.num = $("#modifyNum" + id).val();
             postdata.tname = tname;
-            console.log(basicInfo)
-            console.log(postdata)
             api.reim.remiVerify(postdata)
                 .done(function (data) {
                     if (data.status === 0) {
