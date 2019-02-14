@@ -58,8 +58,10 @@ require(['jquery','config/global','util/md5'], function ($,g) {
           console.log(data);
           var teacherGroupOrClass;
           if (data.data["教师组"]) {
+            $("#userId").html("教师组");
             teacherGroupOrClass = data.data["教师组"];
           } else {
+            $("#userId").html("班级")
             teacherGroupOrClass = data.data["班级"];
           }
           let name = data.data["姓名"];
