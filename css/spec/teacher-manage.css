@@ -1,60 +1,17 @@
-.card {
-	margin-bottom: 50px;
+.operations .btn{
+	padding: 0 8px;
 }
-
-.teacher-list .form-control {
-	margin: 20px;
+.operations .row-image-sm{
+	margin-bottom: 1.9px;
 }
-
-.teacher-list button {
-	margin: 20px;
+.reset_teacher_entry{
+	/*line-height: 30px;*/
+	color: #266997;
+	font-size: 12px;
+	font-family: "Microsoft YaHei UI";
 }
-
-tr th,td {
-	text-align: center;
-}
-
-.operaten {
-	margin: 50px 30px;
-}
-
-.deleten {
-	clear: both;
-	float: right;
-	margin-right: 20px;
-}
-
-.btn-cyan {
-	background-color: #00c3f5;
-}
-
-.card-row {
-	margin: 2px;
-}
-
-.card-row h5 {
-	display: inline-block;
-}
-
-.card-row button {
-	float: right;
-	margin-right: 20px;
-}
-
-.edit-row {
-	display: flex;
-	align-items: center;
-	justify-content: space-around;
-	margin: 20px;
-}
-
-.teacher-list-add {
-	margin: 10px 95px 30px 20px;
-}
-
-.container-fluid .row {
-	display: flex;
-	align-items: center;
-	justify-content: space-around;
-	margin: 20px;
+#delete_selected_teacher{
+	padding: 0.25rem 0;
+	margin-top: 32px;
+	width: 50px;
 }

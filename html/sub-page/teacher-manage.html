@@ -1,5 +1,5 @@
 <div id="body">
-	<link rel="stylesheet" href="./css/spec/teacher-manage.css">
+	<link rel="stylesheet" href="../../css/spec/teacher-manage.css">
 
 
 	<!-- 模板代码 -->
@@ -29,18 +29,18 @@
 		<table>
 			<tbody id="teacher_list_item_data">
 				<tr class="teacher_list_item_data">
-					<td><input type="checkbox" class="batch_op"></td>
 					<td class="tid"></td>
 					<td class="tname"> </td>
 					<td class="all_group"> </td>
 					<td class="role"></td>
 					<td class="material_privilege"></td>
 					<td class="overtime_privilege"></td>
-					<td class="operations">
-						<button class="btn btn-sm edit_teacher_entry"><i class="fa fa-edit"></i>编辑</button>
-						<button class="btn btn-sm reset_teacher_entry"><i class="fa fa-refresh"></i>重置密码</button>
-						<button class="btn btn-sm del_teacher_entry"><i class="fa fa-trash"></i>删除</button>
+					<td class="operations" style="width: 182px">
+						<button class="btn btn-sm edit_teacher_entry"><img src="../../icon/edit.svg" class="row-image-sm"></button>
+						<button class="btn btn-sm del_teacher_entry"><img src="../../icon/delete.svg" class="row-image-sm"></button>
+						<button class="btn btn-sm reset_teacher_entry"><img src="../../icon/reset.svg" class="row-image-sm">重置密码</button>
 					</td>
+					<td><input type="checkbox" class="batch_op"></td>
 				</tr>
 			</tbody>
 		</table>
@@ -108,10 +108,9 @@
 
 
 			<div class="clearfix">
-				<table class="table">
+				<table class="table" id="teacher_table">
 					<thead>
 						<tr>
-							<th></th>
 							<th>用户名</th>
 							<th>姓名</th>
 							<th>教师组</th>
@@ -119,6 +118,7 @@
 							<th>物料</th>
 							<th>开放</th>
 							<th>操作</th>
+							<th></th>
 						</tr>
 					</thead>
 
@@ -127,43 +127,10 @@
 					</tbody>
 				</table>
 
-				<!-- 分页功能部分 -->
-				<div id="barcon" class="barcon clearfix">
-					<div id="barcon1" class="barcon1"></div>
-					<div id="barcon2" class="barcon2">
-						<ul>
-							<li>
-								<a href="###" id="firstPage" class="btn btn-sm">首页</a></li>
-							<li>
-								<a href="###" id="prePage" class="btn btn-sm">上一页</a></li>
-							<li>
-								<a href="###" id="nextPage" class="btn btn-sm">下一页</a></li>
-							<li>
-								<a href="###" id="lastPage" class="btn btn-sm">尾页</a></li>
-							<li>
-								<!-- <select id="jumpWhere"></select> -->
-								<input type="text" id="jumpWhere">
-							</li>
-							<li><a href="###" id="jumpPage" onclick="jumpPage()" class="btn btn-sm btn-primary">跳转</a></li>
-						</ul>
-					</div>
-				</div>
-
-				<div class="operaten">
-					<button class="btn btn-danger deleten" id="delete_selected_teacher">删&emsp;除</button>
-					<span class="clearfix"></span>
-				</div>
+				<button class="btn btn-background3 btn-sm btn-single right" id="delete_selected_teacher">删除</button>
 			</div>
 		</main>
 	</div>
-
-
-
-
-
-
-
-
 
 
 
@@ -387,7 +354,7 @@
 		<!-- 编辑教师信息 modal -->
 		<div class="modal fade" id="teacherManage-button-editModal" tabindex="-1" role="dialog"
 			aria-labelledby="teacherManage-button-editModalTitle" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+			<div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="width: 800px">
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title" id="teacherManage-button-editModalTitle">教师信息修改</h5>
@@ -440,8 +407,8 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-						<button type="button" class="btn btn-primary" id="edit_teacher_ensure" data-dismiss="modal">确定</button>
+						<button type="button" class="btn btn-sm btn-outline btn-multi" data-dismiss="modal">关闭</button>
+						<button type="button" class="btn btn-sm btn-background3 btn-multi" id="edit_teacher_ensure" data-dismiss="modal">确定</button>
 					</div>
 				</div>
 			</div>

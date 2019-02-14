@@ -129,47 +129,24 @@
 				</div>
 
 				<!--<div class="container">-->
-				<div class="table-responsive">
-					<table class="table table-bordered">
-						<thead>
-						<tr>
-							<th>学号</th>
-							<th>姓名</th>
-							<th>班级</th>
-							<th>批次</th>
-							<th>操作</th>
-							<th></th>
-						</tr>
-						</thead>
-						<tbody id="student_list_body">
-						</tbody>
-					</table>
-				</div>
+				<table class="table table-bordered" id="student_table">
+					<thead>
+					<tr>
+						<th>学号</th>
+						<th>姓名</th>
+						<th>班级</th>
+						<th>批次</th>
+						<th>操作</th>
+						<th></th>
+					</tr>
+					</thead>
+					<tbody id="student_list_body">
+					</tbody>
+				</table>
 
 				<!--</div>-->
 
 				<!-- 分页功能部分 -->
-				<div id="barcon" class="barcon">
-					<div id="barcon1" class="barcon1"></div>
-					<div id="barcon2" class="barcon2">
-						<ul>
-							<li>
-								<a href="###" id="firstPage" class="btn btn-sm btn-outline">首页</a></li>
-							<li>
-								<a href="###" id="prePage" class="btn btn-sm btn-outline">上一页</a></li>
-							<li>
-								<a href="###" id="nextPage" class="btn btn-sm btn-outline">下一页</a></li>
-							<li>
-								<a href="###" id="lastPage" class="btn btn-sm btn-outline">尾页</a></li>
-							<li>
-								<!-- <select id="jumpWhere"></select> -->
-								<input class="jumpWhere" type="text" id="jumpWhere">
-							</li>
-							<li><a href="###" id="jumpPage" onclick="jumpPage()" class="btn btn-sm btn-background2">跳转</a>
-							</li>
-						</ul>
-					</div>
-				</div>
 				<button class="btn btn-sm btn-background3 btn-single right" id="delete_selected_stud">删除</button>
 				<div class="clearfix"></div>
 			</div>

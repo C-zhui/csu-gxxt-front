@@ -32,10 +32,6 @@
 	border-bottom: 1px solid #def1fa;
 	margin-bottom: 6px;
 }
-.row-image-lg{
-	width: 19px;
-	height: 19px;
-}
 .group-detail{
 	list-style: none;
 	padding-left: 50px;
@@ -55,11 +51,6 @@
 	font-family: "Microsoft YaHei UI";
 	opacity: 1;
 	box-sizing: border-box;
-}
-
-.row-image-sm{
-	width: 17px;
-	height: 17px;
 }
 .delete_semester_entry,.edit_semester_entry,.new_batch_entry{
 	padding: 0;

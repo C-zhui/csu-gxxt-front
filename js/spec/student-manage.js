@@ -1,6 +1,6 @@
-require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/batch', 'api/student', 'api/user', 'flatpickr', 'util/md5'], function ($, _, swal, api, g) {
+require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_page3','api/batch', 'api/student', 'api/user', 'flatpickr', 'util/md5'], function ($, _, swal, api, g,CutPage) {
   var base_url = g.base_url
-
+  const pageSize = 5;//初始化分页单页页数
   function boot_grouper() {
     $('.grouper').on('click', '.toggle-btn', function () {
       var p = $(this).parents('.group').find('.group-detail');
@@ -404,7 +404,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/batch',
             $cloneTemp.appendTo($stu_list_tbody)
           });
           // 初始化分页
-          goPage("", 1, 10);   // 当前页数为1，每页10条数据
+            CutPage.cutPage('student_table', pageSize);
         } else {
           g.fetch_err(data)
         }
