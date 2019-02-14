@@ -1,4 +1,4 @@
-require(['jquery', 'lodash', 'swal', 'api/apiobj', 'api/group', 'api/admin', 'api/overwork', 'flatpickr', 'util/cut_page3'], function ($, _, swal, api) {
+require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/group', 'api/admin', 'api/overwork', 'flatpickr'], function ($, _, swal, api, CutPage) {
     'use strict';
 
     $(function () {
@@ -125,7 +125,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'api/group', 'api/admin', 'ap
                         tableBody.append(tr);
                     }
                 }
-                new CutPage('student-open-apply-table', 5);
+                CutPage.cutPage('student-open-apply-table', 5);
             });
         }
 
@@ -185,12 +185,13 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'api/group', 'api/admin', 'ap
                         let last_time = getGMThour(data_arr[i].overwork_time_end) - getGMThour(data_arr[i].overwork_time);
                         let tr = $('<tr></tr>');
                         $('<td></td>').text(chGMT(data_arr[i].overwork_time)).appendTo(tr);
+                        $('<td></td>').text(data_arr[i].tname).appendTo(tr);
                         $('<td></td>').text(data_arr[i].pro_name).appendTo(tr);
                         $('<td></td>').text(last_time).appendTo(tr);
                         $('<td></td>').text(data_arr[i].reason).appendTo(tr);
                         let td = $('<td></td>');
                         //编辑按钮
-                        $('<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editTeacherHistoryModal"></button>').click(function () {
+                        $('<img src="../../icon/edit.svg" class="row-image" data-toggle="modal" data-target="#editTeacherHistoryModal">').click(function () {
                             updateTeacherOverwork_init(this);
                         }).data({
                             id: data_arr[i].overwork_id,
@@ -202,14 +203,14 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'api/group', 'api/admin', 'ap
                         }).text('编辑').appendTo(td);
                         td.append('&emsp;');
                         //删除按钮
-                        $('<button class="btn btn-danger btn-sm"></button>').click(function () {
+                        $('<img src="../../icon/delete.svg" class="row-image">').click(function () {
                             deleteOverwork(this);
                         }).attr('id', data_arr[i].overwork_id).text('删除').appendTo(td);
                         tableBody.append(tr.append(td));
                     }
 
                     // 教师值班记录分页初始化
-                    new CutPage('teacher-table', 5);
+                    CutPage.cutPage('teacher-table', 5);
                 }
 
             });
