@@ -1,4 +1,4 @@
-require(['jquery', 'lodash', 'swal', 'api/apiobj', 'api/material', 'api/applyFPchse', 'api/purchase', 'api/reim', 'api/save', 'api/user', 'util/cut_page3', 'bootstrapTable'], function ($, _, swal, api) {
+require(['jquery', 'lodash', 'swal', 'api/apiobj', 'api/material', 'api/applyFPchse', 'api/purchase', 'api/reim', 'api/save', 'api/user', 'util/cut_page3', 'bootstrapTable', 'flatpickr'], function ($, _, swal, api) {
     'use strict';
     let string_array = ["j", "s", "c", "b", "h", "r"]; //定义各功能模块名称字母代表
     let selectedPurchase = []; //定义申购表格中选中的行申购编号
@@ -10,6 +10,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'api/material', 'api/applyFPc
     const pageSize = 5; //分页每页行数
     let tname = "";
     $(function () {
+        $(".mycalendar").flatpickr();
         init_data();
         api.user.getInfo().done(function (data) {
             if (data.status === 0) {
