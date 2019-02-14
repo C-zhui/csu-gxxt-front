@@ -412,11 +412,6 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
     }
   });
 
-  function time_quant_formated(time_quant) {
-    var index_time = parseInt(time_quant.slice(-2));
-    var time = ccs.timeRange[index_time]
-    return time_quant.slice(0, -3) + '(' + _.range(time, time + ccs.timeRangeStep) + '节)'
-  }
 
   function displayResultByBatch(data) {
     var grouped_data = _.groupBy(data, 'class_time') // 使用class_time分组的数据
@@ -441,7 +436,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
       $tr = $('<tr>') // 需要计算出课时对应的时间
       var time_quant = group_data[0].time_quant;
       // var time_quant_arr = parse_time_quant(time_quant);
-      $('<td>').text('' + class_time + "->" + time_quant_formated(time_quant)).appendTo($tr)
+      $('<td>').text('' + class_time + "->" + ccs.time_quant_formated(time_quant)).appendTo($tr)
       var td_datas = []
       td_datas.length = s_groups.length;
       _.each(group_data, function (data, i) {
@@ -516,7 +511,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
     _.each(data, function (class_group, class_time) {
       var time_quant = class_group[0].time_quant;
       $tr = $('<tr>');
-      $('<td>').text('' + class_time + "->" + time_quant_formated(time_quant)).appendTo($tr);
+      $('<td>').text('' + class_time + "->" + ccs.time_quant_formated(time_quant)).appendTo($tr);
 
       var proced_groups = _.groupBy(class_group, 'pro_name');
       // console.log(proced_groups);
@@ -735,7 +730,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
             data_arr = _.sortBy(data_arr, 'time_quant');
             _.each(data_arr, function (val, i) {
               var $tr = $('<tr>');
-              $('<td>').text((val.class_time || (i + 1)) + "->" + time_quant_formated(val.time_quant)).appendTo($tr);
+              $('<td>').text((val.class_time || (i + 1)) + "->" + ccs.time_quant_formated(val.time_quant)).appendTo($tr);
               $('<td>').text(val.pro_name).appendTo($tr);
               $('<td>').text(val.batch_name).appendTo($tr);
               $('<td>').text(val.s_group_id).appendTo($tr);
@@ -1010,7 +1005,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
     _.each(time_data_s, function (time_data, i) {
       var $cloneTemp = $temp.clone();
       $cloneTemp.attr('time_quant', time_data[0])
-        .find('.time').text(time_quant_formated(time_data[0])).end()
+        .find('.time').text(ccs.time_quant_formated(time_data[0])).end()
         .find('.proced').text(time_data[1].pro_name);
       $cloneTemp.appendTo($tbody)
     })
@@ -1044,7 +1039,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
     var $temp = $('#for_spec_batch_course').children();
     _.each(sorted_time_groups, function (time_group, i) {
       var $cloneTemp = $temp.clone().attr('i', i);
-      var $proceds = $cloneTemp.find('.time').text(time_quant_formated(time_group[0])).end().find('.proceds');
+      var $proceds = $cloneTemp.find('.time').text(ccs.time_quant_formated(time_group[0])).end().find('.proceds');
       _.each(time_group[1], function (course, j) {
         $proceds.append($('<button class="btn btn-sm btn-outline for-add"></button>').text(course.pro_name).attr('j', j))
       });
@@ -1098,11 +1093,11 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
     // console.log('del', _.map(del_selected_courses, 'course'));
     // console.log('new', _.map(new_courses));
     var for_del = _.map(del_selected_courses, function (d) {
-      return time_quant_formated(d.course.time_quant) + ":" + d.course.pro_name;
+      return ccs.time_quant_formated(d.course.time_quant) + ":" + d.course.pro_name;
     });
 
     var for_new = _.map(new_courses, function (n) {
-      return time_quant_formated(n.time_quant) + ':' + n.pro_name;
+      return ccs.time_quant_formated(n.time_quant) + ':' + n.pro_name;
     });
     swal(
       '提示更改',
