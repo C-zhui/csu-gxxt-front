@@ -14,7 +14,7 @@ define(['jquery'], function ($) {
         if (this.totalRows / this.pageSize > parseInt(this.totalRows / this.pageSize)) {
             this.totalPage = parseInt(this.totalRows / this.pageSize) + 1;
         } else {
-            this.totalPage = parseInt(this.totalRows / this.pageSize) + 1;
+            this.totalPage = parseInt(this.totalRows / this.pageSize);
         }
 
         let table = $('#' + tableID);
