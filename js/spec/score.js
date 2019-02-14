@@ -1,4 +1,5 @@
-require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'api/batch', 'api/proced', 'api/student', 'api/teacher', 'api/score', 'bootstrapTable'], function ($, swal, _, api, g) {
+require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_page3','api/batch', 'api/proced', 'api/student', 'api/teacher', 'api/score', 'bootstrapTable'], function ($, swal, _, api, g,CutPage) {
+    const pageSize = 5; //设置分页单页条数
     require(['bootstrapTableFixedColumns'], function () {
         //批次对应的工序列表
         var processes = [];
@@ -295,6 +296,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'api/batch',
                         score_list_table_config.columns = _.concat(score_list_table_config.columns, score_list_columns_end);
                         let score_list_table = $('#score_list_table');
                         score_list_table.bootstrapTable('destroy').bootstrapTable(score_list_table_config);
+                        CutPage.cutPage('score_list_table', pageSize);
                     }
 
                 });
@@ -361,6 +363,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'api/batch',
                     tableData = _.sortBy(tableData, 'batchAndGroup');
                     score_list_table_config.data = tableData;
                     $('#score_list_table').bootstrapTable('load', tableData);
+                    CutPage.cutPage('score_list_table', pageSize);
                     //为button设置点击事件
                     $('#score_list_table button').click(function () {
                         editOneStuScore(this);
@@ -600,6 +603,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'api/batch',
                             'success'
                         );
                         $('#score_list_table').bootstrapTable('updateRow', score_row_index, select_data);
+                        CutPage.cutPage('score_list_table', pageSize);
                     } else {
                         swal(
                             '更新失败',
@@ -648,6 +652,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'api/batch',
                             'success'
                         );
                         $('#score_list_table').bootstrapTable('updateRow', score_row_index, select_data);
+                        CutPage.cutPage('score_list_table', pageSize);
                     } else {
                         swal(
                             '更新失败',
@@ -705,10 +710,12 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'api/batch',
                 }
                 let table = $('#score_list_table');
                 table.bootstrapTable('destroy').bootstrapTable(filterTableConfig);
+                CutPage.cutPage('score_list_table', pageSize);
                 if (!filterTableConfig.fixedColumns) {
                     _.forEach(processes, function (value) {
                         if (value !== process) {
                             table.bootstrapTable('hideColumn', value);
+                            CutPage.cutPage('score_list_table', pageSize);
                         }
                     })
 
@@ -777,6 +784,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'api/batch',
                             for (let i = 0; i < tableData.length; i++) {
                                 tableData[i].publishStatus = '已发布';
                                 table.bootstrapTable('updateRow', i, tableData[i]);
+                                CutPage.cutPage('score_list_table', pageSize);
                             }
                         }
                     } else {
@@ -885,6 +893,8 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'api/batch',
                         tableData = _.sortBy(tableData, 'batchNameAndGroup');
                         entry_table_config.data = tableData;
                         $('#entry-list-table').bootstrapTable('destroy').bootstrapTable(entry_table_config);
+                        CutPage.cutPage('entry-list-table', pageSize);
+
                     })
                 }
 
@@ -940,6 +950,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'api/batch',
                     }
                 });
                 $('#entry-list-table').bootstrapTable('destroy').bootstrapTable(filterTableConfig);
+                CutPage.cutPage('entry-list-table', pageSize);
             }
 
             $('#entry-list-select-process').change(filterEntryTable);
@@ -1022,6 +1033,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'api/batch',
                         }).always(function () {
                             submit_list_table_config.data = tableData;
                             $('#submit_list_table').bootstrapTable('destroy').bootstrapTable(submit_list_table_config);
+                            CutPage.cutPage('submit_list_table', pageSize);
                         })
                     }
                 });
@@ -1065,6 +1077,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'api/batch',
                         data_arr = _.orderBy(data_arr, 'time', 'desc');
                         update_list_table_config.data = data_arr;
                         $('#update_list_table').bootstrapTable('destroy').bootstrapTable(update_list_table_config);
+                        CutPage.cutPage('update_list_table', pageSize);
                     }
                 });
             }
@@ -1104,6 +1117,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'api/batch',
                 special_score_list_table_config.columns = _.concat(special_score_list_table_config.columns, special_score_list_columns_end);
                 special_score_list_table_config.data = [];
                 $('#special_score_list_table').bootstrapTable('destroy').bootstrapTable(special_score_list_table_config);
+                CutPage.cutPage('special_score_list_table', pageSize);
             }
 
 //根据权重模板获取特殊学生成绩列表
@@ -1169,6 +1183,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'api/batch',
                     }
                     special_score_list_table_config.data = [tableRow];
                     $('#special_score_list_table').bootstrapTable('load', special_score_list_table_config.data);
+                    CutPage.cutPage('special_score_list_table', pageSize);
                     $('#special_score_list_table img').click(function () {
                         updateSpScore();
                     })
@@ -1201,10 +1216,10 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'api/batch',
                     let input = $('<input type="number" class="edit-input" value="">');
                     input.val(selectData[columns[i].field]);
                     input.data('field', columns[i].field);
-                    tableBody.append($('<td></td>').append(input));
+                    tableBody.append($('<td class="table_num"></td>').append(input));
                 }
                 tableBody.append($('<td></td>').text(selectData[columns[columns.length - 4].field]));
-                let select = $('<select><option>自动</option><option>优</option><option>良</option><option>中</option><option>及格</option><option>不及格</option></select>').val('自动');
+                let select = $('<select class="custom-select custom-select-sm"><option>自动</option><option>优</option><option>良</option><option>中</option><option>及格</option><option>不及格</option></select>').val('自动');
                 tableBody.append($('<td></td>').append(select));
                 tableBody.append($('<td></td>').text(selectData[columns[columns.length - 2].field]));
                 console.log(selectData);
@@ -1242,6 +1257,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'api/batch',
                             'success'
                         );
                         $('#special_score_list_table').bootstrapTable('updateRow', 0, selectData);
+                        CutPage.cutPage('special_score_list_table', pageSize);
                         $('#specialListEditModal').modal('hide');
 
                     } else {
@@ -1258,6 +1274,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'api/batch',
             $('#publish-special-score').click(function () {
                 let specialScoreListTable = $('#special_score_list_table');
                 let selections = specialScoreListTable.bootstrapTable('getSelections');
+                CutPage.cutPage('special_score_list_table', pageSize);
                 if (selections.length < 1) {
                     return;
                 }

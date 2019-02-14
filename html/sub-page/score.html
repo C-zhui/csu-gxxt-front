@@ -26,7 +26,7 @@
                 </header>
 
                 <main>
-                    <div class="content-body">
+                    <div class="content-body clearfix">
                         <div class="row select-top title">
                             <div class="col-xs-3 col-sm-3">实习批次选择：</div>
                             <div class="col-xs-3 col-sm-3">选择工种：</div>
@@ -71,15 +71,13 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="table-responsive">
-                            <table id="score_list_table">
-                            </table>
-                        </div>
+                        <table id="score_list_table">
+                        </table>
                         <div class="clearfix"></div>
                     </div>
                     <div class="modal fade" id="score-grade-test" tabindex="-1" role="dialog"
                          aria-labelledby="score-grade-testTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-dialog modal-dialog-centered" role="document" style="width: 400px">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="score-grade-testTitle">等级评定规则</h5>
@@ -88,12 +86,13 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <select class="form-control custom-select col-xs-3" id="setDegreeModal">
-                                        <option>选择成绩等级设置方式</option>
-                                        <option>按照成绩总排名划分</option>
-                                        <option>按照成绩总分数划分</option>
-                                    </select>
-
+                                    <div class="operate clearfix">
+                                        <select class="custom-select custom-select-sm" id="setDegreeModal">
+                                            <option>选择成绩等级设置方式</option>
+                                            <option>按照成绩总排名划分</option>
+                                            <option>按照成绩总分数划分</option>
+                                        </select>
+                                    </div>
                                     <table class="table col-xs-9 addGradeTest-table">
                                         <tbody id="setDegreeTable">
                                         </tbody>
@@ -102,10 +101,10 @@
 
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                    <button type="button" class="btn btn-sm btn-outline btn-multi" data-dismiss="modal"
                                             id="addNewPlan-close">关闭
                                     </button>
-                                    <button type="button" class="btn btn-primary" id="addNewPlan-ensure" data-dismiss="modal">确定
+                                    <button type="button" class="btn btn-sm btn-background3 btn-multi" id="addNewPlan-ensure" data-dismiss="modal">确定
                                     </button>
                                 </div>
                             </div>
@@ -216,7 +215,7 @@
                     <div class="header-title">录入记录</div>
                 </header>
                 <main>
-                    <div class="content-body">
+                    <div class="content-body clearfix">
                         <div class="row select-top title">
                             <div class="col-xs-3 col-sm-3">实习批次选择：</div>
                             <div class="col-xs-3 col-sm-3">组号：</div>
@@ -257,9 +256,7 @@
                                        id="entry_list_stu_name">
                             </div>
                         </div>
-                        <div class="table-responsive">
-                            <table id="entry-list-table"></table>
-                        </div>
+                        <table id="entry-list-table"></table>
                     </div>
                 </main>
             </div>
@@ -271,7 +268,7 @@
                     <div class="header-title">提交记录</div>
                 </header>
                 <main>
-                    <div class="content-body">
+                    <div class="content-body clearfix">
                         <div class="row select-top title">
                             <div class="col-xs-3 col-sm-3">实习批次选择：</div>
                             <div class="col-xs-3 col-sm-3">工种：</div>
@@ -298,9 +295,7 @@
                                 <button class="btn btn-sm btn-outline btn-single float-right" id="get-score-record" onclick="getScoreRecord()">查询</button>
                             </div>
                         </div>
-                        <div class="table-responsive">
-                            <table id="submit_list_table"></table>
-                        </div>
+                        <table id="submit_list_table"></table>
                     </div>
                 </main>
             </div>
@@ -312,7 +307,7 @@
                     <div class="header-title">修改记录</div>
                 </header>
                 <main>
-                    <div class="content-body">
+                    <div class="content-body clearfix">
                         <div class="row select-top title">
                             <div class="col-xs-3 col-sm-3">实习批次选择：</div>
                             <div class="col-xs-5 col-sm-5">修改时间：</div>
@@ -356,9 +351,7 @@
                                        id="score_edithistory_sname">
                             </div>
                         </div>
-                        <div class="table-responsive">
-                            <table id="update_list_table"></table>
-                        </div>
+                        <table id="update_list_table"></table>
                     </div>
                 </main>
             </div>
@@ -370,7 +363,7 @@
                     <div class="header-title">特殊学生成绩列表</div>
                 </header>
                 <main>
-                    <div class="content-body">
+                    <div class="content-body clearfix">
                         <div class="row select-top title">
                             <div class="col-xs-3 col-sm-3">权重模板：</div>
                             <div class="col-xs-3 col-sm-3">学号：</div>
@@ -389,12 +382,10 @@
                                 <button class="btn btn-sm btn-outline btn-single float-right" id="get_special_score_list">查询</button>
                             </div>
                         </div>
-                        <div class="table-responsive">
-                            <table id="special_score_list_table"></table>
-                        </div>
+                        <table id="special_score_list_table"></table>
                         <div class="modal fade" id="specialListEditModal" tabindex="-1" role="dialog"
                              aria-labelledby="specialListEditModalTitle" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                            <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="width: 1160px">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="specialListEditModalTitle">学生信息修改</h5>
@@ -405,7 +396,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <div class="table-responsive">
-                                            <table class="table table-striped" style="min-width: 1200px;overflow-x: scroll" id="edit_special_score_table">
+                                            <table class="table table-striped" id="edit_special_score_table">
                                                 <thead>
                                                 <tr>
                                                 </tr>
@@ -416,7 +407,7 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <div>
+                                        <div style="margin-top: 1rem">
                                             <label for="edit-state">成绩修改备注</label>
                                             <textarea id="special-edit-state" rows="2"
                                                       class="form-control"></textarea>
@@ -435,8 +426,6 @@
                         <!--<div class="row float-right tips">-->
                         <!--<p>注意：总成绩发布后将不可修改该批次成绩</p>-->
                         <!--</div>-->
-                        <div class="clearfix">
-                        </div>
                     </div>
                     <hr/>
                     <input type="button" class="btn btn-sm btn-single btn-background3 left" value="发布总成绩" id="publish-special-score">
