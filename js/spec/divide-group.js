@@ -1,6 +1,6 @@
-require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/date_format_transform', 'config/config-course-schedule', 'api/experiment', 'api/batch', 'api/proced', 'api/studentGroup', 'api/student', 'api/specialScore'], function ($, _, swal, api, g, dft, ccs) {
+require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_page3','util/date_format_transform', 'config/config-course-schedule', 'api/experiment', 'api/batch', 'api/proced', 'api/studentGroup', 'api/student', 'api/specialScore'], function ($, _, swal, api, g, CutPage,dft, ccs) {
 
-
+  const pageSize = 5;//设置分页页数
   $(document).ready(function () {
     init_data()
     console.log('init divide-group.js')
@@ -669,6 +669,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/date_f
       btn_td.appendTo($tr);
       $tr.appendTo($table_body);
     })
+      CutPage.cutPage('student-grouped-table', pageSize);
   }
 
   $('#student-group-result').on('click', 'button.switch-sgroup', function () {
@@ -899,6 +900,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/date_f
       $('<td class="center"><input type="checkbox" class="batch_op"></td>').appendTo($tr);
       $tr.appendTo($table);
     });
+      CutPage.cutPage('special-table', pageSize);
   }
 
   // 删除一个特殊学生
@@ -1022,6 +1024,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/date_f
         .find('.proced').text(time_data[1].pro_name);
       $cloneTemp.appendTo($tbody)
     })
+      CutPage.cutPage('spec-selected-course-table', pageSize);
   }
 
   var $spec_student_batch_selector = $('#spec-student-batch-selector');
@@ -1053,10 +1056,11 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/date_f
       var $cloneTemp = $temp.clone().attr('i', i);
       var $proceds = $cloneTemp.find('.time').text(time_group[0]).end().find('.proceds');
       _.each(time_group[1], function (course, j) {
-        $proceds.append($('<button class="btn btn-info for-add"></button>').text(course.pro_name).attr('j', j))
+        $proceds.append($('<button class="btn btn-sm btn-outline for-add"></button>').text(course.pro_name).attr('j', j))
       });
       $cloneTemp.appendTo($tbody)
     })
+    CutPage.cutPage('spec-batch-course-table', pageSize);
   }
 
 

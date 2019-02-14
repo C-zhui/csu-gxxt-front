@@ -257,22 +257,24 @@
             </div>
 
             <!-- 学生列表表格 -->
-            <div class="table-responsive" id="student-grouped-table">
-              <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th>学号</th>
-                    <th>姓名</th>
-                    <th>班级</th>
-                    <th>批次</th>
-                    <th>组号</th>
-                    <th>操作</th>
-                  </tr>
-                </thead>
-                <tbody id="student-group-result">
-                </tbody>
-              </table>
-            </div>
+            <!--<div class="table-responsive" id="student-grouped-table">            -->
+            <table class="table table-bordered" id="student-grouped-table">
+              <thead>
+                <tr>
+                  <th>学号</th>
+                  <th>姓名</th>
+                  <th>班级</th>
+                  <th>批次</th>
+                  <th>组号</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody id="student-group-result">
+              </tbody>
+            </table>
+
+            <div class="clearfix"></div>
+            <!--</div>-->
           </div>
         </main>
       </div>
@@ -362,31 +364,29 @@
         <main>
           <div class="content-body">
             <!-- 特殊学生列表筛选 -->
-            <div class="operate">
+            <div class="operate clearfix">
               <span>学生学号:</span>
               <input type="text" name="" class="form-control form-control-sm select" placeholder="学生学号"
                 id="spec_stud_id">
               <button class="btn btn-sm btn-outline btn-single" id="special_stu_search_stu">查询</button>
-              <div class="clearfix"></div>
             </div>
             <!-- 学生列表表格 -->
-            <div class="table-responsive">
-              <table class="table table-bordered" id="mytable">
-                <thead>
-                  <tr>
-                    <!-- <th>选择</th> -->
-                    <th>学号</th>
-                    <th>姓名</th>
-                    <th>班级</th>
-                    <th>批次</th>
-                    <!-- <th>操作</th> -->
-                  </tr>
-                </thead>
-                <tbody id="query-student-result">
+            <table class="table table-bordered mytable" id="student-table">
+              <thead>
+                <tr>
+                  <!-- <th>选择</th> -->
+                  <th>学号</th>
+                  <th>姓名</th>
+                  <th>班级</th>
+                  <th>批次</th>
+                  <!-- <th>操作</th> -->
+                </tr>
+              </thead>
+              <tbody id="query-student-result">
 
-                </tbody>
-              </table>
-            </div>
+              </tbody>
+            </table>
+            <div class="clearfix"></div>
 
             <!-- 绑定模版 -->
             <div class="operate right">
@@ -410,17 +410,14 @@
           </div>
         </header>
         <main>
-          <div class="content-body">
-            <div class="operate">
+          <div class="content-body clearfix">
+            <div class="operate clearfix">
               <span>学生学号:</span>
               <input type="text" name="" class="form-control form-control-sm select" placeholder="学生学号"
                 id="query-spec-stud-id">
               <button class="btn btn-sm btn-outline btn-single" id="query-spec-stud-id-button">查询</button>
-              <div class="clearfix"></div>
             </div>
-          </div>
-          <div class="table-responsive">
-            <table class="table table-bordered" id="mytable">
+            <table class="table table-bordered mytable" id="special-table">
               <thead>
                 <tr>
                   <th>学号</th>
@@ -434,86 +431,87 @@
               <tbody id="query-spstudent-result">
               </tbody>
             </table>
-          </div>
-          <div class="operate right">
-            <button class="btn btn-sm btn-background2" id="del_selected_sp_studs">删除选中</button>
-            <div class="clearfix"></div>
-          </div>
-          <div class="clearfix"></div>
-          <div class="modal fade" id="edit-specialStudentSchedule" tabindex="-1" role="dialog"
-            aria-labelledby="edit-specialStudentScheduleTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered " style="max-width: 95%;" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="edit-specialStudentScheduleTitle">学生信息修改</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-
-                  <!--  这个div作为模板，display是none，不需要样式 -->
-                  <div id="templates" class="d-none">
-                    <table>
-                      <tbody id="for_spec_batch_course">
-                        <tr class="class-time">
-                          <td class="time"></td>
-                          <td class="proceds"></td>
-                        </tr>
-                      </tbody>
-                    </table>
-
-                    <table>
-                      <tbody id="for_selected_course">
-                        <tr class="time-quant">
-                          <td class="time"></td>
-                          <td class="proced"></td>
-                          <td><button class="btn btn-danger del-btn">删除</button></td>
-                        </tr>
-                      </tbody>
-                    </table>
-
+            <div class="operate right">
+              <button class="btn btn-sm btn-background2" id="del_selected_sp_studs">删除选中</button>
+              <div class="clearfix"></div>
+            </div>
+            <div class="modal fade" id="edit-specialStudentSchedule" tabindex="-1" role="dialog"
+              aria-labelledby="edit-specialStudentScheduleTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered " style="width: 1140px" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="edit-specialStudentScheduleTitle">学生信息修改</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
                   </div>
+                  <div class="modal-body clearfix">
+
+                    <!--  这个div作为模板，display是none，不需要样式 -->
+                    <div id="templates" class="d-none">
+                      <table>
+                        <tbody id="for_spec_batch_course">
+                          <tr class="class-time">
+                            <td class="time"></td>
+                            <td class="proceds"></td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                      <table>
+                        <tbody id="for_selected_course">
+                          <tr class="time-quant">
+                            <td class="time"></td>
+                            <td class="proced"></td>
+                            <td><button class="btn btn-sm btn-background3 btn-single del-btn">删除</button></td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                    </div>
 
 
-                  <div class="row align-items-start">
-                    <div class="col-6">
-                      <h3>批次课时表</h3>
-                      <div class="row">
-                        <div class="col-6">
-                          <select class="form-control batch-selector" id="spec-student-batch-selector">
+                    <div class="row align-items-start">
+                      <div class="col-6">
+                        <div class="operate clearfix">
+                          <span>批次课时表</span>
+                          <select class="custom-select custom-select-sm select batch-selector" id="spec-student-batch-selector">
                           </select>
                         </div>
+                        <table class="table" id="spec-batch-course-table">
+                          <thead>
+                            <tr>
+                              <!-- 需要 课时、工种 -->
+                              <th>课时</th>
+                              <th>工种</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          </tbody>
+                        </table>
                       </div>
-                      <table class="table" id="spec-batch-course-table">
-                        <thead>
-                          <tr>
-                            <!-- 需要 课时、工种 -->
-                            <th>课时</th>
-                            <th>工种</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                      </table>
-                      <button class="btn btn-primary" id="log-data">log</button>
-                    </div>
 
-                    <div class="col-6">
-                      <h3>特殊学生课表</h3>
-                      <table class="table" id="spec-selected-course-table">
-                        <thead>
-                          <tr>
-                            <th>课时</th>
-                            <th>工种</th>
-                            <th>操作</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                      </table>
-                      <button class="btn btn-success" id="spec_save_change">保存更改</button>
+                      <div class="col-6">
+                        <div class="operate clearfix">
+                          <span>特殊学生课表</span>
+                        </div>
+                        <table class="table" id="spec-selected-course-table">
+                          <thead>
+                            <tr>
+                              <th>课时</th>
+                              <th>工种</th>
+                              <th>操作</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          </tbody>
+                        </table>
+                        <div class="clearfix"></div>
+
+                      </div>
                     </div>
+                    <button class="btn btn-sm btn-background3 btn-multi right" id="spec_save_change">保存更改</button>
+                    <button class="btn btn-sm btn-outline btn-multi right" id="log-data">查看更改</button>
                   </div>
                 </div>
               </div>
