@@ -735,11 +735,12 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/date_f
   $('#student-class-query-btn').click(getStuClassTableByNum);
   function getStuClassTableByNum() {
     var sid = $('#search_stu_by_number').val();
+    console.log(sid)
     if (sid) {
       api.experiment.getClass(sid)
         .done(function (data) {
           if (data.status === 0) {
-            // console.log(data);
+            console.log(data);
             var data_arr = data.data;
             var $table_body = $('#search_stu_tbody').empty();
             data_arr = _.sortBy(data_arr, 'class_time');
@@ -895,10 +896,79 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/date_f
         '</td></tr>').appendTo($tr);
 
       // $('<td><input type="button" class="btn btn-sm btn-success lookup-course" value="查看&编辑" ><input type="button" class="btn btn-sm btn-danger delete-sp-stud" name="" value="删除"></td>').appendTo($tr)
-      $('<td class="center"><input type="checkbox"></td>').appendTo($tr);
+      $('<td class="center"><input type="checkbox" class="batch_op"></td>').appendTo($tr);
       $tr.appendTo($table);
     });
   }
+
+  // 删除一个特殊学生
+  $('#query-spstudent-result').on('click', 'img.delete-sp-stud', function () {
+    console.log(this)
+    var input = $(this);
+    var tr = $(input).parents('tr')
+    var sid = tr.attr('data-sid');
+    console.log(sid)
+    swal({
+      title: '请确认',
+      text: '将删除学生' + sid,
+      icon: 'warning',
+      buttons: ["取消", '确定'],
+      dangerMode: true
+    }).then(function (ensure) {
+      if (!ensure) return;
+
+      api.student.deleteSpStudentById([sid])
+        .done(function (data) {
+          if (data.status === 0) {
+            swal(
+              '通知',
+              data.message,
+              'success'
+            );
+            $('#query-spec-stud-id-button').click();
+          } else {
+            g.fetch_err(data)
+          }
+        })
+        .fail(g.net_err)
+    });
+  });
+
+  // 批量删除特殊学生
+  $('#del_selected_sp_studs').click(function () {
+    var $checked = $('#query-spstudent-result').find('.batch_op').filter(':checked');
+    var $checked_rows = $checked.parents('.sid-row');
+    console.log($checked_rows)
+    var sp_sid = []
+    $checked_rows.each(function (i, dom) {
+      sp_sid.push($(dom).attr('data-sid'))
+    });
+    console.log(sp_sid);
+    swal({
+      title: '请确认',
+      text: '将删除学生' + sp_sid,
+      icon: 'warning',
+      buttons: ["取消", '确定'],
+      dangerMode: true
+    }).then(function (ensure) {
+      if (!ensure) return;
+      api.student.deleteSpStudentById(sp_sid)
+        .done(function (data) {
+          if (data.status === 0) {
+            swal(
+              '通知',
+              data.message,
+              'success'
+            );
+            $('#query-spec-stud-id-button').click();
+          } else {
+            g.fetch_err(data)
+          }
+        })
+        .fail(g.net_err)
+    });
+  });
+
 
   $('#query-spstudent-result').on('click', 'img.lookup-course', function () {
     console.log(this)
@@ -908,9 +978,6 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/date_f
     init_selected_course(sid);
     $('#edit-specialStudentSchedule').modal('show');
   });
-
-
-
 
   var spec_courses = [];
   var selected_course = {};

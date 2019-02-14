@@ -533,13 +533,13 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
     var student = student_list[student_index]
 
     swal({
-      title: '输入新的密码',
-      content: 'input',
+      title: '注意',
+      text: '密码将重置为123456',
       buttons: ['取消', '确定'],
       dangerMode: true
     }
     ).then(function (input) {
-      api.user.changePwd(student.sid, hex_md5(input))
+      api.user.changePwd(student.sid, hex_md5('123456'))
         .done(function (data) {
           if (data.status === 0) {
             swal(
