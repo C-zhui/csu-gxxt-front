@@ -152,11 +152,63 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/batch',
   }
 
   // 编辑学期点击事件
-  // $('#batch_list').on('click', '.edit_semester_entry', function () {
-  //   var $this = $(this);
-  //   var index = $this.parents('.semester_data').attr('data-semester-index');
-  //   console.log(semester_data[index])
-  // })
+  var $edit_semester_modal = $('#edit_semester_modal');
+  $('#batch_list').on('click', '.edit_semester_entry', function () {
+    var $this = $(this);
+    var index = $this.parents('.semester_data').attr('data-semester-index');
+    init_edit_semester_modal(semester_data[index])
+    $edit_semester_modal.modal('show');
+  })
+
+  function init_edit_semester_modal(semester) {
+    $edit_semester_modal.find('#editSemesterName_old').val(semester.semester_name || '').end()
+      .find('#editSemesterName_new').val(semester.semester_name || '').end()
+      .find('#editSemesterBeginDate').val(semester.date || '')
+  }
+
+  // 编辑确定
+  $("#edit_semester_ensure").click(function () {
+    var semester_old = $edit_semester_modal.find('#editSemesterName_old').val()
+    var semester_new = $edit_semester_modal.find('#editSemesterName_new').val()
+    var beginDate = $edit_semester_modal.find('#editSemesterBeginDate').val()
+    var promise = null;
+    if (semester_old !== semester_new) { // 修改名字先
+      promise = api.batch.updateSemesterName(semester_old, semester_new)
+    }
+
+    if (promise) {
+      promise
+        .done(function (data) {
+          if (data.status === 0) {
+            updateDate(semester_new, beginDate);
+          } else {
+            g.fetch_err(data)
+          }
+        })
+        .fail(g.net_err)
+    } else {
+      updateDate(semester_new, beginDate);
+    }
+  });
+
+  function updateDate(semester_name, beginDate) {
+    api.batch.updateBeginDate(semester_name, beginDate)
+      .done(function (data) {
+        if (data.status === 0) {
+          swal(
+            '成功',
+            data.message,
+            'success'
+          );
+          init_data();
+        } else {
+          g.fetch_err(data);
+        }
+      })
+      .fail(g.net_err)
+  }
+
+
 
   // 删除学期点击事件
   $('#batch_list').on('click', '.delete_semester_entry', function () {
@@ -352,7 +404,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/batch',
             $cloneTemp.appendTo($stu_list_tbody)
           });
           // 初始化分页
-          goPage(1, 10);   // 当前页数为1，每页10条数据
+          goPage("", 1, 10);   // 当前页数为1，每页10条数据
         } else {
           g.fetch_err(data)
         }
@@ -515,21 +567,29 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/batch',
       stud_ids.push(student_list[index].sid);
     });
     // console.log(stud_ids);
-
-    api.student.deleteStudent(stud_ids)
-      .done(function (data) {
-        if (data.status === 0) {
-          swal(
-            '删除成功',
-            '删除学生信息成功',
-            'success'
-          );
-          getStudentByBatchName();
-        } else {
-          g.fetch_err(data)
-        }
-      })
-      .fail(g.net_err)
+    swal({
+      title: '请确认',
+      text: '确定要删除以上数据？',
+      icon: 'warning',
+      buttons: ['取消', '确定'],
+      dangerMode: true
+    }).then(function (ensure) {
+      if (!ensure) return;
+      api.student.deleteStudent(stud_ids)
+        .done(function (data) {
+          if (data.status === 0) {
+            swal(
+              '删除成功',
+              data.message,
+              'success'
+            );
+            getStudentByBatchName();
+          } else {
+            g.fetch_err(data)
+          }
+        })
+        .fail(g.net_err);
+    });
   }
 
 });

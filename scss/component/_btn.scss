@@ -26,6 +26,22 @@
     box-sizing: border-box;
     font-family: "Microsoft YaHei UI";
 }
+.btn-background3{
+    background: $button-background3;
+    color:$button-background-text;
+    border-radius: 5px;
+    border: 1px solid $button-background3;
+    box-sizing: border-box;
+    font-family: "Microsoft YaHei UI";
+}
+.btn-manage{
+    background: $button-manage;
+    color: $text-black;
+    border-radius: 5px;
+    border: 1px solid $button-manage;
+    box-sizing: border-box;
+    font-family: "Microsoft YaHei UI";
+}
 .btn-default{
     background: $button-default-back;
     color:$text-white;
@@ -84,4 +100,30 @@
 }
 .row{
     margin-bottom: 10px;
+}
+
+//文件选择
+.custom-file-sm{
+    width: 245px;
+    height: 31px;
+    .custom-file-input{
+        height: 31px;
+    }
+    .custom-file-label{
+        height: 31px;
+        margin-bottom: 0;
+        box-sizing: border-box;
+        font-size: 14px;
+    }
+    .custom-file-label::after{
+        content: "浏览";
+        height: 30px;
+        line-height: 31px;
+        box-sizing: border-box;
+        font-size: 14px;
+        padding: 0 0.75rem;
+        margin-right: -1px;
+        background: $button-background-color;
+        color: $text-white;
+    }
 }

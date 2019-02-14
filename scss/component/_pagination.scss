@@ -5,6 +5,7 @@
         float: left;
         >ul{
             margin: 20px 0;
+            margin-bottom: 0;
             padding-left: 0;
             list-style: none;
             text-align: center;
@@ -25,6 +26,9 @@
                     width: 50px;
                 }
 
+            }
+            >li:last-child a{
+                margin-right: 0;
             }
             .jumpWhere {
                 width: 50px;

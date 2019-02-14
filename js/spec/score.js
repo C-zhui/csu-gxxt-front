@@ -37,7 +37,8 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'api/batch', 'api/proced', 'a
                 title: '操作',
                 formatter: function (value, row, index) {
                     return [
-                        '<button class="btn btn-sm btn-primary edit_score" data-toggle="modal" data-target="#scorelistEditModal">修改</button>',
+                        // '<button class="btn btn-sm btn-primary edit_score" data-toggle="modal" data-target="#scorelistEditModal">修改</button>' +
+                        '<img src="../../icon/edit.svg" class="row-image edit_score"  data-toggle="modal" data-target="#scorelistEditModal"> ',
                     ]
                 }
             }
@@ -176,7 +177,8 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'api/batch', 'api/proced', 'a
                 title: '操作',
                 formatter: function (value, row, index) {
                     return [
-                        '<button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#specialListEditModal">修改</button>',
+                        // '<button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#specialListEditModal">修改</button>' +
+                        '<img src="../../icon/edit.svg" class="row-image-sm" data-toggle="modal" data-target="#specialListEditModal">',
                     ]
                 }
             }
@@ -522,7 +524,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'api/batch', 'api/proced', 'a
                     body_tr.append(td);
                 }
                 for (let i = 3; i < length - 4; i++) {
-                    let input = $('<input type="number" class="edit-input" value="" size="3">');
+                    let input = $('<input type="number" class="edit-input form-control form-control-sm" value="" size="3">');
                     input.click(function () {
                         onEditSignalScore(this);
                     });
@@ -1167,7 +1169,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'api/batch', 'api/proced', 'a
                     }
                     special_score_list_table_config.data = [tableRow];
                     $('#special_score_list_table').bootstrapTable('load', special_score_list_table_config.data);
-                    $('#special_score_list_table button').click(function () {
+                    $('#special_score_list_table img').click(function () {
                         updateSpScore();
                     })
                 }

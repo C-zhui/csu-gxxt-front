@@ -1,89 +1,127 @@
-.select-area {
-	width: 80%;
-	display: flex;
-	justify-content: space-around;
-	align-items: center;
+/*.select-area {*/
+	/*width: 80%;*/
+	/*display: flex;*/
+	/*justify-content: space-around;*/
+	/*align-items: center;*/
+/*}*/
+
+/*.input-select {*/
+	/*width: 80%;*/
+	/*display: flex;*/
+	/*justify-content: space-around;*/
+	/*align-items: center;*/
+	/*margin-top: 20px;*/
+/*}*/
+
+/*.input-select>input {*/
+	/*margin-left: 25px;*/
+	/*margin-right: 25px;*/
+/*}*/
+
+/*.score-table tr td input {*/
+	/*width: 100%;*/
+/*}*/
+
+/*th, td {*/
+	/*text-align: center;*/
+/*}*/
+
+/*!*.list-name {*/
+	/*padding-left: 0;*/
+	/*padding-right: 0;*/
+/*}*!*/
+
+/*.card{*/
+	/*margin-bottom: 50px;*/
+/*}*/
+
+/*.addGradeTest-table {*/
+	/*margin-top: 50px;*/
+/*}*/
+
+/*.score-list-table {*/
+	/*margin-bottom: 50px;*/
+/*}*/
+
+/*.tips {*/
+	/*color: green;*/
+	/*margin-bottom: 10px;*/
+/*}*/
+
+/*.choose-line p {*/
+	/*width: 20%;*/
+	/*font-size: 18px;*/
+	/*margin: 50px 30px;*/
+/*}*/
+
+/*.choose-line form {*/
+	/*width: 70%;*/
+	/*!*border: 1px solid cyan;*!*/
+	/*display: flex;*/
+	/*align-items: center;*/
+	/*justify-content: space-between;*/
+/*}*/
+
+/*.form-control-file {*/
+	/*!*border: 1px solid red;*!*/
+	/*width: 35%;*/
+/*}*/
+
+/*.changeSore-select {*/
+	/*width: 80%;*/
+	/*margin: 30px 0;*/
+/*}*/
+
+/*.changeSore-select input {*/
+	/*margin: 0 20px;*/
+/*}*/
+
+/*.specialList-select-area {*/
+	/*width: 50%;*/
+	/*display: flex;*/
+	/*justify-content: space-around;*/
+	/*align-items: center;*/
+	/*margin-bottom: 30px;*/
+/*}*/
+
+/*.edit-input {*/
+	/*width: 45px;*/
+/*}*/
+
+.select-top .btn{
+	float: left;
 }
 
-.input-select {
-	width: 80%;
-	display: flex;
-	justify-content: space-around;
-	align-items: center;
-	margin-top: 20px;
+/*调整表格宽度*/
+#score_list_table{
+	width: auto;
+	min-width: 832px;
 }
-
-.input-select>input {
-	margin-left: 25px;
-	margin-right: 25px;
+/*调整表格与上方间距*/
+.table-responsive{
+	margin-top: 28px;
 }
-
-.score-table tr td input {
-	width: 100%;
+.operate-manage >*{
+	float: left;
 }
-
-th, td {
-	text-align: center;
+.operate form{
+	float: left;
 }
-
-/*.list-name {
-	padding-left: 0;
-	padding-right: 0;
-}*/
-
-.card{
-	margin-bottom: 50px;
+.custom-file-label{
+	text-align: left;
 }
-
-.addGradeTest-table {
-	margin-top: 50px;
+.batch-chosen{
+	margin-left: 158px;
 }
-
-.score-list-table {
-	margin-bottom: 50px;
+.batch-chosen span{
+	margin-right: 0.5rem;
 }
-
-.tips {
-	color: green;
-	margin-bottom: 10px;
+#publish-special-score{
+	margin-right: 1.5rem;
 }
-
-.choose-line p {
-	width: 20%;
-	font-size: 18px;
-	margin: 50px 30px;
+#Section6 .text-info{
+	line-height: 30.8px;
 }
-
-.choose-line form {
-	width: 70%;
-	/*border: 1px solid cyan;*/
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-}
-
-.form-control-file {
-	/*border: 1px solid red;*/
-	width: 35%;
-}
-
-.changeSore-select {
-	width: 80%;
-	margin: 30px 0;
-}
-
-.changeSore-select input {
-	margin: 0 20px;
-}
-
-.specialList-select-area {
-	width: 50%;
-	display: flex;
-	justify-content: space-around;
-	align-items: center;
-	margin-bottom: 30px;
-}
-
-.edit-input {
-	width: 45px;
+#Section6 .list{
+	line-height: 32.8px;
 }

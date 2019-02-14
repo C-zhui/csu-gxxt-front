@@ -21,23 +21,28 @@ define(['api/apiobj', 'config/global'], function (api, g) {
                 '/batch/getAllSemesterName',
                 {});
         },
-        // 添加学期
-        // addSemester: function (semester_name, beginDate) {
-        //     return g.post_query(
-        //         '/batch/addBatch',
-        //         {
-        //             'semester_name': semester_name,
-        //             'credit':1,
-        //             'beginDate': beginDate
-        //         }
-        //     );
-        // },
         // 获取学期信息
         getBatchBySemesterName: function (semester_name) {
             return g.post_query('/batch/getBatchBySemesterName',
                 {
                     semester_name: semester_name
                 });
+        },
+        updateSemesterName: function (old, semesterName) {
+            return g.post_query('/batch/updateSemesterName',
+                {
+                    old: old,
+                    semesterName: semesterName
+                });
+        },
+        updateBeginDate: function (semesterName, beginDate) {
+            return g.post_query(
+                '/batch/updateBeginDate',
+                {
+                    semesterName: semesterName,
+                    beginDate: beginDate
+                }
+            )
         },
         deleteSemester: function (semesterName) {
             return g.post_query('/batch/deleteSemester',

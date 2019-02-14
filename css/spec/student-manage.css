@@ -1,80 +1,130 @@
-.card {
-	margin-bottom: 50px;
-}
+/*.tips {*/
+	/*margin-left: 50px;*/
+/*}*/
 
-.download-excel a {
-	color: red;
+/*.choose-line form {*/
+	/*width: 70%;*/
+	/*!*border: 1px solid cyan;*!*/
+	/*display: flex;*/
+	/*align-items: center;*/
+	/*justify-content: space-between;*/
+/*}*/
+.btn-manage.semester_name{
+	width: 132px;
 }
-
-.tips {
-	margin-left: 50px;
+.tip{
+	font-size: 0.75rem;
+	font-family: "Microsoft YaHei UI";
+	color: #000000;
+}
+.stu-manage-list{
+	list-style: none;
+	padding: 0;
+	margin-bottom: 40px;
+	padding-top: 6px;
+	border-top: 1px solid #def1fa;
+	margin-top: 6px;
+}
+.group-summury{
+	margin-bottom: 6px
+}
+.stu-manage-list >li{
+	border-bottom: 1px solid #def1fa;
+	margin-bottom: 6px;
+}
+.row-image-lg{
+	width: 19px;
+	height: 19px;
+}
+.group-detail{
+	list-style: none;
+	padding-left: 50px;
+}
+.batch_data{
+	margin: 14px 0;
+	border-left: 6px solid #56a3d7;
+	height: 28px;
+}
+.batch_name:disabled{
+	width: 96px;
+	line-height: 28px;
+	border: none;
 	font-size: 14px;
+	color: #000000;
+	padding: 0 12px;
+	font-family: "Microsoft YaHei UI";
+	opacity: 1;
+	box-sizing: border-box;
 }
 
-.card-text {
-	font-size: 14px;
+.row-image-sm{
+	width: 17px;
+	height: 17px;
 }
-
-.choose-line p {
-	width: 20%;
+.delete_semester_entry,.edit_semester_entry,.new_batch_entry{
+	padding: 0;
+	margin-right: 1rem;
+	border: none;
+	line-height: 40px;
+}
+.delete_semester_entry{
+	margin-right: 0;
+}
+.edit_batch_entry{
+	margin-right: 12px;
+}
+.edit_batch_entry,.delete_batch_entry{
+	padding: 0;
+	border: none;
+	line-height: 28px;
+}
+.manage-operate{
+	margin-bottom: 2rem;
+}
+.manage-operate span,.manage-operate form{
+	float: left;
+}
+.download-tip{
+	line-height: 31px;
 	font-size: 18px;
-	margin: 50px 30px;
+	color: #000000;
+	margin-right: 22px;
+	font-family: "Microsoft YaHei UI";
+}
+.input-group{
+	float: left;
+}
+.form{
+	width: auto;
+}
+.custom-file-sm{
+	margin-right: 1.5rem;
+}
+.batch-select{
+	width: 176px;
+	margin-right: 2rem;
+}
+.table-responsive{
+	margin-top: 32px;
+}
+.table{
+	margin-bottom: 0;
+}
+.operations .btn{
+	padding: 0 8px;
+}
+.operations .row-image-sm{
+	margin-bottom: 1.9px;
+}
+.reset_stud_entry{
+	/*line-height: 30px;*/
+	color: #266997;
+	font-size: 12px;
+	font-family: "Microsoft YaHei UI";
+}
+#delete_selected_stud{
+	padding: 0.25rem 0;
+	margin-top: 32px;
+	width: 50px;
 }
 
-.choose-line form {
-	width: 70%;
-	/*border: 1px solid cyan;*/
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-}
-
-.form-control-file {
-	/*border: 1px solid red;*/
-	width: 35%;
-}
-
-.query {
-	margin-left: 30px;
-}
-
-.stu-list {
-	width: 90%;
-	margin: 20px;
-}
-
-.btn-cyan {
-	margin-left: 20px;
-	background-color: #00c3f5;
-}
-
-.container {
-	margin-top: 30px;
-}
-
-thead tr th,td {
-	text-align: center;
-}
-
-.operaten {
-	margin: 50px 30px;
-}
-
-.deleten {
-	clear: both;
-	float: right;
-	margin-right: 20px;
-}
-
-.card-row {
-	margin: 2px;
-}
-
-.card-row h5 {
-	display: inline-block;
-}
-
-.card-row button {
-	float: right;
-	margin-right: 20px;
-}

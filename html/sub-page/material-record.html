@@ -9,48 +9,60 @@
         </header>
 
         <main>
-            <h3 class="text-center">库存</h3>
-            <div class="row">
-                <div class="col-md-6 col-xs-6">
-                    <table class="table" id="material-record-table">
-                        <thead>
-                        <tr>
-                            <th>物料种类</th>
-                            <th>存量</th>
-                        </tr>
-                        </thead>
-                        <tbody id="material_record_list">
-                        <!-- <tr>
-                                    <td>铝棒（根x2m）</td>
-                                    <td>20</td>
-                                </tr>
-                                <tr>
-                                    <td>轴承23（个）</td>
-                                    <td>2</td>
-                                </tr> -->
-                        </tbody>
-                    </table>
-
-                </div>
-                <span class="col-md-1 col-xs-1"></span>
-                <div class="col-md-4 col-xs-4 materal-out-number float-right">
-                    <div class="card outNumber-card">
-                        <div class="card-header">
-                            派出数
-                        </div>
-                        <div class="card-body">
-                            <input type="text" class="form-control col-md-11 col-xs-11" placeholder="输入领取学生学号"
-                                   id="distribute_stu_id">
-                            <input type="text" class="form-control col-md-11 col-xs-11" placeholder="输入领取学生姓名"
-                                   id="distribute_stu_name">
-                            <select class="form-control custom-select col-md-11 col-xs-11" id='select_meterial'>
-                                <!-- <option>选择物料种类</option>
-                                        <option>铝棒</option>
-                                        <option>轴承</option> -->
-                            </select>
-                            <input type="text" class="form-control col-md-11 col-xs-11" placeholder="输入领取数量"
-                                   id="distribute_num">
-                            <a href="#" class="btn btn-primary float-right" id="decr-material-Num">确定</a>
+            <div class="content-body">
+                <div class="row" id="material-content">
+                    <div class="col-xs-7 col-sm-7 record-table">
+                        <h3 class="text-center">库存</h3>
+                        <table class="table table-bordered" id="material-record-table">
+                            <thead>
+                            <tr>
+                                <th>物料种类</th>
+                                <th>存量</th>
+                            </tr>
+                            </thead>
+                            <tbody id="material_record_list">
+                            <!-- <tr>
+                                        <td>铝棒（根x2m）</td>
+                                        <td>20</td>
+                                    </tr>
+                                    <tr>
+                                        <td>轴承23（个）</td>
+                                        <td>2</td>
+                                    </tr> -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-xs-5 col-sm-5 no-padding materal-out-number">
+                        <div class="card outNumber-card">
+                            <div class="card-header">
+                                物料派出
+                            </div>
+                            <div class="card-body">
+                                <div class="materal-out-row clearfix">
+                                    <span>领取学生学号：</span>
+                                    <input type="text" class="form-control form-control-sm"
+                                           id="distribute_stu_id">
+                                </div>
+                                <div class="materal-out-row clearfix">
+                                    <span>领取学生姓名：</span>
+                                    <input type="text" class="form-control form-control-sm"
+                                           id="distribute_stu_name">
+                                </div>
+                                <div class="materal-out-row clearfix">
+                                    <span>物料种类：</span>
+                                    <select class="custom-select custom-select-sm" id='select_meterial'>
+                                        <!-- <option>选择物料种类</option>
+                                                <option>铝棒</option>
+                                                <option>轴承</option> -->
+                                    </select>
+                                </div>
+                                <div class="materal-out-row clearfix">
+                                    <span>领取数量：</span>
+                                    <input type="text" class="form-control form-control-sm" placeholder="输入领取数量"
+                                           id="distribute_num">
+                                </div>
+                                <button class="btn btn-sm btn-outline right btn-single" id="decr-material-Num">确定</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -67,27 +79,52 @@
             </div>
         </header>
         <main>
-            <div class="row">
-                <input class="flatpickr mycalendar form-control col-xs-2 col-sm-2 left-flatpickr" name="start-time"
-                       placeholder="开始日期"
-                       id="start_time">
-                <span class="form-control col-xs-1 col-sm-1 time-last">至</span>
-                <input class="flatpickr mycalendar form-control col-xs-2 col-sm-2" name="end-time" placeholder="结束时间"
-                       id="end_time">
-                <select class="form-control custom-select col-xs-2 col-sm-2 select-person"
-                        id="record_history_selset_meterail">
-                    <!-- <option>物料种类</option>
-                            <option>铝棒</option>
-                            <option>轴承</option> -->
-                </select>
-            </div>
-            <div class="row record-search2">
-                <input type="text" class="form-control col-xs-2 col-sm-2" placeholder="学号" id="stu_id">
-                <input type="text" class="form-control col-xs-2 col-sm-2" placeholder="姓名" id="stu_name">
-                <input type="button" class="btn btn-success float-right" id="get-select-purchase" value="查询">
+            <div class="content-body">
+                <div class="row select-top title">
+                    <div class="col-xs-5 col-sm-5 no-padding">领取时间：</div>
+                    <div class="col-xs-3 col-sm-3">物料种类：</div>
+                </div>
+                <div class="row select-top">
+                    <div class="col-xs-5 col-sm-5 row no-padding">
+                        <div class="col-xs-5 col-sm-5 no-padding">
+                            <input class="flatpickr mycalendar form-control form-control-sm" name="start-time"
+                                   id="start_time" placeholder="开始时间">
+                        </div>
+                        <div class="col-xs-1 col-sm-1 no-padding" style="text-align: center">
+                            至
+                        </div>
+                        <div class="col-xs-5 col-sm-5 no-padding">
+                            <input class="flatpickr mycalendar form-control form-control-sm" name="end-time"
+                                   id="end_time" placeholder="结束时间">
+                        </div>
+                    </div>
+                    <div class="col-xs-3 col-sm-3">
+                        <select class="custom-select select-person custom-select-sm"
+                                id="record_history_selset_meterail">
+                            <!-- <option>物料种类</option>
+                                    <option>铝棒</option>
+                                    <option>轴承</option> -->
+                        </select>
+                    </div>
+                    <div class="col-xs-4 col-sm-4 no-padding">
+                        <input type="button" class="btn btn-sm btn-outline btn-single float-right" id="get-select-purchase" value="查询">
+                    </div>
+                </div>
+                <div class="row select-top title">
+                    <div class="col-xs-3 col-sm-3">学号：</div>
+                    <div class="col-xs-3 col-sm-3">姓名：</div>
+                </div>
+                <div class="row select-top">
+                    <div class="col-xs-3 col-sm-3">
+                        <input type="text" class="form-control form-control-sm" placeholder="学号" id="stu_id">
+                    </div>
+                    <div class="col-xs-3 col-sm-3">
+                        <input type="text" class="form-control form-control-sm" placeholder="姓名" id="stu_name">
+                    </div>
+                </div>
             </div>
 
-            <table class="table table-striped" id="receive-materiel-table">
+            <table class="table table-striped table-bordered" id="receive-materiel-table">
                 <thead>
                 <tr>
                     <th>领取时间</th>
