@@ -1,5 +1,7 @@
-require(['jquery', 'lodash', 'moment', 'api/apiobj', 'config/global','api/group','flatpickr'], function
-  ($, _, moment, api, g) {
+require(['jquery', 'lodash', 'moment', 'api/apiobj', 'config/global','util/cut_page3','api/group','flatpickr'], function
+  ($, _, moment, api, g,CutPage) {
+
+  const pageSize = 5;
 
   $(function () {
     init_data();
@@ -71,7 +73,7 @@ require(['jquery', 'lodash', 'moment', 'api/apiobj', 'config/global','api/group'
           html = '';
           for (let i = 0; i < data_arr.length; i++) {
             delta_time = getGMThour(data_arr[i].overwork_time_end) - getGMThour(data_arr[i].overwork_time)
-            html += '<li><p><a href="#">' + chGMT(data_arr[i].overwork_time) + '&emsp;&emsp;' + data_arr[i].pro_name + '&emsp;&emsp;' + data_arr[i].tname + '&emsp;&emsp;' + delta_time + 'h </a></p></li>'
+            html += '<li class="clearfix"><div class="row"><div class="ul-time col-5">' + chGMT(data_arr[i].overwork_time) +'</div><div class="ul-pro-name col-4"> ' + data_arr[i].pro_name + '</div><div class="ul-name col-2"> '+ data_arr[i].tname + '</div><div class="ul-hour col-1"> ' + delta_time + 'h </div></div></li>'
           }
           $('#zhiban_info ul').html(html);   //有数据了再打开这一行
         } else {
@@ -98,7 +100,7 @@ require(['jquery', 'lodash', 'moment', 'api/apiobj', 'config/global','api/group'
           console.log(data)
         }
         // 教师值班记录分页初始化
-        goPage(1, 10);
+        CutPage.cutPage("extra-table",pageSize);
       }).fail(console.log);
   }
 

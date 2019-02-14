@@ -1,5 +1,5 @@
 <div id="body">
-	<link rel="stylesheet" type="text/css" href="./css/extra-select.css">
+	<link rel="stylesheet" type="text/css" href="../../css/spec/extra-select.css">
 	<!-- <script src="./js/color.js"></script>
 	<script src="./js/scroll.js"></script> -->
 
@@ -9,141 +9,84 @@
 			<div class="header-title">新增申请</div>
 		</header>
 		<main>
-			<div class="row">
-				<!-- 新增申请输入框 -->
-				<div class="left-cardBody col-md-6 col-xs-6">
-					<div class="row">
-						<input class="flatpickr mycalendar form-control col-xs-4 col-sm-4 left-flatpickr" name="start-time" placeholder="开始日期"
-						 data-enable-time=true data-time_24hr=true id="request_start_time">
-						<select class="form-control custom-select col-xs-3 col-sm-3 select-worktype" id="request_select_process">
-							<option>选择工种</option>
-							<option>车工</option>
-							<option>钳工</option>
-							<option>铣削</option>
-						</select>
-						<input type="text" name="" class="form-control col-xs-2 col-sm-2 input-times" placeholder="输入时长" id="request_extra_last_time">
-					</div>
-					<br>
-					<div class="form-group">
-						<label>开放事由：</label>
-						<textarea class="form-control" rows="3" id="request_extra_reason"></textarea>
-					</div>
-					<div class="float-right">
-						<input type="button" name="" class="btn btn-outline-danger float-right" value="确认" id="add_overwork_apply" >
-					</div>
-				</div>
+			<div class="content-body clearfix">
+				<div class="row">
+					<!-- 新增申请输入框 -->
+					<div class="left-cardBody col-xs-6 col-sm-6">
+						<div class="row select-top title">
+							<div class="col-xs-5 col-sm-5">申请日期：</div>
+							<div class="col-xs-4 col-sm-4">工种：</div>
+							<div class="col-xs-3 col-sm-3">时长：</div>
+						</div>
+						<div class="row select-top">
+							<div class="col-xs-5 col-sm-5">
+								<input class="flatpickr mycalendar form-control form-control-sm" name="start-time" placeholder="开始日期"
+									   data-enable-time=true data-time_24hr=true id="request_start_time">
+							</div>
+							<div class="col-xs-4 col-sm-4">
+								<select class="custom-select custom-select-sm select-worktype" id="request_select_process">
+									<option>选择工种</option>
+									<option>车工</option>
+									<option>钳工</option>
+									<option>铣削</option>
+								</select>
+							</div>
+							<div class="col-xs-3 col-sm-3 no-padding">
+								<input type="text" name="" class="form-control form-control-sm input-times" placeholder="输入时长" id="request_extra_last_time">
+							</div>
+						</div>
 
-				<!-- 近期值班公示 -->
-				<div class="right-cardBody col-md-6 col-xs-6">
-					<div class="bcon">
-						<div class="title"><b>近期值班公示</b><a href="#">更多 ></a></div>
-						<div class="list_lh" id="zhiban_info">
-							<ul>
-								<!-- <li><p><a href="#">2018-09-10 20:00-22:00&emsp;&emsp;钳工&emsp;&emsp;A老师</a></p></li>
-										<li><p><a href="#">2018-09-10 20:00-22:00&emsp;&emsp;车工&emsp;&emsp;B老师</a></p></li>
-										<li><p><a href="#">2018-09-10 20:00-22:00&emsp;&emsp;钳工&emsp;&emsp;C老师</a></p></li>
-										<li><p><a href="#">2018-09-10 20:00-22:00&emsp;&emsp;车工&emsp;&emsp;D老师</a></p></li>
-										<li><p><a href="#">2018-09-10 20:00-22:00&emsp;&emsp;钳工&emsp;&emsp;E老师</a></p></li>
-										<li><p><a href="#">2018-09-10 20:00-22:00&emsp;&emsp;车工&emsp;&emsp;F老师</a></p></li>
-										<li><p><a href="#">2018-09-10 20:00-22:00&emsp;&emsp;钳工&emsp;&emsp;G老师</a></p></li>
-										<li><p><a href="#">2018-09-10 20:00-22:00&emsp;&emsp;车工&emsp;&emsp;H老师</a></p></li>
-										<li><p><a href="#">2018-09-10 20:00-22:00&emsp;&emsp;钳工&emsp;&emsp;I老师</a></p></li>
-										<li><p><a href="#">2018-09-10 20:00-22:00&emsp;&emsp;铣洗&emsp;&emsp;J老师</a></p></li>
-										<li><p><a href="#">2018-09-10 20:00-22:00&emsp;&emsp;钳工&emsp;&emsp;K老师</a></p></li>
-										<li><p><a href="#">2018-09-10 20:00-22:00&emsp;&emsp;车工&emsp;&emsp;L老师</a></p></li> -->
-							</ul>
+						<div class="form-group">
+							<label>开放事由：</label>
+							<textarea class="form-control" rows="3" id="request_extra_reason"></textarea>
+						</div>
+						<div class="float-right">
+							<input type="button" name="" class="btn btn-sm btn-background3 btn-single float-right" value="确认" id="add_overwork_apply" >
 						</div>
 					</div>
 
+					<!-- 近期值班公示 -->
+					<div class="right-cardBody col-sm-6 col-sm-6">
+						<div class="bcon">
+							<div class="title">近期值班公示</div>
+							<div class="list_lh clearfix" id="zhiban_info">
+								<ul>
+								</ul>
+							</div>
+							<a href="#" id="checkMore">>>更多</a>
+						</div>
+					</div>
 				</div>
 			</div>
 		</main>
 
-		<br><br>
-		<!-- 申请记录 -->
-		<div class="content-card">
-			<header>
-				<div class="header-title">
-					我的申请记录
-				</div>
-			</header>
-
-			<main>
-				<table class="table table-striped text-center">
-					<thead>
-						<tr>
-							<th>申请日期</th>
-							<th>工种</th>
-							<th>开放事由</th>
-						</tr>
-					</thead>
-					<tbody id="adminTbody">
-						<!-- <tr>
-										<td>2018-09-10 12:00-14:00</td>
-										<td>钳工</td>
-										<td>无碳小车校赛开放</td>
-									</tr>
-									<tr>
-										<td>2018-09-10 12:00-14:00</td>
-										<td>钳工</td>
-										<td>未知</td>
-									</tr> -->
-					</tbody>
-				</table>
-
-				<!-- 分页功能部分 -->
-				<div id="barcon" class="barcon clearfix">
-					<div id="barcon1" class="barcon1"></div>
-					<div id="barcon2" class="barcon2">
-						<ul>
-							<li>
-								<a href="###" id="firstPage" class="btn btn-sm">首页</a></li>
-							<li>
-								<a href="###" id="prePage" class="btn btn-sm">上一页</a></li>
-							<li>
-								<a href="###" id="nextPage" class="btn btn-sm">下一页</a></li>
-							<li>
-								<a href="###" id="lastPage" class="btn btn-sm">尾页</a></li>
-							<li>
-								<!-- <select id="jumpWhere"></select> -->
-								<input type="text" id="jumpWhere">
-							</li>
-							<li><a href="###" id="jumpPage" onclick="jumpPage()" class="btn btn-sm btn-primary">跳转</a></li>
-						</ul>
-					</div>
-				</div>
-			</main>
 		</div>
-		<script>
+	<!-- 申请记录 -->
+	<div class="content-card">
+		<header>
+			<div class="header-title">
+				我的申请记录
+			</div>
+		</header>
 
-			// (function addScroll() {
-			// 	if ($.fn.myScroll) {
-			// 		console.log('myScroll')
-			// 		$("div.list_lh").myScroll({
-			// 			speed: 40, //数值越大，速度越慢
-			// 			rowHeight: 30 //li的高度
-			// 		});
+		<main>
+			<table class="table table-striped table-bordered text-center" id="extra-table">
+				<thead>
+					<tr>
+						<th>申请日期</th>
+						<th>工种</th>
+						<th>开放事由</th>
+					</tr>
+				</thead>
+				<tbody id="adminTbody">
 
-			// 		$('.list_lh li:even').addClass('lieven');
-
-			// 		$('.list_lh ul li a').myLink({
-			// 			'color': '#111',
-			// 			'fontSize': '13px'
-			// 		})
-			// 	} else {
-			// 		setTimeout(() => {
-			// 			addScroll()
-			// 		}, 500);
-			// 	}
-			// })()
-
-		</script>
-		<!-- 主体部分结束 -->
-		<!-- 主体部分结束 -->
- 
-		<script src="../js/spec/extra-request.js"></script>
-		<!-- 分页开始 -->
-		<script src="../js/cut_page.js"></script>
-		<link rel="stylesheet" type="text/css" href="../css/cut_page.css">
-		<!-- 分页结束 -->
+				</tbody>
+			</table>
+			<div class="clearfix"></div>
+		</main>
 	</div>
+
+	<!-- 主体部分结束 -->
+ 
+	<script src="../js/spec/extra-request.js"></script>
+</div>

@@ -1,0 +1,44 @@
+.select-top > div[class^=col-]{
+    padding-right: 1rem;!important;
+}
+#add_overwork_apply{
+    margin-top: 1rem;
+}
+.left-cardBody{
+    padding-left: 0;
+    padding-right: 1.5rem;
+}
+.right-cardBody{
+    padding-right: 0;
+    padding-left: 1.5rem;
+}
+.bcon .title{
+    line-height: 40px;
+    background: #5b8fb4;
+    color: #ffffff;
+    text-align: center;
+    font-size: 1rem;
+    font-family: 黑体;
+}
+.list_lh ul{
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+.list_lh ul li .row{
+    width: 100%;
+    margin-bottom: 0;
+    padding: 10px 0;
+}
+.list_lh ul li .row div{
+    padding: 0;
+    text-align: left;
+}
+.list_lh ul li div{
+    float: left;
+}
+#checkMore{
+    display: block;
+    float: right;
+    margin-top: 0.75rem;
+}
