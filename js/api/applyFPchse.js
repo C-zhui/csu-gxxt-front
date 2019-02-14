@@ -26,7 +26,7 @@ define(['api/apiobj','config/global'], function (api,g) {
     // 生成申购单
     downloadApply:function(data) { // data 是 二维的字符串数组
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', base_url + '/applyFPchse/ExcelDownloads', true);        // 也可以使用POST方式，根据接口
+        xhr.open('POST', g.base_url + '/applyFPchse/ExcelDownloads', true);        // 也可以使用POST方式，根据接口
         xhr.responseType = "blob";    // 返回类型blob
         xhr.setRequestHeader("Content-type", "application/json");
         // 定义请求完成的处理函数，请求前也可以增加加载框/禁用下载按钮逻辑
@@ -54,7 +54,7 @@ define(['api/apiobj','config/global'], function (api,g) {
     // 导出excel
     downloadApplyExcel:function (data) {
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', base_url + '/applyFPchse/ExcelDownloads01', true);        // 也可以使用POST方式，根据接口
+        xhr.open('POST', g.base_url + '/applyFPchse/ExcelDownloads01', true);        // 也可以使用POST方式，根据接口
         xhr.responseType = "blob";    // 返回类型blob
         xhr.setRequestHeader("Content-type", "application/json");
         // 定义请求完成的处理函数，请求前也可以增加加载框/禁用下载按钮逻辑

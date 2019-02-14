@@ -18,7 +18,7 @@ define(['api/apiobj', 'config/global'], function (api, g) {
         // 采购导出excel
         downloadPurchase: function (postdata) {
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', base_url + '/purchase/downloadPurchase', true);        // 也可以使用POST方式，根据接口
+            xhr.open('POST', g.base_url + '/purchase/downloadPurchase', true);        // 也可以使用POST方式，根据接口
             xhr.responseType = "blob";    // 返回类型blob
             xhr.setRequestHeader("Content-type", "application/json");
             // 定义请求完成的处理函数，请求前也可以增加加载框/禁用下载按钮逻辑
