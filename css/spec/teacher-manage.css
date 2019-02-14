@@ -1,3 +1,97 @@
+.btn-manage.t_group_name{
+	width: 132px;
+}
+.tip{
+	font-size: 0.75rem;
+	font-family: "Microsoft YaHei UI";
+	color: #000000;
+}
+.teachear-manage-list{
+	list-style: none;
+	padding: 0;
+	margin-bottom: 40px;
+	padding-top: 6px;
+	border-top: 1px solid #def1fa;
+	margin-top: 6px;
+}
+.group-summury{
+	margin-bottom: 6px
+}
+.teachear-manage-list >li{
+	border-bottom: 1px solid #def1fa;
+	margin-bottom: 6px;
+}
+.group-detail{
+	list-style: none;
+	padding-left: 50px;
+}
+.proced_data{
+	margin: 14px 0;
+	border-left: 6px solid #56a3d7;
+	height: 28px;
+}
+.t_group_name:disabled{
+	width: 96px;
+	line-height: 28px;
+	border: none;
+	font-size: 14px;
+	color: #000000;
+	padding: 0 12px;
+	font-family: "Microsoft YaHei UI";
+	opacity: 1;
+	box-sizing: border-box;
+}
+.new_proced_entry,.edit_t_group_entry,.delete_t_group_entry{
+	padding: 0;
+	margin-right: 1rem;
+	border: none;
+	line-height: 40px;
+}
+.delete_t_group_entry{
+	margin-right: 0;
+}
+.edit_proced_entry{
+	margin-right: 12px;
+}
+.edit_proced_entry,.delete_proced_entry{
+	padding: 0;
+	border: none;
+	line-height: 28px;
+}
+.manage-operate{
+	margin-bottom: 2rem;
+}
+.manage-operate span,.manage-operate form{
+	float: left;
+}
+.download-tip{
+	line-height: 31px;
+	font-size: 18px;
+	color: #000000;
+	margin-right: 22px;
+	font-family: "Microsoft YaHei UI";
+}
+.input-group{
+	float: left;
+}
+.form{
+	width: auto;
+}
+.custom-file-sm{
+	margin-right: 1.5rem;
+}
+.batch-select{
+	width: 176px;
+	margin-right: 2rem;
+}
+.table-responsive{
+	margin-top: 32px;
+}
+.table{
+	margin-bottom: 0;
+}
+
+
 .operations .btn{
 	padding: 0 8px;
 }
