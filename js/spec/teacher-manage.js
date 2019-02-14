@@ -1,4 +1,4 @@
-require(['jquery', 'lodash', 'api/apiobj','util/cut_page3', 'config/global', 'api/group', 'api/proced', 'api/admin', 'api/teacher', 'api/user', 'util/md5'], function ($, _, api, CutPage,g) {
+require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'api/group', 'api/proced', 'api/admin', 'api/teacher', 'api/user', 'util/md5'], function ($, _, api, CutPage, g) {
 
 
   var base_url = g.base_url;
@@ -419,7 +419,7 @@ require(['jquery', 'lodash', 'api/apiobj','util/cut_page3', 'config/global', 'ap
     var overtime_privilege = $('#teach-overtime_privilege-add').val();
 
     // 判断物料权限
-    material_privilege = material_privileges_id[material_privilege] || '' 
+    material_privilege = material_privileges_id[material_privilege] || ''
 
     // 判断加班权限
     overtime_privilege = overtime_privileges_id[overtime_privilege] || ''
@@ -576,13 +576,13 @@ require(['jquery', 'lodash', 'api/apiobj','util/cut_page3', 'config/global', 'ap
 
   function initOneTeacherPassword(teacher) {
     swal({
-      title: '输入新的密码',
-      content: 'input',
+      title: '注意',
+      text: '密码将重置为123456',
       buttons: ['取消', '确定'],
       dangerMode: true
-    }).then(function (input) {
-      if (!input) return;
-      api.user.changePwd(teacher.tid, hex_md5(input))
+    }).then(function (ensure) {
+      if (!ensure) return;
+      api.user.changePwd(teacher.tid, hex_md5('123456'))
         .done(function (data) {
           if (data.status === 0) {
             swal(

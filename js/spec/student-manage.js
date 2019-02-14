@@ -1,4 +1,4 @@
-require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_page3','api/batch', 'api/student', 'api/user', 'flatpickr', 'util/md5'], function ($, _, swal, api, g,CutPage) {
+require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_page3', 'api/batch', 'api/student', 'api/user', 'flatpickr', 'util/md5'], function ($, _, swal, api, g, CutPage) {
   var base_url = g.base_url
   const pageSize = 5;//初始化分页单页页数
   function boot_grouper() {
@@ -404,7 +404,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
             $cloneTemp.appendTo($stu_list_tbody)
           });
           // 初始化分页
-            CutPage.cutPage('student_table', pageSize);
+          CutPage.cutPage('student_table', pageSize);
         } else {
           g.fetch_err(data)
         }
@@ -538,12 +538,13 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
       buttons: ['取消', '确定'],
       dangerMode: true
     }
-    ).then(function (input) {
+    ).then(function (ensure) {
+      if (!ensure) return;
       api.user.changePwd(student.sid, hex_md5('123456'))
         .done(function (data) {
           if (data.status === 0) {
             swal(
-              '消息',
+              '重置密码成功',
               data.message,
               'success'
             )

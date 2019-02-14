@@ -92,7 +92,7 @@ define(['api/apiobj','config/global'], function (api,g) {
                     reader.onload = function (e) {
                         // 转换完成，创建一个a标签用于下载
                         var a = document.createElement('a');
-                        a.download = 'data' + (Math.random() * 100000).toFixed(0) + '.xlsx';
+                        a.download = 'data' + (Math.random() * 100000).toFixed(0) + '.xls';
                         a.href = e.target.result;
                         $("body").append(a);    // 修复firefox中无法触发click
                         a.click();
