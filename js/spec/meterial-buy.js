@@ -8,13 +8,12 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/materi
     let selectedRemi = []; //定义报账记录中的行id
     let user = {}; //记录当前用户信息
     const pageSize = 5; //分页每页行数
-    let userInfo = {};
     let tname = "";
     $(function () {
         $(".mycalendar").flatpickr();
         init_data();
-        userInfo = JSON.parse(localStorage.getItem('user'));
-        tname = userInfo['姓名']
+        user = JSON.parse(localStorage.getItem('user'));
+        tname = user['姓名']
         setPage();
 
 
