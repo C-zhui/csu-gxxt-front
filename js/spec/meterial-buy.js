@@ -6,12 +6,13 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/materi
     let optionsForPurchaserText = ""; //用来存放采购人选项html文本
     let selectedPurPurchase = []; //定义采购表格中选中的行id
     let selectedRemi = []; //定义报账记录中的行id
-    let user = JSON.parse(localStorage.getItem('user')); //记录当前用户信息
     const pageSize = 5; //分页每页行数
-    let tname = user['姓名'];
+
     $(function () {
         $(".mycalendar").flatpickr();
         init_data();
+        let user = JSON.parse(localStorage.getItem('user')); //记录当前用户信息
+        let tname = user['姓名'];
         setPage();
 
 
