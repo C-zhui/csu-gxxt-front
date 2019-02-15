@@ -64,6 +64,12 @@ define(['api/apiobj', 'config/global'], function (api, g) {
             return g.post_json('/score/releaseSpScore',{
                 sid:sids
             });
+        },
+        //根据学号查询学生成绩
+        getMyScore: function (sid) {
+            return g.post_query('/score/getMyScore', {
+                sid: sid
+            });
         }
     };
 });
