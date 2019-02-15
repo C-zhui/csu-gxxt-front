@@ -3,6 +3,7 @@ define(['jquery','config/global'],function($,g){
     g.post_query(
       '/logout'
     );
+    localStorage.removeItem('user');
     window.location.href = './login.html'
   }
   $('#logout_tip').click(logout);

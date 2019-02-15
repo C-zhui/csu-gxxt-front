@@ -23,12 +23,15 @@ define(['jquery', 'swal', 'config/global', 'api/apiobj', 'api/user', 'util/md5',
                 });
             } else {
                 console.log(data);
+                localStorage.removeItem('user');
                 swal(
                     '登录失败',
                     String(data.message),
                     'error'
                 );
             }
-        }).fail(g.net_err);
+        }).fail(g.net_err).fail(function () {
+            localStorage.removeItem('user');
+        })
     });
 });
