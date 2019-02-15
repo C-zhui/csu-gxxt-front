@@ -161,7 +161,7 @@ require(['jquery', 'swal', 'api/apiobj', 'config/global', 'api/batch', 'api/proc
                     confirmButtonText: '确定删除！',
                     cancelButtonText: '取消',
                 }).then(result => {
-                    if (result.value) {
+                    if (result) {
                         api.proced.deleteTemplate(
                             {
                                 name: name
@@ -188,7 +188,7 @@ require(['jquery', 'swal', 'api/apiobj', 'config/global', 'api/batch', 'api/proc
                         )
                     } else {
                         // handle dismiss, result.dismiss can be 'cancel', 'overlay', 'close', and 'timer'
-                        console.log(result.dismiss)
+                        console.log(result);
                     }
                 })
             }
@@ -309,7 +309,7 @@ require(['jquery', 'swal', 'api/apiobj', 'config/global', 'api/batch', 'api/proc
         });
 
 //点击确认创建新的权重模板
-
+        $('#addNewPlan-ensure').click(createNewWeightTemp);
         function createNewWeightTemp() {
             let name = $('#new_weight_temp_name').val();
 

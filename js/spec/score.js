@@ -1,4 +1,4 @@
-require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_page3','api/batch', 'api/proced', 'api/student', 'api/teacher', 'api/score', 'bootstrapTable'], function ($, swal, _, api, g,CutPage) {
+require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_page3', 'api/batch', 'api/proced', 'api/student', 'api/teacher', 'api/score', 'bootstrapTable', 'flatpickr'], function ($, swal, _, api, g, CutPage) {
     const pageSize = 5; //设置分页单页条数
     require(['bootstrapTableFixedColumns'], function () {
         //批次对应的工序列表
@@ -179,7 +179,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
                 formatter: function (value, row, index) {
                     return [
                         // '<button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#specialListEditModal">修改</button>' +
-                        '<img src="../../icon/edit.svg" class="row-image-sm" data-toggle="modal" data-target="#specialListEditModal">',
+                        '<img src="../icon/edit.svg" class="row-image-sm" data-toggle="modal" data-target="#specialListEditModal">',
                     ]
                 }
             }
@@ -200,6 +200,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
             init_data();
             console.log('init score.js');
 
+            $('.mycalendar').flatpickr();
             // 初始化数据
             function init_data() {
                 // 获取所有批次
@@ -365,7 +366,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
                     $('#score_list_table').bootstrapTable('load', tableData);
                     CutPage.cutPage('score_list_table', pageSize);
                     //为button设置点击事件
-                    $('#score_list_table button').click(function () {
+                    $('#score_list_table img').click(function () {
                         editOneStuScore(this);
                     })
                 }
@@ -455,6 +456,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
                         );
                         return;
                     }
+                    let degreeForm = {};
                     if (modal === 'percent') {
                         let weight_sum = great + good + middle + pass + notPass;
                         if (weight_sum !== 100) {
@@ -465,6 +467,14 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
                             );
                             return;
                         }
+                        degreeForm = {
+                            "batchName": batch_name,
+                            "good": great / 100,
+                            "great": good / 100,
+                            "middle": middle / 100,
+                            "notPass": pass / 100,
+                            "pass": notPass / 100
+                        };
                     }
                     if (modal === 'score') {
                         if (notPass > pass || pass > middle || middle > good || good > great) {
@@ -475,16 +485,17 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
                             );
                             return;
                         }
+
+                        degreeForm = {
+                            "batchName": batch_name,
+                            "good": great,
+                            "great": good,
+                            "middle": middle,
+                            "notPass": pass,
+                            "pass": notPass
+                        };
                     }
 
-                    let degreeForm = {
-                        "batchName": batch_name,
-                        "good": great / 100,
-                        "great": good / 100,
-                        "middle": middle / 100,
-                        "notPass": pass / 100,
-                        "pass": notPass / 100
-                    };
                     api.score.setDegree(modal, degreeForm).done(function (data) {
                         if (data.status === 0) {
                             // console.log(data);
@@ -567,54 +578,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
             }
 
 //修改学生成绩
-            $('#edit-score').click(function () {
-                let post_data = {};
-                let select_data = score_list_table_config.data[score_row_index];
-                let tds = $('#scorelistEditModal table tbody tr td');
-                post_data['sid'] = $(tds[2]).text();
-                post_data['reason'] = $('#edit-state').val();
-                let score_sum = 0;
-                $('#scorelistEditModal table tbody tr td input').each(function () {
-                    let item = $(this);
-                    let val = item.val();
-                    let number = Number(val);
-                    let title = item.data('title');
-                    //判断成绩是否发生过改变
-                    if (val !== '' && number !== select_data[title]) {
-                        post_data[title] = number;
-                        select_data[title] = number;
-                    }
-                    score_sum += number * weights[title];
-                });
-                if (score_sum !== select_data['total_score']) {
-                    post_data['total_score'] = score_sum;
-                    select_data['total_score'] = score_sum;
-                }
-                let degree = $('#scorelistEditModal table tbody select').val();
-                if (degree !== '自动') {
-                    post_data['degree'] = degree;
-                    select_data['degree'] = degree;
-                }
-                api.score.updateScore(post_data).done(function (data) {
-                    if (data.status === 0) {
-                        swal(
-                            '成功',
-                            '成绩修改成功',
-                            'success'
-                        );
-                        $('#score_list_table').bootstrapTable('updateRow', score_row_index, select_data);
-                        CutPage.cutPage('score_list_table', pageSize);
-                    } else {
-                        swal(
-                            '更新失败',
-                            data.message,
-                            'error'
-                        );
-                        console.log(data.message);
-                    }
-                });
-                $('#scorelistEditModal').modal('hide');
-            })
+            $('#edit-score').click(editScore);
 
             function editScore() {
                 let post_data = {};
@@ -1053,6 +1017,8 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
 
                 if (batch_name !== "实习批次选择") {
                     send_data.batch_name = batch_name;
+                } else {
+                    send_data.batch_name = '%';
                 }
                 if (begin !== '') {
                     send_data.begin = begin;
