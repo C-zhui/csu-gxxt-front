@@ -4,9 +4,9 @@
     <div class="nav nav-tabs" role="tablist">
         <a href="#Section1" data-toggle="tab" role="tab" class="nav-item nav-link active"
            aria-selected="true">库存</a></a>
-        <a href="#Section2" data-toggle="tab" role="tab" class="nav-item nav-link " aria-selected="false">物料申购</a></a>
-        <a href="#Section3" id="materal-purchase" data-toggle="tab" role="tab" class="nav-item nav-link " aria-selected="false">物料采购</a></a>
-        <a href="#Section4" id="materal-store" data-toggle="tab" role="tab" class="nav-item nav-link " aria-selected="false">物料入库</a></a>
+        <a href="#Section2" data-toggle="tab" role="tab" class="nav-item nav-link materal-record" aria-selected="false">物料申购</a></a>
+        <a href="#Section3" id="materal-purchase" data-toggle="tab" role="tab" class="nav-item nav-link materal-record" aria-selected="false">物料采购</a></a>
+        <a href="#Section4" id="materal-store" data-toggle="tab" role="tab" class="nav-item nav-link materal-record" aria-selected="false">物料入库</a></a>
 
         <div class="nav-item space-holder">&emsp;</div>
     </div>
@@ -77,7 +77,7 @@
         </div>
 
         <!-- 物料申购 jadminTbody sadminTbody-->
-        <div role="tabpanel" class="tab-pane fade" id="Section2">
+        <div role="tabpanel" class="tab-pane fade materal-record" id="Section2">
             <!-- 申购记录 jadminTbody-->
             <div class="content-card">
                 <header>
@@ -304,7 +304,7 @@
 
 
         <!-- 物料采购 cadminTbody badminTbody hadminTbody-->
-        <div role="tabpanel" class="tab-pane fade" id="Section3">
+        <div role="tabpanel" class="tab-pane fade materal-record" id="Section3">
             <!-- 采购记录 cadminTbody-->
             <div class="content-card materal_purchase_operate">
                 <header>
@@ -448,7 +448,7 @@
             <!--采购记录结束-->
 
             <!-- 采购报账记录 badminTbody -->
-            <div class="content-card materal_remib_operate">
+            <div class="content-card">
                 <header>
                     <div class="header-title">
                         采购报账记录
@@ -669,7 +669,7 @@
         </div>
 
         <!-- 物料入库 radminTbody-->
-        <div role="tabpanel" class="tab-pane fade materal_store_operate" id="Section4">
+        <div role="tabpanel" class="tab-pane fade materal_store_operate materal-record" id="Section4">
             <div class="content-card">
                 <header>
                     <div class="header-title">

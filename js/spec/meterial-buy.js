@@ -13,36 +13,39 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/materi
         init_data();
         let user = JSON.parse(localStorage.getItem('user')); //记录当前用户信息
         let tname = user['姓名'];
+        let authority = user["物料权限"];
         setPage();
 
 
 // 根据权限设置界面
         function setPage() {
             if(user["角色"]!=="管理员"){
-                // console.log(233)
-                // $(".material_manage_operate").css("display","none");
-                // $(".material_add_apply_operate").css("display","none");
-                // $(".materal_add_apply_verify").css("display","none");
-                // $("#materal-purchase").css("display","none");
-                // $("#materal-store").css("display","none");
-                // $(".materal_purchase_operate").css("display","none");
-                // $(".materal_remib_operate").css("display","none");
-                // $(".materal_add_remib_operate").css("display","none");
-                // $(".materal_remib_verify_operate").css("display","none");
-                // $(".materal_store_operate").css("display","none");
-                // switch (user["物料权限"]){
-                //     case "1":$(".material_add_apply_operate").css("display","block");
-                //         break;  //申请购买物料权限
-                //     case "2":$("#materal-purchase").css("display","block");
-                //         $(".materal_purchase_operate").css("display","block");
-                //         $(".materal_remib_operate").css("display","block");
-                //         $(".materal_add_remib_operate").css("display","block");
-                //         break;  //采购权限
-                //     case "3":$("#materal-store").css("display","block");
-                //         $(".materal_store_operate").css("display","block");
-                //         break;  //入库权限
-                //     case "0":break;
-                // }
+
+                $(".material_manage_operate").css("display","none");
+
+                if(((authority&(1<<1))!==2)&&((authority&(1<<2))!==4)&&((authority&(1<<3))!==8)&&((authority&(1<<4))!==16)&&((authority&(1<<5))!==32)){//无任一物料权限
+                    $(".materal-record").hide();
+                }else{
+                    if((authority&(1<<1))!==2){   //无物料申购权限
+                        $(".material_add_apply_operate").hide();
+                    }
+                    if((authority&(1<<2))!==4){   //无申购审核权限
+                        $(".materal_add_apply_verify").hide();
+                    }
+                    if((authority&(1<<3))!==8&&(authority&(1<<4))!==16){  //既无采购权限也无采购审核权限（不显示采购部分的界面）
+                        $("#materal-purchase").hide();
+                    }
+                    if((authority&(1<<3))!==8){   //无采购权限
+                        $(".materal_purchase_operate").hide();  //采购记录界面消失
+                        $(".materal_add_remib_operate").hide(); //新增采购报账操作
+                    }
+                    if((authority&(1<<4))!==16){   //无采购审核权限
+                        $(".materal_remib_verify_operate").hide();
+                    }
+                    if((authority&(1<<5))!==32){   //无入库权限
+                        $("#materal-store").hide();
+                    }
+                }
             }
         }
 // 初始化页面数据
@@ -85,8 +88,8 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/materi
                         $('<td></td>').text(data_arr[i].clazz).appendTo(tr);
                         $('<td></td>').text(data_arr[i].num).appendTo(tr);
                         let deleteImage = $('<img class="delete-image" src="../../icon/delete-item.svg">').attr("id", data_arr[i].clazz).click(deleteOneMateral);
-                        // if(user["身份"]==="管理员")
-                            $('<td class="table-operate-img"></td>').append(deleteImage).appendTo(tr);
+                        if(user["角色"]==="管理员")
+                            $('<td class="table-operate-img material_manage_operate"></td>').append(deleteImage).appendTo(tr);
                         tableBody.append(tr);
                         material_class.push(data_arr[i].clazz);
                     }
