@@ -178,7 +178,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
                         let row = {
                             sId: value.sid,
                             sName: value.sname,
-                            clazz: '班级',
+                            clazz: value.clazz,
                             batch: batchName,
                             proced: proced,
                             group: value.s_group_id,

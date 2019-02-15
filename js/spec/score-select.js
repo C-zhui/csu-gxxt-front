@@ -24,7 +24,7 @@ require(['jquery', 'swal', 'config/global', 'api/apiobj', 'util/cut_page3', 'api
                         api.score.getMyScore(userInfo.id)
                             .done(function (data) {
                                 if (data.status === 0) {
-                                    let scoreData = data.data;
+                                    let scoreData = data.data[0];
                                     $('#total-score').text(scoreData.degree);
                                     let tableBody = $('#score-table tbody');
                                     for (let i = 0; i < process.length; i++) {
