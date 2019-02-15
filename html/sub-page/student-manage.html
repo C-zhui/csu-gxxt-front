@@ -90,8 +90,8 @@
 					<form class="form" enctype="multipart/form-data" role="form" id="tf">
 
 						<div class="custom-file custom-file-sm left">
-							<input type="file" name="file" class="custom-file-input" id="uploadfiles">
-							<label class="custom-file-label" for="uploadfiles">选择文件</label>
+							<input type="file" name="file" id="uploadfiles" onchange="$('#file_name').text($('#uploadfiles').val())" style="display: none">
+							<label class="custom-file-label" for="uploadfiles" id="file_name">选择文件</label>
 						</div>
 
 						<select class="custom-select custom-select-sm batch_selector left batch-select" name="batchName"

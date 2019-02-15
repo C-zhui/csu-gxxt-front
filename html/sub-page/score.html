@@ -181,10 +181,9 @@
                             <span>学生成绩批量导入：</span>
                             <form class="form form-inline" role="form">
                                 <!--<input type="file" class="form-control-file" id="tf">-->
-
                                 <div class="custom-file custom-file-sm left">
-                                    <input type="file" name="file" class="custom-file-input" id="tf">
-                                    <label class="custom-file-label" for="tf"></label>
+                                    <input type="file" name="file" class="custom-file-input" id="tf" onchange="$('#file_name').text($('#tf').val())">
+                                    <label class="custom-file-label" for="tf" id="file_name"></label>
                                 </div>
                             </form>
                             <!--<div class="clearfix"></div>-->
