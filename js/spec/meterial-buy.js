@@ -12,16 +12,14 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/experi
         $(".mycalendar").flatpickr();
         init_data();
         let user = JSON.parse(localStorage.getItem('user')); //记录当前用户信息
-        // let tname = user['姓名'];
-        // let authority = user["物料权限"];
-        let tname = "我是管理员";
-        let authority = 63;
+        let tname = user['姓名'];
+        let authority = user["物料权限"];
         setPage();
 
 
 // 根据权限设置界面
         function setPage() {
-            // if(user["角色"]!=="管理员"){
+            if(user["角色"]!=="管理员"){
 
                 $(".material_manage_operate").css("display","none");
 
@@ -47,7 +45,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/experi
                     if((authority&(1<<5))!==32){   //无入库权限
                         $("#materal-store").hide();
                     }
-                // }
+                }
             }
         }
 // 初始化页面数据
@@ -90,7 +88,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/experi
                         $('<td></td>').text(data_arr[i].clazz).appendTo(tr);
                         $('<td></td>').text(data_arr[i].num).appendTo(tr);
                         let deleteImage = $('<img class="delete-image" src="../../icon/delete-item.svg">').attr("id", data_arr[i].clazz).click(deleteOneMateral);
-                        // if(user["角色"]==="管理员")
+                        if(user["角色"]==="管理员")
                             $('<td class="table-operate-img material_manage_operate"></td>').append(deleteImage).appendTo(tr);
                         tableBody.append(tr);
                         material_class.push(data_arr[i].clazz);
