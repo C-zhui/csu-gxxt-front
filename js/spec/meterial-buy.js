@@ -12,14 +12,10 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/materi
     $(function () {
         $(".mycalendar").flatpickr();
         init_data();
-        api.user.getInfo().done(function (data) {
-            if (data.status === 0) {
-                user = data.data;
-                tname = data.data["姓名"];
-                console.log(tname);
-                setPage();
-            }
-        });
+        user = JSON.parse(localStorage.getItem('user'));
+        tname = user['姓名']
+        setPage();
+
 
 // 根据权限设置界面
         function setPage() {
