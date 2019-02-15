@@ -1,8 +1,9 @@
 require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'api/group', 'api/proced', 'api/admin', 'api/teacher', 'api/user', 'util/md5'], function ($, _, api, CutPage, g) {
 
 
-  var base_url = g.base_url;
-  var X1 = "选择教师组";
+  // var base_url = g.base_url;
+  var default_teacher_group = "选择教师组";
+  var default_material_group = '选择物料权限';
   const pageSize = 5; //分页每页行数
 
   function boot_grouper() {
@@ -26,14 +27,8 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
 
   $(document).ready(function () {
     boot_grouper();
-    init_data();
-  })
-
-  // 初始化页面数据
-  function init_data() {
-    // 初始化教师组管理模块
     init_page();
-  }
+  })
 
   // 1、教师组管理部分
 
@@ -48,9 +43,9 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
           // console.log(data.data)
           t_groups = data.data
           // 初始化教师组 及 工序列表
-          fill_teachergroup_proced_list();
-          // 初始化教师列表
-          fill_GroupSelector_StuList()
+          init_teachergroup_proced_list();
+          // 初始化教师列表的筛选器
+          init_query_selector_list()
         } else {
           g.fetch_err(data)
         }
@@ -59,7 +54,7 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
   }
 
   var proced_datas = []
-  function fill_teachergroup_proced_list() {
+  function init_teachergroup_proced_list() {
     proced_datas = [] //清空
     // 1. 填充基本的教师组
     $teachergroup_proced_list.empty(); //  清空
@@ -109,7 +104,7 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
             '添加新教师组成功',
             'success'
           );
-          init_data();
+          init_page();
         } else {
           g.fetch_err(data)
         }
@@ -145,7 +140,7 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
             '修改教师组名成功，你的新教师组名为：' + new_teacher_group_name,
             'success'
           );
-          init_data();
+          init_page();
         } else {
           g.fetch_err(data);
         }
@@ -178,7 +173,7 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
               'success'
             );
             // 刷新实习批次信息
-            init_data();
+            init_page();
           } else {
             g.fetch_err(data)
           }
@@ -215,7 +210,7 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
             '添加新工序成功',
             'success'
           );
-          init_data();
+          init_page();
         } else {
           g.fetch_err(data)
         }
@@ -257,7 +252,7 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
             '修改工序名成功',
             'success'
           );
-          init_data();
+          init_page();
         } else {
           g.fetch_err(data)
         }
@@ -297,7 +292,7 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
               'success'
             );
             // 刷新实习批次信息
-            init_data();
+            init_page();
           } else {
             g.fetch_err(data)
           }
@@ -310,130 +305,98 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
 
 
 
+
+
+
+
   // 2、教师列表部分
 
-  function fill_GroupSelector_StuList() {
+  var default_role_group = '选择角色';
+  var roles = ['选择角色', '管理员', '实训教师'];
+
+  var default_overtime_group = '选择开放权限';
+  var overtime_privileges = ['选择开放权限', '无', '开放管理'];
+  var overtime_privileges_id = {
+    '无': 0,
+    '开放管理': 1
+  }
+
+  // 填充教师组
+  var selector_loaded = {}
+  function init_query_selector_list() {
+    fill_teacher_group_selector();
+    fill_role_selector();
+    fill_overtime_selector();
+    fill_material_auth_selector();
+    getAllTeachers();
+  }
+
+  function fill_teacher_group_selector() {
     var $temp = $('<p></p>');
-    $('<option></option>').text(X1).appendTo($temp);
-    _.each(t_groups, function (tgroup) {
-      $('<option></option>').text(tgroup.t_group_id).appendTo($temp);
+    $('<option></option>').text(default_teacher_group).appendTo($temp);
+    _.each(t_groups, function (tgroup, i) {
+      $('<option></option>').text(tgroup.t_group_id).attr('data-t_group-idx', i).appendTo($temp);
     });
     var html = $temp.html();
     $('.teacher_group_selector').html(html);
-    findTeachers();
+    selector_loaded.t_group = true;
   }
 
 
-  var teachers = []
-  // 根据教师组、角色、物料权限、加班权限获取教师列表
-  $('#query_teacher_with_options').click(findTeachers);
-  function findTeachers() {
-    var teacher_list_teacher_groups = $('#teacher_list_teacher_groups').val();
-    var teacher_list_role = $('#teacher_list_role').val();
-    var teacher_list_material_privilege = $('#teacher_list_material_privilege').val();
-    var teacher_list_overwork_privilege = $('#teacher_list_overwork_privilege').val();
+  function fill_role_selector() {
+    var $role_selector = $('.role_selector').empty();
+    var temp = $('<p></p>')
+    _.each(roles, function (role) {
+      $('<option></option>').text(role).appendTo(temp);
+    });
+    $role_selector.html(temp.html())
+  }
 
-    //如果未选择教师组，设置为all
-    if (teacher_list_teacher_groups === X1) {
-      teacher_list_teacher_groups = "all";
-    }
-    //如果未选择角色，设置为all
-    if (teacher_list_role === "选择角色") {
-      teacher_list_role = "all";
-    }
-    //如果未选择物料权限，设置为无
-    if (teacher_list_material_privilege === "物料权限") {
-      teacher_list_material_privilege = "all";
-    }
-    //如果未选择加班权限，设置为无
-    if (teacher_list_overwork_privilege === "开放权限") {
-      teacher_list_overwork_privilege = "all";
-    }
+  function fill_overtime_selector() {
+    var $overtime_selector = $('.overtime_selector').empty();
+    var temp = $('<p></p>')
+    _.each(overtime_privileges, function (op) {
+      $('<option></option>').text(op).appendTo(temp);
+    });
+    $overtime_selector.html(temp.html())
+  }
 
-    api.admin.findTeachers(
-      teacher_list_teacher_groups,
-      teacher_list_role,
-      teacher_list_material_privilege,
-      teacher_list_overwork_privilege
-    ).done(function (data) {
-      if (data.status === 0) {
-        teachers = data.data;
-        fill_teacher_list_tbody();
-      } else {
-        g.fetch_err(data)
-      }
-    })
+  // 填充物料权限
+  var material_authes = []
+  var material_authes_to_bit = {}; // 保存的是第几位
+  function fill_material_auth_selector() {
+    api.teacher.getMaterialAuth()
+      .done(function (data) {
+        if (data.status === 0) {
+          material_authes = data.data
+          console.log(material_authes)
+          var $material_selector = $('#teacher_list_material_privilege').empty().append($('<option></option>').text(default_material_group));
+          _.each(material_authes, function (val, i) {
+            $material_selector.append($('<option></option>').text(val).attr('data-material_authes-idx', i))
+          });
+          // 建立反映射
+          material_authes_to_bit = {}
+          _.each(material_authes, function (val, i) {
+            material_authes_to_bit[val] = 1 << i;
+          });
+          console.log(material_authes_to_bit);
+          selector_loaded.material = true;
+        } else {
+          g.fetch_err(data)
+        }
+      })
       .fail(g.net_err)
   }
 
 
-  // 权限id双向映射
-  var material_privileges = {
-    '0': '无',
-    '1': '物料登记',
-    '2': '物料申购'
-  }
-  var material_privileges_id = {
-    '无': '0',
-    '物料登记': '1',
-    '物料申购': '2'
-  }
-
-  var overtime_privileges = {
-    '0': '无',
-    '1': '开放管理'
-  }
-  var overtime_privileges_id = {
-    '无': '0',
-    '开放管理': '1'
-  }
-
-  // 填充教师列表
-  var $teacher_list_tbody = $('#teacher_list_table')
-  function fill_teacher_list_tbody() {
-    var $tbody = $teacher_list_tbody.empty();
-    var $temp = $templates.find('#teacher_list_item_data').children();
-    _.each(teachers, function (teacher, i) {
-      var $cloneTemp = $temp.clone().attr('data-teachers-idx', i);
-      $cloneTemp.find('.tid').text(teacher.tid).end()
-        .find('.tname').text(teacher.tname).end()
-        .find('.all_group').text(teacher.all_group).end()
-        .find('.role').text(teacher.role).end()
-        .find('.material_privilege').text(material_privileges[teacher.material_privilege]);
-      $cloneTemp.find('.overtime_privilege').text(overtime_privileges[teacher.overtime_privilege])
-      $cloneTemp.appendTo($tbody);
-    });
-    // 分页
-    CutPage.cutPage('teacher_table', pageSize);
-  }
-
-
-  // 添加一个教师
-  $('#add_teacher_ensure').click(addOneTeacher);
-  function addOneTeacher() {
-    var tid = $('#teach-nickname-add').val();
-    var tname = $('#teach-name-add').val();
-    var t_group_id = $('#add_modal_teacher_group').val();
-    var role = $('#teach-role-add').val();
-    var material_privilege = $('#teach-material_privilege-add').val();
-    var overtime_privilege = $('#teach-overtime_privilege-add').val();
-
-    // 判断物料权限
-    material_privilege = material_privileges_id[material_privilege] || ''
-
-    // 判断加班权限
-    overtime_privilege = overtime_privileges_id[overtime_privilege] || ''
-
-    console.log(material_privilege, overtime_privilege)
-    api.teacher.addTeacher(tid, tname, t_group_id, role, material_privilege, overtime_privilege)
+  var teachers = []
+  function getAllTeachers() {
+    api.teacher.getAllTeacher()
       .done(function (data) {
         if (data.status === 0) {
-          console.log(data);
-          swal(
-            '添加成功',
-            '添加教师信息成功',
-            'success'
-          );
+          teachers = data.data;
+          // console.log(teachers)
+          get_fill_tgroup();
           findTeachers();
         } else {
           g.fetch_err(data)
@@ -442,11 +405,168 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
       .fail(g.net_err)
   }
 
+  var cnt_tgroups = -1;
+  function get_fill_tgroup() {
+    cnt_tgroups = 0;
+    _.each(teachers, function (teacher, i) {
+      api.teacher.getTGroup(teacher.tid)
+        .done(function (data) {
+          if (data.status === 0) {
+            // 直接将数据挂载到teacher对象上
+            teacher.t_groups = data.data
+            console.log(teacher)
+            cnt_tgroups++;
+          } else {
+            g.fetch_err(data);
+          }
+        })
+        .fail(g.net_err);
+    });
+  }
+
+
+
+
+
+
+  var teacher_filtered = []
+  // 根据教师组、角色、物料权限、加班权限获取教师列表
+  $('#query_teacher_with_options').click(findTeachers);
+  var t = null;
+  function findTeachers() {
+    // 检查异步数据是否到位 done
+    if (!selector_loaded.material || !selector_loaded.t_group) {
+      _.delay(findTeachers, 500);
+      return;
+    }
+
+    var selected_teacher_groups = $('#teacher_list_teacher_groups').val();
+    var selected_role = $('#teacher_list_role').val();
+    var selected_material_privilege = $('#teacher_list_material_privilege').val();
+    var selected_overwork_privilege = $('#teacher_list_overwork_privilege').val();
+    teacher_filtered = teachers;
+
+    // tgroups 没有到位，等
+    if (cnt_tgroups != teachers.length) {
+      _.delay(findTeachers, 500);
+      return;
+    }
+
+    // //如果未选择教师组，设置为all
+    if (selected_teacher_groups === default_teacher_group) {
+    } else {
+      console.log('过滤', selected_teacher_groups);
+      teacher_filtered = _.filter(teacher_filtered, function (teacher) {
+        return _.includes(teacher.t_groups, selected_teacher_groups);
+      });
+    }
+
+    //如果未选择角色，设置为all
+    if (selected_role === "选择角色") {
+    } else {
+      teacher_filtered = _.filter(teacher_filtered, function (teacher) {
+        return (teacher.role === selected_role);
+      });
+    }
+
+    //如果未选择物料权限，设置为无
+    if (selected_material_privilege === default_material_group) {
+    } else {
+      teacher_filtered = _.filter(teacher_filtered, function (teacher) {
+        return (teacher.material_privilege & material_authes_to_bit[selected_material_privilege]);
+      });
+    }
+
+    //如果未选择加班权限，设置为无
+    if (selected_overwork_privilege === "选择开放权限") {
+    } else {
+      teacher_filtered = _.filter(teacher_filtered, function (teacher) {
+        return (teacher.overtime_privilege === overtime_privileges_id[selected_overwork_privilege]);
+      });
+    }
+
+    console.log(teacher_filtered);
+    fill_teacher_list_tbody(teacher_filtered);
+  }
+
+  // 填充教师列表
+  var $teacher_list_tbody = $('#teacher_list_table')
+  function fill_teacher_list_tbody() {
+    var $tbody = $teacher_list_tbody.empty();
+    var $temp = $templates.find('#teacher_list_item_data').children();
+    _.each(teacher_filtered, function (teacher, i) {
+      var $cloneTemp = $temp.clone().attr('data-teacher_filtered-idx', i);
+      $cloneTemp.find('.tid').text(teacher.tid).end()
+        .find('.tname').text(teacher.tname).end()
+        .find('.all_group').text('' + teacher.t_groups).end()
+        .find('.role').text(teacher.role).end()
+      // .find('.material_privilege').text(material_privileges[teacher.material_privilege]);
+      $cloneTemp.find('.overtime_privilege').text(overtime_privileges[teacher.overtime_privilege]);
+      $cloneTemp.appendTo($tbody);
+      // get_fill_tgroup($cloneTemp, teacher);
+      trans_fill_material_auth($cloneTemp, teacher);
+    });
+    // 分页
+    CutPage.cutPage('teacher_table', pageSize);
+  }
+
+  // 转换显示物料权限
+  function trans_fill_material_auth($teacher_row, teacher) {
+    // console.log(teacher.material_privilege);
+    var bit_code = teacher.material_privilege;
+    var authes = []
+    _.each(material_authes, function (val, i) {
+      if (bit_code & (1 << i)) {
+        authes.push(val);
+      }
+    });
+    $teacher_row.find('.material_privilege').text('' + authes);
+  }
+
+
+  // 添加一个教师
+  $('#add_teacher_ensure').click(addOneTeacher);
+  function addOneTeacher() {
+    var tid = $('#teach-nickname-add').val();
+    var tname = $('#teach-name-add').val();
+    // var t_group_id = $('#add_modal_teacher_group').val();
+    var role = $('#teach-role-add').val();
+    // var material_privilege = $('#teach-material_privilege-add').val();
+    var overtime_privilege = $('#teach-overtime_privilege-add').val();
+    // 判断物料权限
+    // material_privilege = material_privileges_id[material_privilege] || ''
+
+    // 判断加班权限
+
+    if (!tid || !tname || role === default_role_group || overtime_privilege === default_overtime_group) {
+      swal('', '请完善表单填写', 'warning');
+      return;
+    }
+    overtime_privilege = overtime_privileges_id[overtime_privilege]
+    console.log(overtime_privilege)
+
+    api.teacher.addTeacher(tid, tname, role, 0, overtime_privilege)
+      .done(function (data) {
+        if (data.status === 0) {
+          console.log(data);
+          swal(
+            '添加成功',
+            '添加教师信息成功',
+            'success'
+          );
+          getAllTeachers();
+        } else {
+          g.fetch_err(data)
+        } 
+      })
+      .fail(g.net_err)
+  }
+
   // 删除一个教师
   $teacher_list_tbody.on('click', '.del_teacher_entry', function () {
     var $this = $(this);
-    var idx = $this.parents('.teacher_list_item_data').attr('data-teachers-idx')
-    deleteOneTeacher(teachers[idx]);
+    var idx = $this.parents('.teacher_list_item_data').attr('data-teacher_filtered-idx')
+    deleteOneTeacher(teacher_filtered[idx]);
   });
 
   function deleteOneTeacher(teacher) {
@@ -466,7 +586,7 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
               '删除教师信息成功',
               'success'
             );
-            findTeachers();
+            getAllTeachers();
           } else {
             g.fetch_err(data)
           }
@@ -482,7 +602,7 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
     //  console.log($checked);
     var teacher_ids = [];
     $checked.each(function (i, dom) {
-      var index = $(dom).attr('data-teachers-idx');
+      var index = $(dom).attr('data-teacher_filtered-idx');
       teacher_ids.push(teachers[index].tid);
     });
     // console.log(teacher_ids);
@@ -502,7 +622,7 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
               '删除教师信息成功',
               'success'
             );
-            findTeachers();
+            getAllTeachers();
           } else {
             g.fetch_err(data)
           }
@@ -512,25 +632,28 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
   }
 
 
+
+
+  var teacher_editing = null;
   // 修改一个教师--初始化
   $teacher_list_tbody.on('click', '.edit_teacher_entry', function () {
     var $this = $(this);
-    var idx = $this.parents('.teacher_list_item_data').attr('data-teachers-idx')
-    editOneTeacher_init(teachers[idx]);
+    var idx = $this.parents('.teacher_list_item_data').attr('data-teacher_filtered-idx')
+    editOneTeacher_init(teacher_filtered[idx]);
     $('#teacherManage-button-editModal').modal('show')
   });
 
   function editOneTeacher_init(teacher) {
-    // console.log(teacher)
+    teacher_editing = teacher;
     $('#teach_nickname_add').val(teacher.tid);
     $('#teach_name_add').val(teacher.tname);
-    // $('#teach_groups_add').val(all_group);
     $('#teach_role_add').val(teacher.role);
     // 判断物料权限
-    $('#teach_material_privilege_add').val('').val(material_privileges[teacher.material_privilege]);
+    // $('#teach_material_privilege_add').val('').val(material_privileges[teacher.material_privilege]);
     // 判断加班权限
     $('#teach_overwork_privilege_add').val('').val(overtime_privileges[teacher.overtime_privilege]);
   }
+
 
   // 修改一个教师
   $('#edit_teacher_ensure').click(editOneTeacher);
@@ -570,8 +693,8 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
   // 重置一个教师的密码
   $teacher_list_tbody.on('click', '.reset_teacher_entry', function () {
     var $this = $(this);
-    var idx = $this.parents('.teacher_list_item_data').attr('data-teachers-idx')
-    initOneTeacherPassword(teachers[idx]);
+    var idx = $this.parents('.teacher_list_item_data').attr('data-teacher_filtered-idx')
+    initOneTeacherPassword(teacher_filtered[idx]);
   });
 
   function initOneTeacherPassword(teacher) {
@@ -597,5 +720,4 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
         .fail(g.net_err)
     });
   }
-
 });
