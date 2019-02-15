@@ -302,13 +302,6 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
   }
 
 
-
-
-
-
-
-
-
   // 2、教师列表部分
 
   var default_role_group = '选择角色';
@@ -363,7 +356,7 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
 
   // 填充物料权限
   var material_authes = []
-  var material_authes_to_bit = {}; // 保存的是第几位
+  var material_authes_to_bit = {}; // 保存的位码
   function fill_material_auth_selector() {
     api.teacher.getMaterialAuth()
       .done(function (data) {
@@ -414,7 +407,7 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
           if (data.status === 0) {
             // 直接将数据挂载到teacher对象上
             teacher.t_groups = data.data
-            console.log(teacher)
+            // console.log(teacher)
             cnt_tgroups++;
           } else {
             g.fetch_err(data);
@@ -423,10 +416,6 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
         .fail(g.net_err);
     });
   }
-
-
-
-
 
 
   var teacher_filtered = []
@@ -455,7 +444,7 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
     // //如果未选择教师组，设置为all
     if (selected_teacher_groups === default_teacher_group) {
     } else {
-      console.log('过滤', selected_teacher_groups);
+      // console.log('过滤', selected_teacher_groups);
       teacher_filtered = _.filter(teacher_filtered, function (teacher) {
         return _.includes(teacher.t_groups, selected_teacher_groups);
       });
@@ -557,7 +546,7 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
           getAllTeachers();
         } else {
           g.fetch_err(data)
-        } 
+        }
       })
       .fail(g.net_err)
   }
@@ -632,8 +621,6 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
   }
 
 
-
-
   var teacher_editing = null;
   // 修改一个教师--初始化
   $teacher_list_tbody.on('click', '.edit_teacher_entry', function () {
@@ -642,6 +629,7 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
     editOneTeacher_init(teacher_filtered[idx]);
     $('#teacherManage-button-editModal').modal('show')
   });
+
 
   function editOneTeacher_init(teacher) {
     teacher_editing = teacher;
@@ -652,7 +640,101 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
     // $('#teach_material_privilege_add').val('').val(material_privileges[teacher.material_privilege]);
     // 判断加班权限
     $('#teach_overwork_privilege_add').val('').val(overtime_privileges[teacher.overtime_privilege]);
+    if (teacher_editing) {
+      init_btn_bar_tgroups();
+      init_btn_bar_material_privileges();
+    }
   }
+
+
+  var $edit_teacher_groups = $('#edit_teacher_groups');
+  var tgroups_has = {};
+  var tgroups_not = {};
+  var t_group_ids;
+  // 初始化教师编辑的教师组
+  function init_btn_bar_tgroups() {
+    tgroups_has = {};
+    tgroups_not = {};
+    console.log(teacher_editing)
+    t_group_ids = _.map(t_groups, 't_group_id');
+    console.log(t_group_ids);
+    _.each(t_group_ids, function (name, i) {
+      if (_.includes(teacher_editing.t_groups, name)) {
+        tgroups_has[name] = i;
+      } else {
+        tgroups_not[name] = i;
+      }
+    });
+    redraw_btn_bar_tgroups();
+  }
+
+  function redraw_btn_bar_tgroups() {
+    $edit_teacher_groups.empty();
+    var has = _.keys(tgroups_has);
+    var not = _.keys(tgroups_not);
+    _.each(has, function (g_name) {
+      $('<button class="btn btn-success"></button>').addClass('tgroup has_').attr('data-tgroup', g_name).text(g_name).appendTo($edit_teacher_groups);
+    });
+
+    _.each(not, function (g_name) {
+      $('<button class="btn btn-danger"></button>').addClass('tgroup').attr('data-tgroup', g_name).text(g_name).appendTo($edit_teacher_groups);
+    });
+  }
+
+  $edit_teacher_groups.on('click', '.tgroup', function () {
+    var $this = $(this);
+    var tgroup = $this.attr('data-tgroup');
+    console.log(tgroup)
+    if ($this.hasClass('has_')) {// 点击了绿色  
+      tgroups_not[tgroup] = tgroups_has[tgroup];
+      delete tgroups_has[tgroup];
+    } else {
+      tgroups_has[tgroup] = tgroups_not[tgroup];
+      delete tgroups_not[tgroup];
+    }
+    redraw_btn_bar_tgroups();
+  });
+
+  var material_has = {}
+  var material_not = {}
+  function init_btn_bar_material_privileges() {
+    material_has = {}
+    material_not = {}
+    _.each(material_authes, function (name, i) {
+      if (teacher_editing.material_privilege & (1 << i)) {
+        material_has[1 << i] = name;
+      } else {
+        material_not[1 << i] = name;
+      }
+    });
+    redraw_btn_bar_material();
+  }
+
+  var $edit_material_privileges = $('#edit_material_privileges');
+  function redraw_btn_bar_material() {
+    $edit_material_privileges.empty();
+    _.each(material_has, function (name, code) {
+      $('<button class="btn btn-success"></button>').attr('data-code', code).addClass('material has_').text(name).appendTo($edit_material_privileges);
+    });
+
+    _.each(material_not, function (name, code) {
+      $('<button class="btn btn-danger"></button>').attr('data-code', code).addClass('material').text(name).appendTo($edit_material_privileges);
+    });
+  }
+
+  $edit_material_privileges.on('click', '.material', function () {
+    var $this = $(this);
+    var code = $this.attr('data-code');
+    console.log(code)
+    if ($this.hasClass('has_')) {// 点击了绿色  
+      material_not[code] = material_has[code];
+      delete material_has[code];
+    } else {
+      material_has[code] = material_not[code];
+      delete material_not[code];
+    }
+    redraw_btn_bar_material();
+  });
 
 
   // 修改一个教师
@@ -661,29 +743,75 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
     var tid = $('#teach_nickname_add').val();
     var tname = $('#teach_name_add').val();
     var role = $('#teach_role_add').val();
-    var material_privilege = $('#teach_material_privilege_add').val();
+    // var material_privilege = $('#teach_material_privilege_add').val();
     var overtime_privilege = $('#teach_overwork_privilege_add').val();
-    var t_group_id = $('#teachGroupFormControlSelect').val();
+    // var t_group_id = $('#teachGroupFormControlSelect').val();
     // 判断物料权限
-    material_privilege = material_privileges_id[material_privilege] || '';
+    // material_privilege = material_privileges_id[material_privilege] || '';
     // 判断加班权限
-    overtime_privilege = overtime_privileges_id[overtime_privilege] || ''
-    // 判断教师组
-    if (t_group_id === "选择教师组") {
-      t_group_id = "0";
+    overtime_privilege = overtime_privileges_id[overtime_privilege]
+    // 计算物料权限位码
+    var codes = _.keys(material_has);
+    // console.log('codes ',codes);
+    codes = _.map(codes, _.toInteger);
+    // console.log('codes ',codes);
+    var material_privilege = _.sum(codes);
+    // console.log('material_privilege ', material_privilege);
+    // console.log(tgroups_has)
+    var now_tgroups = _.keys(tgroups_has);
+    // console.log(now_tgroups)
+
+    var for_del = _.difference(teacher_editing.t_groups, now_tgroups);
+    var for_new = _.difference(now_tgroups, teacher_editing.t_groups);
+    console.log('del', for_del);
+    console.log('new', for_new);
+    console.log(material_privilege)
+
+    var cnt = {
+      done: false,
+      val: 0,
+      increment: function (data) {
+        if (this.done) return;
+        if (data.status === 0) { this.val++; }
+        else this.val += for_del.length + for_new.length;
+
+        if (this.val == for_del.length + for_new.length) {
+          swal('提示', '信息修改成功', 'success');
+          getAllTeachers();
+        }
+        if (this.val >= for_del.length + for_new.length) {
+          this.done = true;
+          if (this.val > for_del.length + for_new.length) {
+            swal('错误', '信息修改中断', 'error');
+            getAllTeachers();
+          }
+        }
+      },
+      fail: function (data) {
+        this.val += for_del.length + for_new.length;
+        this.done = true;
+        swal('错误', '信息修改中断', 'error');
+        getAllTeachers();
+      }
     }
 
-    api.teacher.updateTeacher(tid, tname, t_group_id, role, material_privilege, overtime_privilege)
+    api.teacher.updateTeacher(tid, tname, now_tgroups[0], role, material_privilege, overtime_privilege)
       .done(function (data) {
         if (data.status === 0) {
-          swal(
-            '更新成功',
-            '更新教师信息成功',
-            'success'
-          );
-          findTeachers();
+          if (for_del.length === 0 && for_new.length === 0) {
+            swal('提示', '信息修改成功', 'success');
+            getAllTeachers();
+          }
+          _.each(for_del, function (tgroup) {
+            api.teacher.deleteTeacherGroup(tid, tgroup)
+              .done(cnt.increment.bind(cnt)).fail(cnt.fail.bind(cnt));
+          });
+          _.each(for_new, function (tgroup) {
+            api.teacher.updateTeacherGroup(tid, tgroup)
+              .done(cnt.increment.bind(cnt)).fail(cnt.fail.bind(cnt));
+          });
         } else {
-          g.fetch_err(data)
+          console.log(data);
         }
       })
       .fail(g.net_err)

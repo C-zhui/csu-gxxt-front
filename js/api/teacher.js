@@ -22,6 +22,22 @@ define(['api/apiobj', 'config/global'], function (api, g) {
         teacher_ids
       );
     },
+    // 删除教师的教师组
+    deleteTeacherGroup: function (tid, t_group_id) {
+      return g.post_query(
+        '/teacherGroup/deleteTeacherGroup/' + tid + '/' + t_group_id
+      )
+    },
+    // 增加教师的教师组
+    updateTeacherGroup: function (tid, t_group_id) {
+      return g.post_query(
+        '/teacherGroup/updateTeacherGroup',
+        {
+          'teacherGroupId.t_group_id': t_group_id,
+          'teacherGroupId.tid': tid
+        }
+      );
+    },
     // 修改教师
     updateTeacher: function (tid, tname, t_group_id, role, material_privilege, overtime_privilege) {
       return g.post_query(
@@ -53,8 +69,5 @@ define(['api/apiobj', 'config/global'], function (api, g) {
         { tid: tid }
       );
     }
-
-
-
   }
 });
