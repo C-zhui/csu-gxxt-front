@@ -90,8 +90,8 @@
 					<form class="form" enctype="multipart/form-data" role="form" id="tf">
 
 						<div class="custom-file custom-file-sm left">
-							<input type="file" name="file" class="custom-file-input" id="uploadfiles">
-							<label class="custom-file-label" for="uploadfiles">选择文件</label>
+							<input type="file" name="file" id="uploadfiles" onchange="$('#file_name').text($('#uploadfiles').val())" style="display: none">
+							<label class="custom-file-label" for="uploadfiles" id="file_name">选择文件</label>
 						</div>
 
 						<select class="custom-select custom-select-sm batch_selector left batch-select" name="batchName"
@@ -184,8 +184,11 @@
 											id="new_semester_beginDate">
 									</div>
 								</div>
-								<small class="text-danger">注意：</small>
-								<small class="text-info">起始时间请设置为第一周的星期一</small>
+								<h6 class="text-info left">编辑说明：</h6>
+								<ul class="list">
+									<li>起始时间请设置为第一周的星期一</li>
+								</ul>
+								<div class="clearfix"></div>
 							</form>
 						</div>
 						<div class="modal-footer">
@@ -202,7 +205,7 @@
 			<!-- 添加新批次 Modal -->
 			<div class="modal fade" id="add_semester_batchModal" tabindex="-1" role="dialog"
 				aria-labelledby="add_semester_batchModalTitle" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered" role="document" style="width: 900px">
+				<div class="modal-dialog modal-dialog-centered" role="document" style="width: 550px">
 					<div class="modal-content">
 						<div class="modal-header">
 							<h5 class="modal-title" id="add_semester_batchModalTitle">添加新批次</h5>
@@ -240,10 +243,13 @@
 											id="addNewBatch_beginDate">
 									</div>
 								</div>
-								<small style="color: red;">注意：</small>
-								<small style="color: green;">批次名请使用数字及英文大写字母的组合形式，具体为 年份+季节缩写+学分+序号，如 2018S101 代表 2018年
-									秋季学期
-									1学分培养方案 批次1</small>
+								<h6 class="text-info left">注意：</h6>
+								<ul class="list">
+									<li>批次名请使用数字及英文大写字母的组合形式，具体为 年份+季节缩写+学分+序号，如 2018S101 代表 2018年
+										秋季学期
+										1学分培养方案 批次1</li>
+								</ul>
+								<div class="clearfix"></div>
 							</form>
 						</div>
 						<div class="modal-footer">
@@ -260,7 +266,7 @@
 			<!-- 编辑批次 Modal -->
 			<div class="modal fade" id="editOneBatchModal" tabindex="-1" role="dialog"
 				aria-labelledby="editOneBatchModalTitle" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered" role="document" style="width: 900px">
+				<div class="modal-dialog modal-dialog-centered" role="document" style="width: 550px">
 					<div class="modal-content">
 						<div class="modal-header">
 							<h5 class="modal-title" id="editOneBatchModalTitle">修改批次信息</h5>
@@ -295,10 +301,13 @@
 											id="editOneBatchBeginDate">
 									</div>
 								</div>
-								<small style="color: red;">注意：</small>
-								<small style="color: green;">批次名请使用数字及英文大写字母的组合形式，具体为 年份+季节缩写+学分+序号，如 2018S101 代表 2018年
-									秋季学期
-									1学分培养方案 批次1</small>
+								<h6 class="text-info left">注意：</h6>
+								<ul class="list">
+									<li>批次名请使用数字及英文大写字母的组合形式，具体为 年份+季节缩写+学分+序号，如 2018S101 代表 2018年
+										秋季学期
+										1学分培养方案 批次1</li>
+								</ul>
+								<div class="clearfix"></div>
 							</form>
 						</div>
 						<div class="modal-footer">
@@ -316,7 +325,7 @@
 			<!-- 编辑学期 Modal -->
 			<div class="modal fade" id="edit_semester_modal" tabindex="-1" role="dialog"
 				aria-labelledby="edit_semester_modalTitle" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered" role="document" style="width: 900px">
+				<div class="modal-dialog modal-dialog-centered" role="document" style="width: 620px">
 					<div class="modal-content">
 						<div class="modal-header">
 							<h5 class="modal-title" id="edit_semester_modalTitle">修改学期信息</h5>
@@ -362,7 +371,7 @@
 			<!-- 添加学生 Modal -->
 			<div class="modal fade" id="add_student_modal" tabindex="-1" role="dialog"
 				aria-labelledby="add_student_modalTitle" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered" role="document" style="width: 780px">
+				<div class="modal-dialog modal-dialog-centered" role="document" style="width: 550px">
 					<div class="modal-content">
 						<div class="modal-header">
 							<h5 class="modal-title" id="add_student_modalTitle">添加学生</h5>
@@ -403,7 +412,7 @@
 			<!-- stu_list_tbody中编辑的 modal  -->
 			<div class="modal fade" id="edit_stud_modal" tabindex="-1" role="dialog"
 				aria-labelledby="edit_stud_modalTitle" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered" role="document" style="width: 780px">
+				<div class="modal-dialog modal-dialog-centered" role="document" style="width: 550px">
 					<div class="modal-content">
 						<div class="modal-header">
 							<h5 class="modal-title" id="edit_stud_modalTitle">学生信息修改</h5>

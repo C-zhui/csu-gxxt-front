@@ -277,8 +277,8 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/materi
                 $("#jadminTbody").bootstrapTable("destroy").bootstrapTable({
                     pagination: false,
                     data: tableData,
-                    fixedColumns: true,
-                    fixedNumber: 4,
+                    // fixedColumns: true,
+                    // fixedNumber: 4,
                     onCheck: function (row) {
                         selectedPurchase.push(row.purchaseId);
                     },
@@ -556,8 +556,8 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/materi
                 $("#cadminTbody").bootstrapTable("destroy").bootstrapTable({
                     pagination: false,
                     data: tableData,
-                    fixedColumns: true,
-                    fixedNumber: 4,
+                    // fixedColumns: true,
+                    // fixedNumber: 4,
                     onCheck: function (row) {
                         selectedPurPurchase.push(row.id);
                     },
@@ -689,8 +689,8 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/materi
                 $("#badminTbody").bootstrapTable("destroy").bootstrapTable({
                     pagination: false,
                     data: tableData,
-                    fixedColumns: true,
-                    fixedNumber: 4,
+                    // fixedColumns: true,
+                    // fixedNumber: 4,
                     onCheck: function (row) {
                         selectedRemi.push(row.id);
                         // console.log(selectedRemi);
@@ -961,8 +961,8 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/materi
                 $("#radminTbody").bootstrapTable("destroy").bootstrapTable({
                     pagination: false,
                     data: tableData,
-                    fixedColumns: true,
-                    fixedNumber: 4,
+                    // fixedColumns: true,
+                    // fixedNumber: 4,
                 });
                 // 分页初始化
                 CutPage.cutPage('radminTbody', pageSize);

@@ -627,6 +627,25 @@ hr {
 .modal-dialog .modal-body {
   padding: 1.25rem;
 }
+.modal-dialog .modal-body .text-info {
+  font-family: "Microsoft YaHei UI";
+  font-size: 0.875rem;
+  color: #3f8bc7;
+}
+.modal-dialog .modal-body .list {
+  padding-left: 0;
+  list-style: none;
+  margin-bottom: 0;
+}
+.modal-dialog .modal-body .list li {
+  font-family: "Microsoft YaHei UI";
+  font-size: 0.75rem;
+  color: #434343;
+  margin: 5px 0;
+}
+.modal-dialog .modal-body .col-form-label {
+  text-align: right;
+}
 .modal-dialog .modal-footer {
   padding: 1rem 1.25rem;
 }

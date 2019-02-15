@@ -107,4 +107,12 @@
 	margin-top: 32px;
 	width: 50px;
 }
+.file-input input{
+	float: left;
+}
+.fix_row{
+	POSITION: relative;
+	z-index:2;
+}
+
 
