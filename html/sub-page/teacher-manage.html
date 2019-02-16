@@ -309,7 +309,7 @@
     <!-- 添加教师 modal -->
     <div class="modal fade" id="teacherManage-button-addModal" tabindex="-1" role="dialog"
       aria-labelledby="teacherManage-button-addModalTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="width: 950px">
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="width: 922px">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="teacherManage-button-addModalTitle">添加教师</h5>
@@ -358,36 +358,6 @@
                   </select>
                 </div> -->
 
-                <div class="row edit-row clearfix">
-                  <div class="form-group">
-                    <label for="teach_name_add">教师组：</label>
-                    <div class="clearfix privilige_operate" id="edit_teacher_groups">
-                      <button class="pri_btn">asd</button>
-                      <button class="pri_btn">ads</button>
-                      <button class="pri_btn">qwe</button>
-                      <button class="pri_btn">qwe</button>
-                      <button class="pri_btn">qwe</button>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row edit-row clearfix">
-                  <div class="form-group">
-                    <label for="edit_material_privileges">物料权限：</label>
-                    <div class="clearfix privilige_operate" id="edit_material_privileges">
-                      <button class="pri_btn">asd</button>
-                      <button class="pri_btn">ads</button>
-                      <button class="pri_btn">qwe</button>
-                      <button class="pri_btn">qwe</button>
-                      <button class="pri_btn">qwe</button>
-                    </div>
-                  </div>
-                </div>
-                <h6 class="text-info left">说明：</h6>
-                <ul class="list tip-info">
-                  <li>点击选中，再次点击取消</li>
-                </ul>
-                <div class="clearfix"></div>
               </div>
             </div>
           </div>
@@ -406,7 +376,7 @@
     <!-- 编辑教师信息 modal -->
     <div class="modal fade" id="teacherManage-button-editModal" tabindex="-1" role="dialog"
       aria-labelledby="teacherManage-button-editModalTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="width: 780px">
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="width: 922px">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="teacherManage-button-editModalTitle">教师信息修改</h5>
@@ -416,7 +386,7 @@
           </div>
           <div class="modal-body">
             <div class="container-fluid">
-              <div class="row edit-row">
+              <div class="row edit-row select-group">
                 <div class="form-group  col-md-3">
                   <label for="teach_nickname_add">学工号：</label>
                   <input type="text" class="form-control" id="teach_nickname_add" disabled placeholder="学工号">
@@ -437,38 +407,38 @@
                 </div>
               </div>
 
-              <div class="row edit-row">
-                <div class="form-group col-md-4">
+              <div class="row edit-row clearfix">
+                <div class="form-group edit-row-btn">
                   <label for="teach_name_add">教师组：</label>
-                  <div class="btn-group" id="edit_teacher_groups">
-                    <button class="btn btn-success">asd</button>
-                    <button class="btn btn-success">ads</button>
-                    <button class="btn btn-success">qwe</button>
-                    <button class="btn btn-danger">qwe</button>
-                    <button class="btn btn-danger">qwe</button>
+                  <div class="clearfix privilige_operate" id="edit_teacher_groups">
+                    <button class="pri_btn">asd</button>
+                    <button class="pri_btn">ads</button>
+                    <button class="pri_btn">qwe</button>
+                    <button class="pri_btn">qwe</button>
+                    <button class="pri_btn">qwe</button>
                   </div>
                 </div>
+              </div>
 
-              </div>
-              <div class="row edit-row">
-                <div class="form-group  col-md-4">
+              <div class="row edit-row clearfix">
+                <div class="form-group edit-row-btn">
                   <label for="edit_material_privileges">物料权限：</label>
-                  <div class="btn-group" id="edit_material_privileges">
-                    <button class="btn btn-success">asd</button>
-                    <button class="btn btn-success">ads</button>
-                    <button class="btn btn-success">qwe</button>
-                    <button class="btn btn-danger">qwe</button>
-                    <button class="btn btn-danger">qwe</button>
+                  <div class="clearfix privilige_operate" id="edit_material_privileges">
+                    <button class="pri_btn">asd</button>
+                    <button class="pri_btn">ads</button>
+                    <button class="pri_btn">qwe</button>
+                    <button class="pri_btn">qwe</button>
+                    <button class="pri_btn">qwe</button>
                   </div>
                 </div>
               </div>
-              <div>
-                <h6 class="text-primary">注意</h6>
-                <ul class="list">
-                  <li>状态条上的绿色代表处于一个组或者拥有权限，红色代表不是</li>
-                  <li>点击绿色或红色都会将其转换成另一边</li>
-                </ul>
-              </div>
+
+              <h6 class="text-info left">说明：</h6>
+              <ul class="list tip-info">
+                <li>点击选中，再次点击取消</li>
+              </ul>
+              <div class="clearfix"></div>
+
             </div>
           </div>
           <div class="modal-footer">

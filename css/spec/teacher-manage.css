@@ -109,37 +109,37 @@
 	margin-top: 32px;
 	width: 50px;
 }
-
+.select-group .form-group:last-child{
+	padding-right: 0;
+}
+.edit-row-btn,.text-info{
+	padding-left: 15px;
+}
 /*权限操作框*/
 .privilige_operate{
 	max-height: 272px;
 	overflow-y: scroll;
-	width: 880px;
+	width: 840px;
 }
 .pri_btn{
 	float: left;
-	width: 171px;
+	width: 164px;
 	/*padding: 20px 22px;*/
-	height: 58px;
+	height: 50px;
 	text-align: center;
 	box-sizing: border-box;
 	border: 1px solid #ffffff;
 	margin: 0;
 	margin-bottom: 10px;
 	word-wrap: break-word;
-}
-.pri_btn.active{
-	background: #3f8cb0;
-	color: #ffffff;
-}
-.pri_btn.odd{
 	background: #d8e9f1;
 	color: #000000;
 }
-.pri_btn.even{
+.pri_btn.active{
+	background: #3f8cb0;!important;
+	color: #ffffff;!important;
+}
+.privilige_operate .pri_btn:nth-child(5n+2):not(.active),.privilige_operate .pri_btn:nth-child(5n+4):not(.active){
 	background: #f1f7fa;
 	color: #000000;
-}
-.text-info{
-	margin-top: 5px;
 }
