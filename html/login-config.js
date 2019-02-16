@@ -1,11 +1,11 @@
 require.config({
     baseUrl:'../js/',
     paths:{
-        jquery:'lib/jquery',
-        bootstrap:'lib/bootstrap',
+        jquery:'lib/jquery.min',
+        bootstrap:'lib/bootstrap.min',
         popper:'lib/popper.min',
-        lodash:'lib/lodash',
-        flatpickr:'lib/flatpickr',
+        lodash:'lib/lodash.min',
+        flatpickr:'lib/flatpickr.min',
         swal:'lib/sweetalert.min'
     }
 })
