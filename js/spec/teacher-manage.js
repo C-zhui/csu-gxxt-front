@@ -680,11 +680,11 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
     var has = _.keys(tgroups_has);
     var not = _.keys(tgroups_not);
     _.each(has, function (g_name) {
-      $('<button class="btn btn-success"></button>').addClass('tgroup has_').attr('data-tgroup', g_name).text(g_name).appendTo($edit_teacher_groups);
+      $('<button class="pri_btn active"></button>').addClass('tgroup has_').attr('data-tgroup', g_name).text(g_name).appendTo($edit_teacher_groups);
     });
 
     _.each(not, function (g_name) {
-      $('<button class="btn btn-danger"></button>').addClass('tgroup').attr('data-tgroup', g_name).text(g_name).appendTo($edit_teacher_groups);
+      $('<button class="pri_btn"></button>').addClass('tgroup').attr('data-tgroup', g_name).text(g_name).appendTo($edit_teacher_groups);
     });
   }
 
@@ -721,11 +721,11 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
   function redraw_btn_bar_material() {
     $edit_material_privileges.empty();
     _.each(material_has, function (name, code) {
-      $('<button class="btn btn-success"></button>').attr('data-code', code).addClass('material has_').text(name).appendTo($edit_material_privileges);
+      $('<button class="pri_btn active"></button>').attr('data-code', code).addClass('material has_').text(name).appendTo($edit_material_privileges);
     });
 
     _.each(material_not, function (name, code) {
-      $('<button class="btn btn-danger"></button>').attr('data-code', code).addClass('material').text(name).appendTo($edit_material_privileges);
+      $('<button class="pri_btn"></button>').attr('data-code', code).addClass('material').text(name).appendTo($edit_material_privileges);
     });
   }
 

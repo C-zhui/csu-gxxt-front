@@ -109,3 +109,37 @@
 	margin-top: 32px;
 	width: 50px;
 }
+
+/*权限操作框*/
+.privilige_operate{
+	max-height: 272px;
+	overflow-y: scroll;
+	width: 880px;
+}
+.pri_btn{
+	float: left;
+	width: 171px;
+	/*padding: 20px 22px;*/
+	height: 58px;
+	text-align: center;
+	box-sizing: border-box;
+	border: 1px solid #ffffff;
+	margin: 0;
+	margin-bottom: 10px;
+	word-wrap: break-word;
+}
+.pri_btn.active{
+	background: #3f8cb0;
+	color: #ffffff;
+}
+.pri_btn.odd{
+	background: #d8e9f1;
+	color: #000000;
+}
+.pri_btn.even{
+	background: #f1f7fa;
+	color: #000000;
+}
+.text-info{
+	margin-top: 5px;
+}
