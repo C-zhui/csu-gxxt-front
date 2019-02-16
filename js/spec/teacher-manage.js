@@ -752,9 +752,12 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
     var role = $('#teach_role_add').val();
     // var material_privilege = $('#teach_material_privilege_add').val();
     var overtime_privilege = $('#teach_overwork_privilege_add').val();
-    // var t_group_id = $('#teachGroupFormControlSelect').val();
-    // 判断物料权限
-    // material_privilege = material_privileges_id[material_privilege] || '';
+
+    if (!tid || !tname || role === default_role_group || overtime_privilege === default_overtime_group) {
+      swal('', '请完善表单填写', 'warning');
+      return;
+    }
+    
     // 判断加班权限
     overtime_privilege = overtime_privileges_id[overtime_privilege]
     // 计算物料权限位码

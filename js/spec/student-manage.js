@@ -521,7 +521,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
             '修改学生信息成功',
             'success'
           );
-          getAllBatch_StuList();
+          getStudentByBatchName();
         } else {
           g.fetch_err(data)
         }
@@ -594,5 +594,4 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
         .fail(g.net_err);
     });
   }
-
 });
