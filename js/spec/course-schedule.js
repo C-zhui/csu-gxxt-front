@@ -80,27 +80,28 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/group',
     var $head = $("#template-thead").empty();
     var $tr = $('<tr></tr>')
     $("<th></th>").appendTo($tr)
-    for (var g of student_groups) {
+    _.each(student_groups, function (g) {
       $("<th></th>").attr('s_group_id', g).text(g).appendTo($tr)
-    }
+    });
     $tr.appendTo($head)
   }
 
   function toMatrix() {
     var _groupMap = {}
     modelData = _.map(modelData, function () { return [] })
-    student_groups.forEach(function (elem, ind) {
+    _.each(student_groups, function (elem, ind) {
       _groupMap[elem] = ind + 1
-    })
-    for (var g in currentTemplate) {
+    });
+    _.each(currentTemplate, function (groupstemp, g) {
       var a = currentTemplate[g]
       var gi = _groupMap[g]
-      a.forEach(function (val, ind) {
+      _.each(a, function (val, ind) {
+        if (!val) return;
         if (!modelData[ind]) modelData[ind] = []
         modelData[ind][gi] = val
       })
-    }
-    return modelData
+    });
+    return modelData;
   }
 
   function set_template_tbody() {
@@ -125,15 +126,12 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/group',
   function sortSGroup() {
     // console.log('sortSGroup')
     student_groups = []
-    for (var g in currentTemplate) {
+    _.each(currentTemplate, function (col, g) {
       if (g)
         student_groups.push(g)
-      // if (g === null) { }
-      // else
-      //   student_groups.push(g)
-    }
+    });
     student_groups.sort()
-    return student_groups
+    // return student_groups
   }
 
   function updateTemplateTable() {
@@ -141,6 +139,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/group',
     set_template_head()
     toMatrix()
     set_template_tbody()
+    console.log(modelData)
   }
 
   // 新建模板
@@ -292,6 +291,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/group',
       clicktime = newClickTime;
       return;
     }
+
     clicktime = newClickTime;
     if (!t_group_id || !tempName || !pro_name) return;
     console.log('single');
@@ -341,9 +341,9 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/group',
           if (ifTrue) {
             class_time_head = parseInt(class_time_head)
             if (!_.isInteger(class_time_head)) return;
-            for (var g in currentTemplate) {
-              delete currentTemplate[g][class_time_head]
-            }
+            _.each(currentTemplate, function (group_temp) {
+              delete group_temp[class_time_head];
+            });
             modelData = []
             setTimeout(function () {
               updateTemplateTable()
@@ -410,7 +410,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/group',
         // console.log('cancel')
       }
     });
-  })
+  });
 
   $('#save-template').click(saveTemplate)
   function saveTemplate() {
@@ -510,5 +510,4 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/group',
       });
     }
   }
-
 })
