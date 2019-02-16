@@ -308,7 +308,7 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
   var roles = ['选择角色', '管理员', '实训教师'];
 
   var default_overtime_group = '选择开放权限';
-  var overtime_privileges = ['选择开放权限', '无', '开放管理'];
+  var overtime_privileges = ['无', '开放管理', '选择开放权限'];
   var overtime_privileges_id = {
     '无': 0,
     '开放管理': 1
@@ -348,9 +348,10 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
   function fill_overtime_selector() {
     var $overtime_selector = $('.overtime_selector').empty();
     var temp = $('<p></p>')
-    _.each(overtime_privileges, function (op) {
+    _.each(_.reverse(overtime_privileges), function (op) {
       $('<option></option>').text(op).appendTo(temp);
     });
+    _.reverse(overtime_privileges);
     $overtime_selector.html(temp.html())
   }
 
@@ -390,10 +391,10 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
           teachers = data.data;
           console.log(teachers)
           // get_fill_tgroup();
-          _.each(teachers,function(teacher){ // 转换t_groups 为数组
-            if(teacher.t_groups){
+          _.each(teachers, function (teacher) { // 转换t_groups 为数组
+            if (teacher.t_groups) {
               teacher.t_groups = teacher.t_groups.split(',');
-            }else {
+            } else {
               teacher.t_groups = []
             }
           });
@@ -757,7 +758,7 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
       swal('', '请完善表单填写', 'warning');
       return;
     }
-    
+
     // 判断加班权限
     overtime_privilege = overtime_privileges_id[overtime_privilege]
     // 计算物料权限位码
