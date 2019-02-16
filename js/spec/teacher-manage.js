@@ -388,8 +388,15 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
       .done(function (data) {
         if (data.status === 0) {
           teachers = data.data;
-          // console.log(teachers)
-          get_fill_tgroup();
+          console.log(teachers)
+          // get_fill_tgroup();
+          _.each(teachers,function(teacher){ // 转换t_groups 为数组
+            if(teacher.t_groups){
+              teacher.t_groups = teacher.t_groups.split(',');
+            }else {
+              teacher.t_groups = []
+            }
+          });
           findTeachers();
         } else {
           g.fetch_err(data)
@@ -398,24 +405,24 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
       .fail(g.net_err)
   }
 
-  var cnt_tgroups = -1;
-  function get_fill_tgroup() {
-    cnt_tgroups = 0;
-    _.each(teachers, function (teacher, i) {
-      api.teacher.getTGroup(teacher.tid)
-        .done(function (data) {
-          if (data.status === 0) {
-            // 直接将数据挂载到teacher对象上
-            teacher.t_groups = data.data
-            // console.log(teacher)
-            cnt_tgroups++;
-          } else {
-            g.fetch_err(data);
-          }
-        })
-        .fail(g.net_err);
-    });
-  }
+  // var cnt_tgroups = -1;
+  // function get_fill_tgroup() {
+  //   cnt_tgroups = 0;
+  //   _.each(teachers, function (teacher, i) {
+  //     api.teacher.getTGroup(teacher.tid)
+  //       .done(function (data) {
+  //         if (data.status === 0) {
+  //           // 直接将数据挂载到teacher对象上
+  //           teacher.t_groups = data.data
+  //           // console.log(teacher)
+  //           cnt_tgroups++;
+  //         } else {
+  //           g.fetch_err(data);
+  //         }
+  //       })
+  //       .fail(g.net_err);
+  //   });
+  // }
 
 
   var teacher_filtered = []
@@ -436,10 +443,10 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
     teacher_filtered = teachers;
 
     // tgroups 没有到位，等
-    if (cnt_tgroups != teachers.length) {
-      _.delay(findTeachers, 500);
-      return;
-    }
+    // if (cnt_tgroups != teachers.length) {
+    //   _.delay(findTeachers, 500);
+    //   return;
+    // }
 
     // //如果未选择教师组，设置为all
     if (selected_teacher_groups === default_teacher_group) {
@@ -795,7 +802,7 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
       }
     }
 
-    api.teacher.updateTeacher(tid, tname, now_tgroups[0], role, material_privilege, overtime_privilege)
+    api.teacher.updateTeacher(tid, tname, role, material_privilege, overtime_privilege)
       .done(function (data) {
         if (data.status === 0) {
           if (for_del.length === 0 && for_new.length === 0) {

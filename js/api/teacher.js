@@ -39,13 +39,12 @@ define(['api/apiobj', 'config/global'], function (api, g) {
       );
     },
     // 修改教师
-    updateTeacher: function (tid, tname, t_group_id, role, material_privilege, overtime_privilege) {
+    updateTeacher: function (tid, tname, role, material_privilege, overtime_privilege) {
       return g.post_query(
         '/teacher/updateTeacher',
         {
           'tid': tid,
           'tname': tname,
-          't_group_id': t_group_id,
           'role': role,
           'material_privilege': material_privilege,
           'overtime_privilege': overtime_privilege
