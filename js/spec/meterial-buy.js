@@ -11,9 +11,10 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/experi
     $(function () {
         $(".mycalendar").flatpickr();
         init_data();
-        let user = JSON.parse(localStorage.getItem('user')); //记录当前用户信息
-        let tname = "";
-        tname = user['姓名'];
+        let user = {"姓名":"","物料权限":0,"角色":""}; //初始化
+        if(localStorage.getItem('user')!=undefined)
+            user = JSON.parse(localStorage.getItem('user')); //记录当前用户信息
+        let tname = user['姓名'];
         let authority = user["物料权限"];
         setPage();
 
