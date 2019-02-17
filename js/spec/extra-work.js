@@ -148,7 +148,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/group'
             let tname = $('#teacher_overwork_select_teacher').val();
             let last_time = $('#teacher_overwork_last_time').val();
             let reason = $('#extraWork-reason').val();
-
+            start_time += ':00';
             api.overwork.addTeacherOverwork(start_time, last_time, process, tname, reason).done(function (data) {
                 if (data.status === 0) {
                     swal(
