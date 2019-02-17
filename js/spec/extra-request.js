@@ -1,5 +1,5 @@
 require(['jquery', 'lodash', 'moment', 'api/apiobj', 'config/global', 'util/cut_page3', 'api/group', 'api/overwork', 'flatpickr'], function
-  ($, _, moment, api, g,CutPage) {
+  ($, _, moment, api, g, CutPage) {
 
   const pageSize = 5;
 
@@ -29,10 +29,10 @@ require(['jquery', 'lodash', 'moment', 'api/apiobj', 'config/global', 'util/cut_
             $('<option></option>').text(val.t_group_id).appendTo(selector);
           });
         } else {
-          console.log('err getallgroup')
-          console.log(data);
+          //console.log('err getallgroup')
+          //console.log(data);
         }
-      }).fail(console.log)
+      }).fail(g.net_err)
   }
 
   // 新增开放申请
@@ -45,20 +45,20 @@ require(['jquery', 'lodash', 'moment', 'api/apiobj', 'config/global', 'util/cut_
     begin += ":00";
 
     api.overwork.addOverworkApply(begin, pro_name, duration, reason)
-        .done(function (data) {
-          if (data.status === 0) {
-            // console.log(data);
-            swal(
-                '新增成功',
-                '新增开放申请成功',
-                'success'
-            );
-            getMyOverworkApply();
-          } else {
-            console.log('err addOverworkApply')
-            console.log(data);
-          }
-        }).fail(console.log);
+      .done(function (data) {
+        if (data.status === 0) {
+          // console.log(data);
+          swal(
+            '新增成功',
+            '新增开放申请成功',
+            'success'
+          );
+          getMyOverworkApply();
+        } else {
+          //console.log('err addOverworkApply')
+          //console.log(data);
+        }
+      }).fail(g.net_err);
 
   }
 
@@ -66,22 +66,22 @@ require(['jquery', 'lodash', 'moment', 'api/apiobj', 'config/global', 'util/cut_
   function getTeacherOverworkFromStudent() {
     g.post_query('/overwork/getTeacherOverworkFromStudent')
       .done(function (data) {
-        console.log(data);
+        //console.log(data);
         if (data.status === 0) {
           let data_arr = data.data;
           var delta_time;
           html = '';
           for (let i = 0; i < data_arr.length; i++) {
             delta_time = getGMThour(data_arr[i].overwork_time_end) - getGMThour(data_arr[i].overwork_time)
-            html += '<li class="clearfix"><div class="row"><div class="ul-time col-5">' + chGMT(data_arr[i].overwork_time) +'</div><div class="ul-pro-name col-4"> ' + data_arr[i].pro_name + '</div><div class="ul-name col-2"> '+ data_arr[i].tname + '</div><div class="ul-hour col-1"> ' + delta_time + 'h </div></div></li>'
+            html += '<li class="clearfix"><div class="row"><div class="ul-time col-5">' + chGMT(data_arr[i].overwork_time) + '</div><div class="ul-pro-name col-4"> ' + data_arr[i].pro_name + '</div><div class="ul-name col-2"> ' + data_arr[i].tname + '</div><div class="ul-hour col-1"> ' + delta_time + 'h </div></div></li>'
           }
           $('#zhiban_info ul').html(html);   //有数据了再打开这一行
         } else {
-          console.log('err getTeacherOverworkFromStudent')
-          console.log(data)
+          //console.log('err getTeacherOverworkFromStudent')
+          //console.log(data)
         }
       })
-      .fail(console.log);
+      .fail(g.net_err);
   }
 
   // 获取“我的申请”记录
@@ -96,12 +96,12 @@ require(['jquery', 'lodash', 'moment', 'api/apiobj', 'config/global', 'util/cut_
           }
           $('#adminTbody').html(html);   //有数据了再打开这一行
         } else {
-          console.log('err getMyOverworkApply')
-          console.log(data)
+          //console.log('err getMyOverworkApply')
+          //console.log(data)
         }
         // 教师值班记录分页初始化
-        CutPage.cutPage("extra-table",pageSize);
-      }).fail(console.log);
+        CutPage.cutPage("extra-table", pageSize);
+      }).fail(g.net_err);
   }
 
   // 格林威治时间的转换
