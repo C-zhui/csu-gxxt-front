@@ -360,7 +360,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
               .done(function (data) {
                 // console.log(data);
                 if (data.status === 0) {
-                  swal('修改成功了', '大概……', 'success');
+                  swal('修改成功', '', 'success');
                 } else {
                   g.fetch_err(data)
                 }
@@ -370,7 +370,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
           }
         })
     } else {
-      swal('这样可不行！', '请在编辑模式下保存！', 'warning')
+      swal('注意!', '请在编辑模式下保存！', 'warning')
     }
   });
 
