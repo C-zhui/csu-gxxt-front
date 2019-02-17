@@ -7,14 +7,23 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/group'
         $(".mycalendar").flatpickr();
         init_data();
 
-
 // 初始化数据
         function init_data() {
+            htmlControl();
             // 获取所有教师组
             getAllGroup();
             //获取所有的教师信息
             getAllTeachers();
             console.log('init extra-work.js');
+        }
+
+        //根据权限情况控制页面的显示
+        function htmlControl() {
+            let financial = JSON.parse(localStorage.user)['加班权限'];
+            if (financial === '0') {
+                $('#student-open-apply').hide();
+                $('#add-teacher').hide();
+            }
         }
 
         //根据id和option数组设置select
