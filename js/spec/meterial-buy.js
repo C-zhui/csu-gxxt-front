@@ -1,4 +1,4 @@
-require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/experiment','api/material', 'api/applyFPchse', 'api/purchase', 'api/reim', 'api/save', 'api/user', 'bootstrapTable', 'flatpickr'], function ($, _, swal, api, CutPage) {
+require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/experiment','api/material', 'api/applyFPchse', 'api/purchase', 'api/reim', 'api/save', 'api/user', 'api/teacher','bootstrapTable', 'flatpickr'], function ($, _, swal, api, CutPage) {
     'use strict';
     let string_array = ["j", "s", "c", "b", "h", "r"]; //定义各功能模块名称字母代表
     let selectedPurchase = []; //定义申购表格中选中的行申购编号
@@ -6,6 +6,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/experi
     let optionsForPurchaserText = ""; //用来存放采购人选项html文本
     let selectedPurPurchase = []; //定义采购表格中选中的行id
     let selectedRemi = []; //定义报账记录中的行id
+    let teachers = [];//记录所有教师
     const pageSize = 5; //分页每页行数
 
     $(function () {
@@ -54,8 +55,10 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/experi
         function init_data() {
             // 刷新库存列表
             getAllMaterial();
+            // 获取所有教师
+            getAllTeacher();
             // 获取所有申购权限的人的信息
-            getApplyer();
+            // getApplyer();
             // 获取所有采购权限的人的信息
             getPurchaser();
             // 获取所有入库权限的人的信息
@@ -173,50 +176,85 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/experi
         });
 
 // 其他记录页******************************
-// 获取所有申购人信息
-        function getApplyer() {
-            api.applyFPchse.getAllNameByAuthType(1)
+//         获取所有教师列表
+        function getAllTeacher() {
+            api.teacher.getAllTeacher()
                 .done(function (data) {
-                    let data_arr = data.data;
-                    let html = '<option>申购人</option>';
-                    for (let i = 0; i < data_arr.length; i++) {
-                        html += '<option>' + data_arr[i] + '</option>';
-                    }
+                    if (data.status === 0) {
+                        teachers = data.data;
+                        // console.log(teachers)
+                        // get_fill_tgroup();
+                        _.each(teachers, function (teacher) { // 转换t_groups 为数组
+                            if (teacher.t_groups) {
+                                teacher.t_groups = teacher.t_groups.split(',');
+                            } else {
+                                teacher.t_groups = []
+                            }
+                        });
+                        fillSelect();
+                    } else {
 
-                    $('#' + string_array[0] + 'apply_person').html(html);
+                    }
                 })
+
         }
 
-// 获取所有采购人信息
-        function getPurchaser() {
-            api.applyFPchse.getAllNameByAuthType(2)
-                .done(function (data) {
-                    optionsForPurchaser = ["采购人"];
-                    let data_arr = data.data;
-                    let html = '<option>采购人</option>';
-
-                    for (let i = 0; i < data_arr.length; i++) {
-                        html += '<option>' + data_arr[i] + '</option>';
-                        optionsForPurchaser.push(data_arr[i])
-                    }
-                    optionsForPurchaserText = html;
-                    for (let i = 0; i < 4; i++) {
-                        $('#' + string_array[i] + 'purchase_person').html(html);
-                    }
-                })
+        // 填充申购人、采购人、入库人的选择框
+        function fillSelect(){
+            fillApplyer();
+            fillPurchaser();
+            fillStorer();
+        }
+// 填充申购人列表
+        function fillApplyer() {
+            let teacher_filtered = teachers;
+            //获取申购人
+            let teacher_apply = _.filter(teacher_filtered, function (teacher) {
+                return (teacher.material_privilege & (1<<1));
+            });
+            let data_arr = teacher_apply;
+            let html = '<option>申购人</option>';
+            _.each(data_arr,function (item) {
+                html+='<option>' + item.tname + '</option>'
+            })
+            // console.log(html)
+            $('#' + string_array[0] + 'apply_person').html(html);
         }
 
-// 获取所有入库人信息
-        function getStorer() {
-            api.applyFPchse.getAllNameByAuthType(3)
-                .done(function (data) {
-                    let data_arr = data.data;
-                    let html = '<option>入库人</option>';
-                    for (let i = 0; i < data_arr.length; i++) {
-                        html += '<option>' + data_arr[i] + '</option>';
-                    }
-                    $('#' + string_array[5] + 'store_person').html(html);
-                })
+// 填充采购人列表
+        function fillPurchaser() {
+            let teacher_filtered = teachers;
+            //获取申购人
+            let teacher_apply = _.filter(teacher_filtered, function (teacher) {
+                return (teacher.material_privilege & (1<<3));
+            });
+            let data_arr = teacher_apply;
+            let html = '<option>采购人</option>';
+            _.each(data_arr,function (item) {
+                html+='<option>' + item.tname + '</option>';
+                optionsForPurchaser.push(item.tname)
+            })
+            // console.log(html)
+            optionsForPurchaserText = html;
+            for (let i = 0; i < 4; i++) {
+                $('#' + string_array[i] + 'purchase_person').html(html);
+            }
+        }
+
+// 填充入库人列表
+        function fillStorer() {
+            let teacher_filtered = teachers;
+            //获取申购人
+            let teacher_apply = _.filter(teacher_filtered, function (teacher) {
+                return (teacher.material_privilege & (1<<5));
+            });
+            let data_arr = teacher_apply;
+            let html = '<option>入库人</option>';
+            _.each(data_arr,function (item) {
+                html+='<option>' + item.tname + '</option>'
+            })
+            // console.log(html)
+            $('#' + string_array[5] + 'store_person').html(html);
         }
 
 // 物料申购页
