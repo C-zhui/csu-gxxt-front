@@ -14,11 +14,19 @@ define(['jquery', 'swal', 'config/global', 'api/apiobj', 'api/user', 'util/md5',
         ).done(function (data) {
             if (data.status === 0) {
                 basicInfo = data.data;
-                window.location.href = './a-index.html?' + data.data["身份"]
                 //获取用户基本信息使用local storage存储
-                api.user.getInfo().done(function (data) {
-                    if (data.status === 0) {
-                        localStorage.setItem('user', JSON.stringify(data.data));
+                api.user.getInfo().done(function (userInfo) {
+                    if (userInfo.status === 0) {
+                        localStorage.setItem('user', JSON.stringify(userInfo.data));
+                        window.location.href = './a-index.html?' + data.data["身份"]
+                    }
+                    else{
+                        localStorage.removeItem('user');
+                        swal(
+                            '登录失败',
+                            "登录失败，请待会再试！",
+                            'error'
+                        );
                     }
                 });
             } else {
