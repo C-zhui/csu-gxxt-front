@@ -3,6 +3,12 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/group'
 
     $(function () {
         $(".mycalendar").flatpickr();
+        // let userInfo = JSON.parse(localStorage.getItem('user'));
+        // let auth = userInfo["加班权限"];
+        let auth = 0;
+        if(auth===0){
+            $(".overtime_auth").css("display","none");
+        }
         init_data();
 
 
@@ -10,7 +16,6 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/group'
         function init_data() {
             // 获取所有教师组
             getAllGroup();
-            console.log('init extra-work.js');
         }
 
         //根据id和option数组设置select

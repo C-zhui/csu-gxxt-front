@@ -12,6 +12,7 @@
 }
 .outNumber-card {
 	margin-top: 18px;
+	display: none;
 }
 .card-header{
 	background: #badaed;

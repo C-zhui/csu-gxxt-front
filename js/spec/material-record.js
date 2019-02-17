@@ -6,6 +6,11 @@ require(['jquery', 'swal', 'api/apiobj', 'util/cut_page3', 'api/material', 'flat
 
     $(function () {
         $(".mycalendar").flatpickr();
+        let userInfo = JSON.parse(localStorage.getItem('user'));
+        let auth = userInfo["物料权限"];
+        if((auth&(1<<0))===1){
+            $(".outNumber-card").css("display","block");
+        }
         init_data();
 
 
@@ -15,6 +20,7 @@ require(['jquery', 'swal', 'api/apiobj', 'util/cut_page3', 'api/material', 'flat
             getAllMaterial();
             // 根据条件显示物料登记记录
             getSelectedPurchase();
+
         }
 
 // 刷新库存列表

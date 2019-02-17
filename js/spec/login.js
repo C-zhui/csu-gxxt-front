@@ -16,18 +16,18 @@ define(['jquery', 'swal', 'config/global', 'api/apiobj', 'api/user', 'util/md5',
                 basicInfo = data.data;
                 //获取用户基本信息使用local storage存储
                 api.user.getInfo().done(function (temp) {
-                    if (temp.status === 0) {
+                    // if (temp.status === 0) {
                         localStorage.setItem('user', JSON.stringify(temp.data));
                         window.location.href = './a-index.html?' + data.data["身份"]
-                    }
-                    else{
-                        localStorage.removeItem('user');
-                        swal(
-                            '登录失败',
-                            "登录失败，请待会再试！",
-                            'error'
-                        );
-                    }
+                    // }
+                    // else{
+                    //     localStorage.removeItem('user');
+                    //     swal(
+                    //         '登录失败',
+                    //         "登录失败，请待会再试！",
+                    //         'error'
+                    //     );
+                    // }
                 });
             } else {
                 console.log(data);
