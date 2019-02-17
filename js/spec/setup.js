@@ -57,12 +57,12 @@ require(['jquery','config/global','util/md5'], function ($,g) {
         if (data.status === 0) {
           console.log(data);
           var teacherGroupOrClass;
-          if (data.data["教师组"]) {
+          if (data.data["班级"]) {
+              $("#userId").html("班级：")
+              teacherGroupOrClass = data.data["班级"];
+          } else {
             $("#userId").html("教师组：");
             teacherGroupOrClass = data.data["教师组"];
-          } else {
-            $("#userId").html("班级：")
-            teacherGroupOrClass = data.data["班级"];
           }
           let name = data.data["姓名"];
           console.log(teacherGroupOrClass);
