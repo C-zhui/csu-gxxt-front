@@ -1,4 +1,4 @@
-require(['jquery', 'lodash', 'moment', 'api/apiobj', 'config/global','util/cut_page3','api/group','flatpickr'], function
+require(['jquery', 'lodash', 'moment', 'api/apiobj', 'config/global', 'util/cut_page3', 'api/group', 'api/overwork', 'flatpickr'], function
   ($, _, moment, api, g,CutPage) {
 
   const pageSize = 5;
@@ -7,7 +7,6 @@ require(['jquery', 'lodash', 'moment', 'api/apiobj', 'config/global','util/cut_p
     init_data();
   });
   $(".mycalendar").flatpickr();
-  var base_url = g.base_url;
 
   function init_data() {
     // 获取所有教师组
@@ -45,21 +44,22 @@ require(['jquery', 'lodash', 'moment', 'api/apiobj', 'config/global','util/cut_p
     let reason = $('#request_extra_reason').val();
     begin += ":00";
 
-    g.post_query('/overwork/addOverworkApply', {})
-      .done(function (data) {
-        if (data.status === 0) {
-          // console.log(data);
-          swal(
-            '新增成功',
-            '新增开放申请成功',
-            'success'
-          );
-        }
-        else {
-          console.log('err addOverworkApply')
-          console.log(data);
-        }
-      }).fail(console.log)
+    api.overwork.addOverworkApply(begin, pro_name, duration, reason)
+        .done(function (data) {
+          if (data.status === 0) {
+            // console.log(data);
+            swal(
+                '新增成功',
+                '新增开放申请成功',
+                'success'
+            );
+            getMyOverworkApply();
+          } else {
+            console.log('err addOverworkApply')
+            console.log(data);
+          }
+        }).fail(console.log);
+
   }
 
   // 展示值班信息
@@ -91,7 +91,7 @@ require(['jquery', 'lodash', 'moment', 'api/apiobj', 'config/global','util/cut_p
         if (data.status === 0) {
           let data_arr = data.data;
           html = '';
-          for (let i = 0; i < data_arr; i++) {
+          for (let i = 0; i < data_arr.length; i++) {
             html += '<tr><td>' + chGMT(data_arr[i].overwork_time) + '</td><td>' + data_arr[i].pro_name + '</td><td>' + data_arr[i].reason + '</td></tr>';
           }
           $('#adminTbody').html(html);   //有数据了再打开这一行
