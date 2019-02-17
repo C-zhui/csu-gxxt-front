@@ -1,4 +1,4 @@
-require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_page3', 'api/batch', 'api/proced', 'api/score', 'api/user', 'bootstrapTable'], function ($, _, swal, api, g, CutPage) {
+require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_page3', 'api/batch', 'api/proced', 'api/group', 'api/score', 'api/user', 'bootstrapTable'], function ($, _, swal, api, g, CutPage) {
     'use strict';
 
     let process = [];//该教师负责的所有工序
@@ -59,21 +59,18 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
         }
 
         function getProcess() {
-            api.user.getInfo().done(function (data) {
-                if (data.status === 0) {
-                    let teacherGroup = data.data['教师组'].split(',');
-                    process = [];
-                    _.forEach(teacherGroup, function (value) {
-                        api.group.getProcedByGroup(value).done(function (data) {
-                            if (data.status === 0) {
-                                process = _.concat(process, data.data);
-                            } else {
-                                console.log(data.message);
-                            }
-                        })
-                    });
-                }
-            })
+            let teacherGroup = JSON.parse(localStorage.user)['教师组'].split(',');
+            process = [];
+            for (let i = 0; i < teacherGroup.length; i++) {
+                api.group.getProcedByGroup(teacherGroup[i])
+                    .done(function (data) {
+                        if (data.status === 0) {
+                            process = _.concat(process, data.data);
+                        } else {
+                            console.log(data.message);
+                        }
+                    })
+            }
         }
 
         //获取并设置所有批次
@@ -97,6 +94,8 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
             let batchName = $(this).val();
 
             if (batchName === '选择批次') {
+                $('#student-list-group').empty().append('<option>选择组号</option>');
+                $('#student-list-proced').empty().append('<option>选择工种</option>');
                 return;
             }
 
@@ -112,8 +111,12 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
                             _.forEach(data.data, function (value) {
                                 batchProcess.push(value.proid.pro_name);
                             });
-                            commonProcess = _.union(process, batchProcess);
-
+                            commonProcess = _.intersection(process, batchProcess);
+                            //设置工种select
+                            let procedSelect = $('#student-list-proced').empty().append('<option>选择工种</option>');
+                            for (let i = 0; i < commonProcess.length; i++) {
+                                procedSelect.append($('<option></option>').text(commonProcess[i]));
+                            }
                             let postData = {
                                 batch_name: batchName,
                                 s_group_id: 'all',
@@ -131,21 +134,31 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
             })
         });
 
-        $('#student-list-group').change(function () {
-            let gropu = $(this).val();
+        //根据分组变化进行筛选
+        $('#student-list-group').change(scoreFilter);
+        //根据工种变化进行筛选
+        $('#student-list-proced').change(scoreFilter);
+
+        //成绩筛选函数
+        function scoreFilter() {
+            let proced = $('#student-list-proced').val();
+            let group = $('#student-list-group').val();
             let batchName = $('#student-list-batch').val();
             if (gropu === '选择组号') {
-                gropu = 'all';
+                group = 'all';
+            }
+            if (proced === '选择工种') {
+                proced = 'all';
             }
             let postData = {
                 batch_name: batchName,
-                s_group_id: gropu,
-                pro_name: 'all',
+                s_group_id: group,
+                pro_name: proced,
                 sId: 'all',
                 sName: 'all'
             };
             api.score.getScore(postData).done(getScoreSuccess);
-        });
+        }
 
         //获取学生成绩列表
         $('#get-score').click(function () {
