@@ -15,9 +15,9 @@ define(['jquery', 'swal', 'config/global', 'api/apiobj', 'api/user', 'util/md5',
             if (data.status === 0) {
                 basicInfo = data.data;
                 //获取用户基本信息使用local storage存储
-                api.user.getInfo().done(function (userInfo) {
-                    if (userInfo.status === 0) {
-                        localStorage.setItem('user', JSON.stringify(userInfo.data));
+                api.user.getInfo().done(function (temp) {
+                    if (temp.status === 0) {
+                        localStorage.setItem('user', JSON.stringify(temp.data));
                         window.location.href = './a-index.html?' + data.data["身份"]
                     }
                     else{
