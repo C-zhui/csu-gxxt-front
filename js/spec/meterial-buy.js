@@ -57,12 +57,6 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/experi
             getAllMaterial();
             // 获取所有教师
             getAllTeacher();
-            // 获取所有申购权限的人的信息
-            // getApplyer();
-            // 获取所有采购权限的人的信息
-            getPurchaser();
-            // 获取所有入库权限的人的信息
-            getStorer();
             // 获取所有物料申购记录
             getAllApplyFPchse();
             // 获取所有物料申购记录（审核）
