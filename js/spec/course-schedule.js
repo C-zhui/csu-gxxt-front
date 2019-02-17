@@ -454,7 +454,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/group',
       });
     } else {
       swal({
-        title: '这样可不行!',
+        title: '注意!',
         text: "请在编辑模式下保存!",
         icon: 'warning'
       })
@@ -467,7 +467,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/group',
   function doDeleteTemplate() {
     if (edit_mode) {
       swal({
-        title: '这样可不行!',
+        title: '注意!',
         text: "请先退出编辑模式!",
         icon: 'warning'
       })

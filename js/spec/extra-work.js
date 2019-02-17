@@ -1,21 +1,29 @@
-require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/group', 'api/admin', 'api/overwork', 'flatpickr'], function ($, _, swal, api, CutPage) {
+require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/group', 'api/admin', 'api/overwork', 'api/teacher', 'flatpickr'], function ($, _, swal, api, CutPage) {
     'use strict';
+
+    let teachers = [];//所以教師信息
 
     $(function () {
         $(".mycalendar").flatpickr();
-        // let userInfo = JSON.parse(localStorage.getItem('user'));
-        // let auth = userInfo["加班权限"];
-        let auth = 0;
-        if(auth===0){
-            $(".overtime_auth").css("display","none");
-        }
         init_data();
-
 
 // 初始化数据
         function init_data() {
+            htmlControl();
             // 获取所有教师组
             getAllGroup();
+            //获取所有的教师信息
+            getAllTeachers();
+            console.log('init extra-work.js');
+        }
+
+        //根据权限情况控制页面的显示
+        function htmlControl() {
+            let financial = JSON.parse(localStorage.user)['加班权限'];
+            if (financial === '0') {
+                $('#student-open-apply').hide();
+                $('#add-teacher').hide();
+            }
         }
 
         //根据id和option数组设置select
@@ -53,6 +61,18 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/group'
             });
         }
 
+        //获取所有教师信息
+        function getAllTeachers() {
+            return api.teacher.getAllTeacher()
+                .done(function (data) {
+                    if (data.status === 0) {
+                        teachers = data.data;
+                        findOverworkPrivilegeTeachers();
+                        findOverworkPrivilegeTeachersEdit();
+                    }
+                })
+        }
+
 // 根据教师组获取管理权限
         $('#teacher_overwork_select_process').change(function () {
             findOverworkPrivilegeTeachers();
@@ -64,17 +84,10 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/group'
 // 根据教师组获取所有可以有加班管理权限的老师
         function findOverworkPrivilegeTeachers() {
             let teacherGroup = $('#teacher_overwork_select_process').val();
-            if (teacherGroup === "选择教师组") {
-                teacherGroup = "all";
-            }
-
-            return api.admin.findTeachers(teacherGroup, 'all', 'all', '加班管理').done(function (data) {
-                if (data.status === 0) {
-                    let data_arr = data.data;
-                    let teacherOverwork = $('#teacher_overwork_select_teacher').empty().append('<option>选择教师</option>');
-                    for (let i = 0; i < data_arr.length; i++) {
-                        $('<option></option>').text(data_arr[i].tname).appendTo(teacherOverwork);
-                    }
+            let teacherOverwork = $('#teacher_overwork_select_teacher').empty().append('<option>选择教师</option>');
+            _.forEach(teachers, function (value) {
+                if ((teacherGroup === "选择教师组" || teacherGroup === value.t_groups) && value.overtime_privilege === 1) {
+                    $('<option></option>').text(value.tname).appendTo(teacherOverwork);
                 }
             });
         }
@@ -82,16 +95,10 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/group'
 // 根据教师组获取所有可以有加班管理权限的老师---编辑
         function findOverworkPrivilegeTeachersEdit() {
             let teacherGroup = $('#edit_history_select_process').val();
-            if (teacherGroup === "选择教师组") {
-                teacherGroup = "all";
-            }
-            return api.admin.findTeachers(teacherGroup, 'all', 'all', '加班管理').done(function (data) {
-                if (data.status === 0) {
-                    let data_arr = data.data;
-                    let teacherOverwork = $('#edit_history_select_teacher').empty().append('<option>选择教师</option>');
-                    for (let i = 0; i < data_arr.length; i++) {
-                        $('<option></option>').text(data_arr[i].tname).appendTo(teacherOverwork);
-                    }
+            let teacherOverwork = $('#edit_history_select_teacher').empty().append('<option>选择教师</option>');
+            _.forEach(teachers, function (value) {
+                if ((teacherGroup === "选择教师组" || teacherGroup === value.t_groups) && value.overtime_privilege === 1) {
+                    $('<option></option>').text(value.tname).appendTo(teacherOverwork);
                 }
             });
         }
@@ -197,7 +204,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/group'
                         let td = $('<td></td>');
                         //编辑按钮
                         $('<img src="../../icon/edit.svg" class="row-image" data-toggle="modal" data-target="#editTeacherHistoryModal">').click(function () {
-                            updateTeacherOverwork_init(this);
+                            updateTeacherOverwork_initteacher_overwork_select_process(this);
                         }).data({
                             id: data_arr[i].overwork_id,
                             tname: data_arr[i].tname,
