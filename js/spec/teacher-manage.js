@@ -165,7 +165,7 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
       if (!ensure) return;
       api.group.delete(t_groups[index].t_group_id)
         .done(function (data) {
-          console.log(data)
+          //console.log(data)
           if (data.status === 0) {
             swal(
               '删除！',
@@ -201,7 +201,7 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
   function addNewProcedToGroup() {
     var groupName = $('#addProcedToGroup_TeacherGroup').val();
     var proName = $('#addProcedToGroup_Process').val();
-    console.log(proName);
+    //console.log(proName);
     api.proced.addProcedToGroup(groupName, proName)
       .done(function (data) {
         if (data.status === 0) {
@@ -221,7 +221,7 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
 
   // 编辑工序
   $teachergroup_proced_list.on('click', '.edit_proced_entry', function () {
-    console.log('click:.edit_t_group_entry')
+    //console.log('click:.edit_t_group_entry')
     var $this = $(this);
     var proced_idx = $this.parents('.proced_data').attr('data-proced_datas-idx');
     var t_group_idx = $this.parents('.t_group_data').attr('data-t_group-idx')
@@ -264,7 +264,7 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
 
   // 删除某个工序
   $teachergroup_proced_list.on('click', '.delete_proced_entry', function () {
-    console.log('click:.edit_t_group_entry')
+    //console.log('click:.edit_t_group_entry')
     var $this = $(this);
     var proced_idx = $this.parents('.proced_data').attr('data-proced_datas-idx');
     var t_group_idx = $this.parents('.t_group_data').attr('data-t_group-idx')
@@ -363,7 +363,7 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
       .done(function (data) {
         if (data.status === 0) {
           material_authes = data.data
-          console.log(material_authes)
+          //console.log(material_authes)
           var $material_selector = $('#teacher_list_material_privilege').empty().append($('<option></option>').text(default_material_group));
           _.each(material_authes, function (val, i) {
             $material_selector.append($('<option></option>').text(val).attr('data-material_authes-idx', i))
@@ -373,7 +373,7 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
           _.each(material_authes, function (val, i) {
             material_authes_to_bit[val] = 1 << i;
           });
-          console.log(material_authes_to_bit);
+          //console.log(material_authes_to_bit);
           selector_loaded.material = true;
         } else {
           g.fetch_err(data)
@@ -389,7 +389,7 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
       .done(function (data) {
         if (data.status === 0) {
           teachers = data.data;
-          console.log(teachers)
+          //console.log(teachers)
           // get_fill_tgroup();
           _.each(teachers, function (teacher) { // 转换t_groups 为数组
             if (teacher.t_groups) {
@@ -482,7 +482,7 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
       });
     }
 
-    console.log(teacher_filtered);
+    //console.log(teacher_filtered);
     fill_teacher_list_tbody(teacher_filtered);
   }
 
@@ -540,12 +540,12 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
       return;
     }
     overtime_privilege = overtime_privileges_id[overtime_privilege]
-    console.log(overtime_privilege)
+    //console.log(overtime_privilege)
 
     api.teacher.addTeacher(tid, tname, role, 0, overtime_privilege)
       .done(function (data) {
         if (data.status === 0) {
-          console.log(data);
+          //console.log(data);
           swal(
             '添加成功',
             '添加教师信息成功',
@@ -567,7 +567,7 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
   });
 
   function deleteOneTeacher(teacher) {
-    console.log(teacher);
+    //console.log(teacher);
     swal({
       title: '确定删除吗？',
       text: '确定删除' + teacher.tname + '吗？',
@@ -663,9 +663,9 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
   function init_btn_bar_tgroups() {
     tgroups_has = {};
     tgroups_not = {};
-    console.log(teacher_editing)
+    //console.log(teacher_editing)
     t_group_ids = _.map(t_groups, 't_group_id');
-    console.log(t_group_ids);
+    //console.log(t_group_ids);
     _.each(t_group_ids, function (name, i) {
       if (_.includes(teacher_editing.t_groups, name)) {
         tgroups_has[name] = i;
@@ -692,7 +692,7 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
   $edit_teacher_groups.on('click', '.tgroup', function () {
     var $this = $(this);
     var tgroup = $this.attr('data-tgroup');
-    console.log(tgroup)
+    //console.log(tgroup)
     if ($this.hasClass('has_')) {// 点击了绿色  
       tgroups_not[tgroup] = tgroups_has[tgroup];
       delete tgroups_has[tgroup];
@@ -733,7 +733,7 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
   $edit_material_privileges.on('click', '.material', function () {
     var $this = $(this);
     var code = $this.attr('data-code');
-    console.log(code)
+    //console.log(code)
     if ($this.hasClass('has_')) {// 点击了绿色  
       material_not[code] = material_has[code];
       delete material_has[code];
@@ -774,9 +774,9 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
 
     var for_del = _.difference(teacher_editing.t_groups, now_tgroups);
     var for_new = _.difference(now_tgroups, teacher_editing.t_groups);
-    console.log('del', for_del);
-    console.log('new', for_new);
-    console.log(material_privilege)
+    //console.log('del', for_del);
+    //console.log('new', for_new);
+    //console.log(material_privilege)
 
     var cnt = {
       done: false,
@@ -822,7 +822,7 @@ require(['jquery', 'lodash', 'api/apiobj', 'util/cut_page3', 'config/global', 'a
               .done(cnt.increment.bind(cnt)).fail(cnt.fail.bind(cnt));
           });
         } else {
-          console.log(data);
+          //console.log(data);
         }
       })
       .fail(g.net_err)

@@ -595,3 +595,4 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
     });
   }
 });
+

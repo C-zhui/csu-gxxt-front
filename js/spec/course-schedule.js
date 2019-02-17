@@ -139,7 +139,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/group',
     set_template_head()
     toMatrix()
     set_template_tbody()
-    console.log(modelData)
+    //console.log(modelData)
   }
 
   // 新建模板
@@ -213,7 +213,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/group',
     api.group.getAllTeacherGroup()
       .done(function (data) {
         if (data.status === 0) {
-          console.log(teacher_groups)
+          //console.log(teacher_groups)
           teacher_groups = data.data
           _.forEach(teacher_groups, function (val, i) {
             $('<option></option>').text(val.t_group_id).attr('i_teachergroup', i).appendTo($teacherGroupSelector)
@@ -281,9 +281,9 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/group',
     if (!i_group || !i_class_time) return;
     var s_group_id = student_groups[i_group - 1]
 
-    console.log(newClickTime - clicktime)
+    //console.log(newClickTime - clicktime)
     if (newClickTime - clicktime < 200) {
-      console.log('double');
+      //console.log('double');
       if (timeoutid)
         clearTimeout(timeoutid)
       $td.empty();
@@ -294,7 +294,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'api/group',
 
     clicktime = newClickTime;
     if (!t_group_id || !tempName || !pro_name) return;
-    console.log('single');
+    //console.log('single');
     timeoutid = setTimeout(function () {
       currentTemplate[s_group_id][i_class_time] = {
         template_id: tempName,

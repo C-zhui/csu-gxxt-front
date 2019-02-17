@@ -3,7 +3,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
   const pageSize = 5;//设置分页页数
   $(document).ready(function () {
     init_data()
-    console.log('init divide-group.js')
+    //console.log('init divide-group.js')
   })
 
   function init_data() {
@@ -43,7 +43,6 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
       .done(function (data) {
         if (data.status === 0) {
           batches = data.data;
-          // console.log('批次')
           // console.log(batches)
           var temp = $('<span><option>实习批次选择</option></span>')
           _.each(batches, function (batch, index) {
@@ -592,7 +591,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
       api.batch.getAllSGroup(batch_name)
         .done(function (data) {
           if (data.status === 0) {
-            console.log(data);
+            //console.log(data);
             var data_arr = data.data;
             data_arr = _.sortBy(data_arr)
             _.each(data_arr, function (val, i) {
@@ -670,7 +669,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
       if (ensure) {
         if (!ensure) return;
         var s_group_id = $student_select_group.val();
-        console.log(sid, s_group_id);
+        //console.log(sid, s_group_id);
         api.student.updateGroup(sid, s_group_id)
           .done(function (data) {
             if (data.status === 0) {
@@ -719,12 +718,12 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
   $('#student-class-query-btn').click(getStuClassTableByNum);
   function getStuClassTableByNum() {
     var sid = $('#search_stu_by_number').val();
-    console.log(sid)
+    //console.log(sid)
     if (sid) {
       api.experiment.getClass(sid)
         .done(function (data) {
           if (data.status === 0) {
-            console.log(data);
+            //console.log(data);
             var data_arr = data.data;
             var $table_body = $('#search_stu_tbody').empty();
             data_arr = _.sortBy(data_arr, 'time_quant');
@@ -839,7 +838,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
     // console.log("$('#query-spec-stud-id-button').click")
     var stud_id = $('#query-spec-stud-id').val().trim();
     $('#query-spec-stud-id-button').attr('sid', stud_id);
-    console.log($('#query-spec-stud-id-button').attr('sid'))
+    //console.log($('#query-spec-stud-id-button').attr('sid'))
 
     if (stud_id === '') { // 查询所有
       // console.log('get all sp student');
@@ -888,11 +887,11 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
 
   // 删除一个特殊学生
   $('#query-spstudent-result').on('click', 'img.delete-sp-stud', function () {
-    console.log(this)
+    //console.log(this)
     var input = $(this);
     var tr = $(input).parents('tr')
     var sid = tr.attr('data-sid');
-    console.log(sid)
+    //console.log(sid)
     swal({
       title: '请确认',
       text: '将删除学生' + sid,
@@ -923,12 +922,12 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
   $('#del_selected_sp_studs').click(function () {
     var $checked = $('#query-spstudent-result').find('.batch_op').filter(':checked');
     var $checked_rows = $checked.parents('.sid-row');
-    console.log($checked_rows)
+    //console.log($checked_rows)
     var sp_sid = []
     $checked_rows.each(function (i, dom) {
       sp_sid.push($(dom).attr('data-sid'))
     });
-    console.log(sp_sid);
+    //console.log(sp_sid);
     swal({
       title: '请确认',
       text: '将删除学生' + sp_sid,
@@ -957,7 +956,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
 
   // 查看、编辑课表
   $('#query-spstudent-result').on('click', 'img.lookup-course', function () {
-    console.log(this)
+    //console.log(this)
     var input = $(this);
     var tr = $(input).parents('tr')
     var sid = tr.attr('data-sid');
@@ -973,7 +972,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
   var edit_sid = null;
 
   function init_selected_course(sid) {
-    console.log("function init_selected_course(sid)")
+    //console.log("function init_selected_course(sid)")
     // console.log(sid) 
     // 辅助数据初始化
     selected_course = {};
@@ -1056,7 +1055,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
     // console.log(i, j)
     var time = spec_courses[i][0];
     var for_add = spec_courses[i][1][j];
-    console.log(for_add);
+    //console.log(for_add);
     new_courses[time] = operator_courses[time] = for_add;
     if (selected_course[time] && new_courses[time] && selected_course[time].pro_name == new_courses[time].pro_name) {
       // 不需要添加原有数据
@@ -1110,7 +1109,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
     api.specialScore.deleteClass(_.map(del_selected_courses, 'id'))
       .done(function (data) {
         if (data.status === 0) {
-          console.log('删除原有课时成功');
+          //console.log('删除原有课时成功');
           var res = []
           var count = 0
           var new_courses_arr = _.map(new_courses)
