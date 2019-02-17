@@ -168,7 +168,6 @@ require(['jquery', 'swal', 'api/apiobj', 'config/global', 'api/batch', 'api/proc
                             }
                         ).done(function (data) {
                                 if (data.status === 0) {
-                                    console.log(data);
                                     swal(
                                         '删除成功',
                                         '删除排课模版成功',
