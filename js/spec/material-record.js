@@ -7,9 +7,14 @@ require(['jquery', 'swal', 'api/apiobj', 'util/cut_page3', 'api/material', 'flat
     $(function () {
         $(".mycalendar").flatpickr();
         let userInfo = JSON.parse(localStorage.getItem('user'));
-        let auth = userInfo["物料权限"];
-        if((auth&(1<<0))===1){
+        if(userInfo["角色"]==="管理员"){
             $(".outNumber-card").css("display","block");
+        }
+        else{
+            let auth = userInfo["物料权限"];
+            if((auth&(1<<0))===1){
+                $(".outNumber-card").css("display","block");
+            }
         }
         init_data();
 
@@ -68,7 +73,7 @@ require(['jquery', 'swal', 'api/apiobj', 'util/cut_page3', 'api/material', 'flat
                     $('#distribute_stu_name').val("");
                     init_data();
                 } else {
-                    console.log(data);
+                    // console.log(data);
                     swal(
                         '派出失败',
                         '物料数量不足',
@@ -107,7 +112,7 @@ require(['jquery', 'swal', 'api/apiobj', 'util/cut_page3', 'api/material', 'flat
                     }
                     CutPage.cutPage('receive-materiel-table', pageSize);
                 } else {
-                    console.log(data);
+                    // console.log(data);
                 }
             })
         }
