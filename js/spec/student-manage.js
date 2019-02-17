@@ -43,9 +43,10 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
       .done(function (data) {
         if (data.status === 0) {
           semester_data = data.data;
-          // 过滤重复
-          semester_data = _.uniqBy(semester_data, 'semester_name')
-          semester_data = _.filter(semester_data, 'semester_name')
+          // 过滤重复、排序
+          semester_data = _.uniqBy(semester_data, 'semester_name');
+          semester_data = _.filter(semester_data, 'semester_name');
+          semester_data = _.sortBy(semester_data, 'semester_name');
           getAndFillBatchList();
         } else {
           g.fetch_err(data)
@@ -290,7 +291,8 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
       icon: 'warning',
       dangerMode: true,
       buttons: ['取消', '确定']
-    }).then(function (result) {
+    }).then(function (ensure) {
+      if (!ensure) return;
       api.batch.deleteBatch(batch_name)
         .done(function (data) {
           if (data.status === 0) {
@@ -455,7 +457,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
       text: '确定删除吗？你将无法恢复它！',
       buttons: ['取消', '确定'],
       dangerMode: true
-    }).then(ensure => {
+    }).then(function (ensure) {
       // console.log(ensure)
       if (!ensure) return;
 
@@ -519,7 +521,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
             '修改学生信息成功',
             'success'
           );
-          getAllBatch_StuList();
+          getStudentByBatchName();
         } else {
           g.fetch_err(data)
         }
@@ -592,5 +594,4 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
         .fail(g.net_err);
     });
   }
-
 });
