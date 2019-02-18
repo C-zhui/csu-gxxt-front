@@ -1,7 +1,8 @@
 require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/group', 'api/admin', 'api/overwork', 'api/teacher', 'flatpickr'], function ($, _, swal, api, CutPage) {
     'use strict';
 
-    let teachers = [];//所以教師信息
+    let teachers = [];//所有教师信息
+    let financial = JSON.parse(localStorage.user)['加班权限'];//当前用户的加班权限
 
     $(function () {
         $(".mycalendar").flatpickr();
@@ -19,8 +20,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/group'
 
         //根据权限情况控制页面的显示
         function htmlControl() {
-            let financial = JSON.parse(localStorage.user)['加班权限'];
-            if (financial === '0') {
+            if (financial !== '1') {
                 $('#student-open-apply').hide();
                 $('#add-teacher').hide();
             }
@@ -201,24 +201,31 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/group'
                         $('<td></td>').text(data_arr[i].pro_name).appendTo(tr);
                         $('<td></td>').text(last_time).appendTo(tr);
                         $('<td></td>').text(data_arr[i].reason).appendTo(tr);
-                        let td = $('<td></td>');
-                        //编辑按钮
-                        $('<img src="../../icon/edit.svg" class="row-image" data-toggle="modal" data-target="#editTeacherHistoryModal">').click(function () {
-                            updateTeacherOverwork_initteacher_overwork_select_process(this);
-                        }).data({
-                            id: data_arr[i].overwork_id,
-                            tname: data_arr[i].tname,
-                            reason: data_arr[i].reason,
-                            begin: chGMT(data_arr[i].overwork_time),
-                            pro_name: data_arr[i].pro_name,
-                            last_time: last_time
-                        }).text('编辑').appendTo(td);
-                        td.append('&emsp;');
-                        //删除按钮
-                        $('<img src="../../icon/delete.svg" class="row-image">').click(function () {
-                            deleteOverwork(this);
-                        }).attr('id', data_arr[i].overwork_id).text('删除').appendTo(td);
-                        tableBody.append(tr.append(td));
+                        //如果没有加班权限则不显示编辑和删除按钮
+                        if (financial === '1') {
+                            let td = $('<td></td>');
+                            //编辑按钮
+                            $('<img src="../icon/edit.svg" class="row-image" alt="编辑" data-toggle="modal" data-target="#editTeacherHistoryModal">').click(function () {
+                                updateTeacherOverwork_initteacher_overwork_select_process(this);
+                            }).data({
+                                id: data_arr[i].overwork_id,
+                                tname: data_arr[i].tname,
+                                reason: data_arr[i].reason,
+                                begin: chGMT(data_arr[i].overwork_time),
+                                pro_name: data_arr[i].pro_name,
+                                last_time: last_time
+                            }).text('编辑').appendTo(td);
+                            td.append('&emsp;');
+                            //删除按钮
+                            $('<img src="../icon/delete.svg" alt="删除" class="row-image">').click(function () {
+                                deleteOverwork(this);
+                            }).data('id', data_arr[i].overwork_id).text('删除').appendTo(td);
+                            tr.append(td);
+                        } else {
+                            //隐藏操作列
+                            $('#teacher-table thead th:last').hide();
+                        }
+                        tableBody.append(tr);
                     }
 
                     // 教师值班记录分页初始化
@@ -337,7 +344,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/group'
                 format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
             for (var k in o)
                 if (new RegExp("(" + k + ")").test(format))
-                    format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
+                    format = format.replace(RegExp.$1, RegExp.$1.length === 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
             return format;
         };
 
