@@ -2,9 +2,9 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
     const pageSize = 5; //设置分页单页条数
     require(['bootstrapTableFixedColumns'], function () {
         //批次对应的工序列表
-        var processes = [];
+        let processes = [];
 //成绩列表表格前段固定列
-        var score_list_columns_front = [
+        let score_list_columns_front = [
             {
                 field: 'batchAndGroup',
                 title: '批次/组',
@@ -20,7 +20,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
             }
         ];
 //成绩列表后段固定列
-        var score_list_columns_end = [
+        let score_list_columns_end = [
             {
                 field: 'scoreSum',
                 title: '总成绩'
@@ -45,7 +45,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
             }
         ];
 //成绩列表 bootstrap table 配置信息
-        var score_list_table_config = {
+        let score_list_table_config = {
             columns: [],
             data: [],
             pagination: true,
@@ -55,11 +55,11 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
             fixedNumber: score_list_columns_front.length
         };
 //权重模板信息
-        var weights = {};
+        let weights = {};
 //修改时选择的row的index
-        var score_row_index = null;
+        let score_row_index = null;
 //成绩提交列表 bootstrap table 配置信息
-        var submit_list_table_config = {
+        let submit_list_table_config = {
             columns: [
                 {
                     field: 'submitTime',
@@ -84,7 +84,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
         };
 
 //成绩修改列表 bootstrap table 配置信息
-        var update_list_table_config = {
+        let update_list_table_config = {
             columns: [
                 {
                     field: 'update_time',
@@ -114,7 +114,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
             pageList: [10, 20, 50],
         };
 //成绩录入记录表格设置
-        var entry_table_config = {
+        let entry_table_config = {
             columns: [
                 {
                     title: '批次/组',
@@ -144,9 +144,9 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
             pageList: [10, 20, 50],
         };
 //特殊学生工序
-        var special_processes = [];
+        let special_processes = [];
 //特殊学生成绩列表前段固定列
-        var special_score_list_columns_front = [
+        let special_score_list_columns_front = [
             {
                 checkbox: true
             },
@@ -160,7 +160,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
             }
         ];
 //特殊学生成绩列表后段固定列
-        var special_score_list_columns_end = [
+        let special_score_list_columns_end = [
             {
                 field: 'scoreSum',
                 title: '总成绩'
@@ -186,7 +186,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
         ];
 
 //特殊学生成绩列表 bootstrap table 配置信息
-        var special_score_list_table_config = {
+        let special_score_list_table_config = {
             columns: [],
             data: [],
             pagination: true,
@@ -195,6 +195,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
             // fixedColumns: true,
             fixedNumber: score_list_columns_front.length
         };
+        let user = JSON.parse(localStorage.user);//用户信息
 
         $(document).ready(function () {
             init_data();
@@ -608,6 +609,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
                     post_data['degree'] = degree;
                     select_data['degree'] = degree;
                 }
+                post_data['tName'] = user['姓名'];
                 api.score.updateScore(post_data).done(function (data) {
                     if (data.status === 0) {
                         swal(
@@ -767,7 +769,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
 //下载模板文件
             $('#download-score-file').click(function () {
                 // 创建a标签，设置属性，并触发点击下载
-                var a = $("<a>");
+                let a = $("<a>");
                 a.attr("href", g.base_url + '/admin/downloadScore');
                 $("body").append(a);
                 a[0].click();
@@ -784,7 +786,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
             });
             //导入学生成绩
             $('#import-students-score').click(function () {
-                var form = new FormData();
+                let form = new FormData();
                 let batchName = $('#input_score_select_batch').val();
                 let scoreitem = $('#input_score_select_scoreitem').val();
                 form.append("batch_name", batchName);
@@ -1266,7 +1268,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
 
 // 格林威治时间的转换
             Date.prototype.format = function (format) {
-                var o = {
+                let o = {
                     "M+": this.getMonth() + 1, //month
                     "d+": this.getDate(), //day
                     "h+": this.getHours(), //hour
@@ -1277,7 +1279,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
                 }
                 if (/(y+)/.test(format))
                     format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-                for (var k in o)
+                for (let k in o)
                     if (new RegExp("(" + k + ")").test(format))
                         format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
                 return format;
@@ -1285,7 +1287,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
 
 // 获取标准时间格式
             function chGMT(gmtDate) {
-                var mydate = new Date(gmtDate);
+                let mydate = new Date(gmtDate);
                 return mydate.format("yyyy-MM-dd hh:mm");
             }
         });
