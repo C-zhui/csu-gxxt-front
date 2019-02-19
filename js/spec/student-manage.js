@@ -77,8 +77,8 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
       var $this = this;
       var $temp = $('#templates #batch_data').children();
       _.each(data_arr, function (val, i) {
+        if (!val.batch_name) return;
         var $cloneTemp = $temp.clone().find('.batch_name').text(val.batch_name).end();
-
         $cloneTemp.attr('data-batch-index', batches.length);
         batches.push(val);
         $cloneTemp.appendTo($this);
