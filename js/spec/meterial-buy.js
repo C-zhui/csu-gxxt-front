@@ -720,7 +720,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/experi
                         purTname: data_arr[i].pur_tname,
                         clazz: data_arr[i].clazz,
                         remibNum: data_arr[i].remib_num,
-                        purTime: data_arr[i].pur_time.substr(0,16),
+                        // purTime: data_arr[i].pur_time.substr(0,16),
                         remibVertify: data_arr[i].remib_vertify === false ? "待审核" : "已审核",
                         remibVerbTname: data_arr[i].remib_vert_tname === null ? "" : data_arr[i].remib_vert_tname,
                         remibRemark: data_arr[i].remib_remark === null ? '' : data_arr[i].remib_remark,
