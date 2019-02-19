@@ -18,14 +18,6 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/group'
             console.log('init extra-work.js');
         }
 
-        //根据权限情况控制页面的显示
-        function htmlControl() {
-            if (financial !== '1') {
-                $('#student-open-apply').hide();
-                $('#add-teacher').hide();
-            }
-        }
-
         //根据id和option数组设置select
         function setSelect(id, options) {
             let select = $('#' + id).empty();
@@ -34,6 +26,13 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/group'
             });
         }
 
+        //根据权限情况控制页面的显示
+        function htmlControl() {
+            if (financial !== '1') {
+                $('#student-open-apply').hide();
+                $('#add-teacher').hide();
+            }
+        }
 
 // 获取所有教师组
         function getAllGroup() {
@@ -86,7 +85,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/group'
             let teacherGroup = $('#teacher_overwork_select_process').val();
             let teacherOverwork = $('#teacher_overwork_select_teacher').empty().append('<option>选择教师</option>');
             _.forEach(teachers, function (value) {
-                if ((teacherGroup === "选择教师组" || teacherGroup === value.t_groups) && value.overtime_privilege === 1) {
+                if ((teacherGroup === "选择教师组" || value.t_groups.indexOf(teacherGroup) !== -1) && value.overtime_privilege === 1) {
                     $('<option></option>').text(value.tname).appendTo(teacherOverwork);
                 }
             });
@@ -206,7 +205,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/group'
                             let td = $('<td></td>');
                             //编辑按钮
                             $('<img src="../icon/edit.svg" class="row-image" alt="编辑" data-toggle="modal" data-target="#editTeacherHistoryModal">').click(function () {
-                                updateTeacherOverwork_initteacher_overwork_select_process(this);
+                                updateTeacherOverwork_init(this);
                             }).data({
                                 id: data_arr[i].overwork_id,
                                 tname: data_arr[i].tname,
@@ -303,7 +302,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/group'
                 confirmButtonText: '确定删除！',
                 cancelButtonText: '取消',
             }).then(result => {
-                if (result.value) {
+                if (result) {
                     api.overwork.deleteOverwork(id).done(function (data) {
                         if (data.status === 0) {
                             swal(
@@ -322,8 +321,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/group'
                         }
                     });
                 } else {
-                    // handle dismiss, result.dismiss can be 'cancel', 'overlay', 'close', and 'timer'
-                    console.log(result.dismiss)
+                    console.log(result)
                 }
             })
 
