@@ -70,6 +70,10 @@ define(['api/apiobj', 'config/global'], function (api, g) {
             return g.post_query('/score/getMyScore', {
                 sid: sid
             });
+        },
+        //教师端修改学生成绩
+        updateScore2: function (postData) {
+            return g.post_json('/score/updateScore2', postData);
         }
     };
 });

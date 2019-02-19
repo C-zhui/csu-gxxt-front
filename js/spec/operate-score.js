@@ -6,7 +6,6 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
 
     const pageSize = 5;//分页每页行数
 
-    let oldData = [];//原始成绩数据
     let student_list_table_config = {
         columns: [
             {
@@ -48,6 +47,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
         ],
         data: []
     };
+    let user = JSON.parse(localStorage.user);//用户信息
 
     $(function () {
         Init();
@@ -59,7 +59,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
         }
 
         function getProcess() {
-            let teacherGroup = JSON.parse(localStorage.user)['教师组'].split(',');
+            let teacherGroup = user['教师组'].split(',');
             process = [];
             for (let i = 0; i < teacherGroup.length; i++) {
                 api.group.getProcedByGroup(teacherGroup[i])
@@ -143,21 +143,19 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
         function scoreFilter() {
             let proced = $('#student-list-proced').val();
             let group = $('#student-list-group').val();
-            let batchName = $('#student-list-batch').val();
-            if (gropu === '选择组号') {
-                group = 'all';
-            }
-            if (proced === '选择工种') {
-                proced = 'all';
-            }
-            let postData = {
-                batch_name: batchName,
-                s_group_id: group,
-                pro_name: proced,
-                sId: 'all',
-                sName: 'all'
-            };
-            api.score.getScore(postData).done(getScoreSuccess);
+            let tableData = [];
+            let index = 0;
+            _.forEach(student_list_table_config.data, function (value) {
+                if ((proced === '选择工种' || proced === value.proced) && (group === '选择组号' || group === value.group)) {
+                    let copyValue = _.cloneDeep(value);
+                    copyValue.index = index;
+                    tableData.push(copyValue);
+                    ++index;
+                }
+            });
+            student_list_table_config.data = tableData;
+            $('#student-list-table').bootstrapTable('load', tableData);
+            CutPage.cutPage('student-list-table', pageSize);
         }
 
         //获取学生成绩列表
@@ -185,7 +183,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
             if (data.status === 0) {
                 let tableData = [];
                 let batchName = $('#student-list-batch').val();
-                let index = 1;
+                let index = 0;
                 _.forEach(data.data, function (value) {
                     _.forEach(commonProcess, function (proced) {
                         let row = {
@@ -207,7 +205,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
                     })
                 });
                 student_list_table_config.data = tableData;
-                oldData = _.cloneDeep(tableData);
+                // oldData = _.cloneDeep(tableData);
                 $('#student-list-table').bootstrapTable('destroy').bootstrapTable(student_list_table_config);
                 CutPage.cutPage('student-list-table', pageSize);
             } else {
@@ -222,8 +220,8 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
             let selectRows = table.bootstrapTable('getSelections');
             let inputs = $('#student-list-table tbody input:odd');
             _.forEach(selectRows, function (value) {
-                $(inputs[value.index - 1]).val(score);
-                student_list_table_config.data[value.index - 1].score = score;
+                $(inputs[value.index]).val(score);
+                // student_list_table_config.data[value.index].score = score;
             });
         });
 
@@ -232,22 +230,40 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
             let newData = student_list_table_config.data;
             let ajaxArray = [];
             let inputs = $('#student-list-table tbody input:odd');
+            let tableData = student_list_table_config.data;
             for (let i = 0; i < inputs.length; i++) {
                 let val = $(inputs[i]).val();
-                if (val !== oldData[i].score) {
-                    console.log($(inputs[i]).val(), oldData[i].score);
-                    let scoreMap = {};
-                    scoreMap[newData[i].proced] = val;
-                    ajaxArray.push(api.score.updateSpScore(newData[i].sId, scoreMap));
+                if (val !== tableData[i].score) {
+                    // console.log($(inputs[i]).val(), oldData[i].score);
+                    let postData = {
+                        sid: newData[i].sId
+                    };
+                    postData[newData[i].proced] = val;
+                    postData['tName'] = user['姓名'];
+                    ajaxArray.push(api.score.updateScore2(postData));
                 }
             }
-            $.when.apply(ajaxArray).done(function () {
+            $.when.apply($, ajaxArray).done(function () {
                 let flag = true;
-                for (let i = 0; i < arguments.length; i++) {
-                    let data = arguments[i][0];
+                let failSid = '';
+                if (tableData.length > 1) {
+                    for (let i = 0; i < arguments.length; i++) {
+                        let data = arguments[i][0];
+                        try {
+                            if (data.status !== 0) {
+                                flag = false;
+                                failSid = failSid + ',' + tableData[i].sId;
+                            }
+                        } catch (e) {
+                            console.log(e);
+                        }
+                    }
+                } else {
+                    let data = arguments[0];
                     try {
-                        if (data.status === 0) {
+                        if (data.status !== 0) {
                             flag = false;
+                            failSid = failSid + ',' + tableData[i].sId;
                         }
                     } catch (e) {
                         console.log(e);
@@ -262,7 +278,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
                 } else {
                     swal(
                         '失败',
-                        '部分成绩提交失败',
+                        '学号为:' + failSid + '的学生成绩修改失败',
                         'error'
                     )
                 }
