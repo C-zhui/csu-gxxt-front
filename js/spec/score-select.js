@@ -25,20 +25,24 @@ require(['jquery', 'swal', 'config/global', 'api/apiobj', 'util/cut_page3', 'api
                             .done(function (data) {
                                 if (data.status === 0) {
                                     let scoreData = data.data[0];
-                                    $('#total-score').text(scoreData.degree);
-                                    let tableBody = $('#score-table tbody');
-                                    for (let i = 0; i < process.length; i++) {
-                                        let tr = $('<tr></tr>');
-                                        $('<td></td>').text(process[i]).appendTo(tr);
-                                        let score = Number(scoreData[process[i]]);
-                                        if (scoreData[process[i]] !== null && scoreData[process[i]] !== undefined && !isNaN(score)) {
-                                            $('<td></td>').text(score).appendTo(tr);
-                                        } else {
-                                            $('<td></td>').text('无').appendTo(tr);
+                                    if (scoreData.release === '未发布') {
+                                        $('#total-score').text('暂未发布');
+                                    } else {
+                                        $('#total-score').text(scoreData.degree);
+                                        let tableBody = $('#score-table tbody');
+                                        for (let i = 0; i < process.length; i++) {
+                                            let tr = $('<tr></tr>');
+                                            $('<td></td>').text(process[i]).appendTo(tr);
+                                            let score = Number(scoreData[process[i]]);
+                                            if (scoreData[process[i]] !== null && scoreData[process[i]] !== undefined && !isNaN(score)) {
+                                                $('<td></td>').text(score).appendTo(tr);
+                                            } else {
+                                                $('<td></td>').text('无').appendTo(tr);
+                                            }
+                                            tableBody.append(tr);
                                         }
-                                        tableBody.append(tr);
+                                        CutPage.cutPage('score-table', pageSize);
                                     }
-                                    CutPage.cutPage('score-table', pageSize);
                                 } else {
                                     g.fetch_err(data);
                                 }

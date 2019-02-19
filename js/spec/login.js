@@ -1,7 +1,7 @@
 define(['jquery', 'swal', 'config/global', 'api/apiobj', 'api/user', 'util/md5',], function ($, swal, g, api) {
     $("#login_submit").click(function () {
-        let username = $('#username').val();
-        let password = $('#password').val();
+        let username = $('#username').val().trim();
+        let password = $('#password').val().trim();
         password = hex_md5(password);
         console.log(username);
         console.log(password);
