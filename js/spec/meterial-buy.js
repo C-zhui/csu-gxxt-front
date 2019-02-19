@@ -295,7 +295,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/experi
                 for (let i = 0; i < data_arr.length; i++) {
                     let tableRow = {
                         purchaseId: data_arr[i].purchase_id,
-                        applyTime: data_arr[i].apply_time,
+                        applyTime: data_arr[i].apply_time.substr(0,16),
                         applyName: data_arr[i].apply_tname,
                         clazz: data_arr[i].clazz,
                         applyNum: data_arr[i].apply_num,
@@ -441,7 +441,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/experi
                     data_arr[i].vertify = "待审核";
                 let tr = $('<tr></tr>');
                 $('<td></td>').text(data_arr[i].purchase_id).appendTo(tr);
-                $('<td></td>').text(data_arr[i].apply_time).appendTo(tr);
+                $('<td></td>').text(data_arr[i].apply_time.substr(0,16)).appendTo(tr);
                 $('<td></td>').text(data_arr[i].apply_tname).appendTo(tr);
                 $('<td></td>').text(data_arr[i].clazz).appendTo(tr);
                 $('<td></td>').text(data_arr[i].apply_remark).appendTo(tr);
@@ -589,7 +589,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/experi
                 for (let i = 0; i < data_arr.length; i++) {
                     let tableRow = {
                         purchaseId: data_arr[i].purchase_id,
-                        purTime: data_arr[i].pur_time,
+                        purTime: data_arr[i].pur_time.substr(0,16),
                         purTname: data_arr[i].pur_tname,
                         clazz: data_arr[i].clazz,
                         purNum: data_arr[i].pur_num,
@@ -716,11 +716,11 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/experi
                 for (let i = 0; i < data_arr.length; i++) {
                     let tableRow = {
                         purchaseId: data_arr[i].purchase_id,
-                        remibTime: data_arr[i].remib_time,
+                        remibTime: data_arr[i].remib_time.substr(0,16),
                         purTname: data_arr[i].pur_tname,
                         clazz: data_arr[i].clazz,
                         remibNum: data_arr[i].remib_num,
-                        purTime: data_arr[i].pur_time,
+                        purTime: data_arr[i].pur_time.substr(0,16),
                         remibVertify: data_arr[i].remib_vertify === false ? "待审核" : "已审核",
                         remibVerbTname: data_arr[i].remib_vert_tname === null ? "" : data_arr[i].remib_vert_tname,
                         remibRemark: data_arr[i].remib_remark === null ? '' : data_arr[i].remib_remark,
@@ -868,7 +868,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/experi
                     data_arr[i].vertify = "待审核";
                 let tr = $('<tr></tr>');
                 $('<td></td>').text(data_arr[i].purchase_id).appendTo(tr);
-                $('<td></td>').text(data_arr[i].remib_time).appendTo(tr);
+                $('<td></td>').text(data_arr[i].remib_time.substr(0,16)).appendTo(tr);
                 $('<td></td>').text(data_arr[i].pur_tname).appendTo(tr);
                 $('<td></td>').text(data_arr[i].clazz).appendTo(tr);
                 $('<td  class="input_td"><div class="modify' + data_arr[i].id + '">' + data_arr[i].remib_num + '</div><input type="number" class="modifyInput' + data_arr[i].id + ' form-control" value="' + data_arr[i].remib_num + '" id="modifyNum' + data_arr[i].id + '"></td>').appendTo(tr);
@@ -1001,7 +1001,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/experi
                 for (let i = 0; i < data_arr.length; i++) {
                     let tableRow = {
                         purchaseId: data_arr[i].purchase_id,
-                        saveTime: data_arr[i].save_time,
+                        saveTime: data_arr[i].save_time.substr(0,16),
                         clazz: data_arr[i].clazz,
                         saveNum: data_arr[i].save_num,
                         saveTname: data_arr[i].save_tname,
