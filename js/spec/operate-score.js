@@ -227,8 +227,8 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
 
         //提交修改成绩
         $('#submit-score').click(function () {
-            let newData = student_list_table_config.data;
             let ajaxArray = [];
+            let changeRow = [];
             let inputs = $('#student-list-table tbody input:odd');
             let tableData = student_list_table_config.data;
             for (let i = 0; i < inputs.length; i++) {
@@ -236,23 +236,26 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
                 if (val !== tableData[i].score) {
                     // console.log($(inputs[i]).val(), oldData[i].score);
                     let postData = {
-                        sid: newData[i].sId
+                        sid: tableData[i].sId
                     };
-                    postData[newData[i].proced] = val;
+                    postData[tableData[i].proced] = val;
                     postData['tName'] = user['姓名'];
                     ajaxArray.push(api.score.updateScore2(postData));
+                    changeRow.push(tableData[i]);
                 }
             }
             $.when.apply($, ajaxArray).done(function () {
                 let flag = true;
                 let failSid = '';
-                if (tableData.length > 1) {
+                let failMessage = '';
+                if (ajaxArray.length > 1) {
                     for (let i = 0; i < arguments.length; i++) {
                         let data = arguments[i][0];
                         try {
                             if (data.status !== 0) {
                                 flag = false;
-                                failSid = failSid + ',' + tableData[i].sId;
+                                failSid = failSid + ',' + changeRow[i].sId;
+                                failMessage = data.message;
                             }
                         } catch (e) {
                             console.log(e);
@@ -263,7 +266,8 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
                     try {
                         if (data.status !== 0) {
                             flag = false;
-                            failSid = failSid + ',' + tableData[i].sId;
+                            failSid = failSid + ',' + changeRow[0].sId;
+                            failMessage = data.message;
                         }
                     } catch (e) {
                         console.log(e);
@@ -278,7 +282,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
                 } else {
                     swal(
                         '失败',
-                        '学号为:' + failSid + '的学生成绩修改失败',
+                        '学号为:' + failSid + '的学生成绩修改失败。' + failMessage,
                         'error'
                     )
                 }
