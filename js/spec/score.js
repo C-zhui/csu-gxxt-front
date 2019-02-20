@@ -953,65 +953,65 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
 // ========================================================================
 // 4、成绩提交记录
 
-        $('#score_submit_select_batch').change(function () {
-            let batchName = $('#score_submit_select_batch').val();
-            // 根据批次获取对应的分组号--成绩提交记录
-            getGroupByBatch(batchName, '#score_submit_select_groupid');
-            getProcessByBatch(batchName, '#score_submit_select_process');
-        });
-
-
-// 查询教师提交成绩记录
-        $('#get-score-record').click(function () {
-            let batch_name = $('#score_submit_select_batch').val();
-            let pro_name = $('#score_submit_select_process').val();
-            let s_group_id = $('#score_submit_select_groupid').val();
-            let send_data = {};
-            if (batch_name !== "实习批次选择") {
-                send_data.batch_name = batch_name;
-            }
-            if (pro_name !== "选择工种") {
-                send_data.pro_name = pro_name;
-            }
-            if (s_group_id !== "组号") {
-                send_data.s_group_id = s_group_id;
-            }
-
-            api.score.getScoreRecord(send_data).done(function (data) {
-                if (data.status === 0) {
-                    let data_arr = data.data;
-                    let tableData = [];
-                    let submitterAjaxArray = [];
-                    for (let i = 0; i < data_arr.length; i++) {
-                        let tableRow = {
-                            submitTime: chGMT(data_arr[i].submit_time),
-                            batchName: data_arr[i].batch_name,
-                            group: data_arr[i].s_group_id,
-                            process: data_arr[i].pro_name,
-                            // submitter: data_arr[i].pro_name
-                        };
-                        submitterAjaxArray.push(api.teacher.getTeacher(data_arr[i].tid));
-                        tableData.push(tableRow);
-                    }
-                    $.when.apply($, submitterAjaxArray).done(function () {
-                        for (let i = 0; i < arguments.length; i++) {
-                            let data = arguments[i][0];
-                            try {
-                                if (data.status === 0) {
-                                    tableData[i].submitter = data.data.tname;
-                                }
-                            } catch (e) {
-                                console.log(e);
-                            }
-                        }
-                    }).always(function () {
-                        submit_list_table_config.data = tableData;
-                        $('#submit_list_table').bootstrapTable('destroy').bootstrapTable(submit_list_table_config);
-                        CutPage.cutPage('submit_list_table', pageSize);
-                    })
-                }
-            });
-        });
+//         $('#score_submit_select_batch').change(function () {
+//             let batchName = $('#score_submit_select_batch').val();
+//             // 根据批次获取对应的分组号--成绩提交记录
+//             getGroupByBatch(batchName, '#score_submit_select_groupid');
+//             getProcessByBatch(batchName, '#score_submit_select_process');
+//         });
+//
+//
+// // 查询教师提交成绩记录
+//         $('#get-score-record').click(function () {
+//             let batch_name = $('#score_submit_select_batch').val();
+//             let pro_name = $('#score_submit_select_process').val();
+//             let s_group_id = $('#score_submit_select_groupid').val();
+//             let send_data = {};
+//             if (batch_name !== "实习批次选择") {
+//                 send_data.batch_name = batch_name;
+//             }
+//             if (pro_name !== "选择工种") {
+//                 send_data.pro_name = pro_name;
+//             }
+//             if (s_group_id !== "组号") {
+//                 send_data.s_group_id = s_group_id;
+//             }
+//
+//             api.score.getScoreRecord(send_data).done(function (data) {
+//                 if (data.status === 0) {
+//                     let data_arr = data.data;
+//                     let tableData = [];
+//                     let submitterAjaxArray = [];
+//                     for (let i = 0; i < data_arr.length; i++) {
+//                         let tableRow = {
+//                             submitTime: chGMT(data_arr[i].submit_time),
+//                             batchName: data_arr[i].batch_name,
+//                             group: data_arr[i].s_group_id,
+//                             process: data_arr[i].pro_name,
+//                             // submitter: data_arr[i].pro_name
+//                         };
+//                         submitterAjaxArray.push(api.teacher.getTeacher(data_arr[i].tid));
+//                         tableData.push(tableRow);
+//                     }
+//                     $.when.apply($, submitterAjaxArray).done(function () {
+//                         for (let i = 0; i < arguments.length; i++) {
+//                             let data = arguments[i][0];
+//                             try {
+//                                 if (data.status === 0) {
+//                                     tableData[i].submitter = data.data.tname;
+//                                 }
+//                             } catch (e) {
+//                                 console.log(e);
+//                             }
+//                         }
+//                     }).always(function () {
+//                         submit_list_table_config.data = tableData;
+//                         $('#submit_list_table').bootstrapTable('destroy').bootstrapTable(submit_list_table_config);
+//                         CutPage.cutPage('submit_list_table', pageSize);
+//                     })
+//                 }
+//             });
+//         });
 
 
 // ========================================================================
