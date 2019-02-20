@@ -2,7 +2,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/group'
     'use strict';
 
     let teachers = [];//所有教师信息
-    let financial = JSON.parse(localStorage.user)['加班权限'];//当前用户的加班权限
+    let user = JSON.parse(localStorage.user);
 
     $(function () {
         $(".mycalendar").flatpickr();
@@ -28,7 +28,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/group'
 
         //根据权限情况控制页面的显示
         function htmlControl() {
-            if (financial !== '1') {
+            if (user['角色'] !== '管理员' && user['加班权限'] !== '1') {
                 $('#student-open-apply').hide();
                 $('#add-teacher').hide();
             }
@@ -201,7 +201,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/group'
                         $('<td></td>').text(last_time).appendTo(tr);
                         $('<td></td>').text(data_arr[i].reason).appendTo(tr);
                         //如果没有加班权限则不显示编辑和删除按钮
-                        if (financial === '1') {
+                        if (user['角色'] === '管理员' || user['加班权限'] === '1') {
                             let td = $('<td></td>');
                             //编辑按钮
                             $('<img src="../icon/edit.svg" class="row-image" alt="编辑" data-toggle="modal" data-target="#editTeacherHistoryModal">').click(function () {
