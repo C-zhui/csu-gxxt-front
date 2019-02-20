@@ -388,30 +388,48 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
   // 根据批次名获取学生列表
   function getStudentByBatchName() {
     var batch_name = $('#stu_list_batch_name').val();
-    var $stu_list_tbody = $('#student_list_body').empty();
 
     api.student.getStudentByBatchName(batch_name)
       .done(function (data) {
         if (data.status === 0) {
-          data_arr = data.data;
-          student_list = data_arr;
-          var $temp = $('#templates #student_list_item_data').children();
-          _.each(data_arr, function (val, i) {
-            var $cloneTemp = $temp.clone();
-            $cloneTemp.attr('data-stud-idx', i)
-              .find('.sid').text(val.sid).end()
-              .find('.sname').text(val.sname).end()
-              .find('.clazz').text(val.clazz).end()
-              .find('.batch_name').text(val.batch_name).end();
-            $cloneTemp.appendTo($stu_list_tbody)
-          });
-          // 初始化分页
-          CutPage.cutPage('student_table', pageSize);
+          student_list = data.data;
+          fill_student_list();
         } else {
           g.fetch_err(data)
         }
       })
       .fail(g.net_err)
+  }
+
+  function fill_student_list() {
+    var $stu_list_tbody = $('#student_list_body').empty();
+    var $temp = $('#templates #student_list_item_data').children();
+    _.each(student_list, function (val, i) {
+      var $cloneTemp = $temp.clone();
+      $cloneTemp.attr('data-stud-idx', i)
+        .find('.sid').text(val.sid).end()
+        .find('.sname').text(val.sname).end()
+        .find('.clazz').text(val.clazz).end()
+        .find('.batch_name').text(val.batch_name).end();
+      $cloneTemp.appendTo($stu_list_tbody)
+    });
+    // 初始化分页
+    CutPage.cutPage('student_table', pageSize);
+  }
+
+  $('#query_student_list_by_sid').click(getStudentBySid);
+  function getStudentBySid() {
+    var sid = $('#input_sid').val();
+    if (!sid) return;
+    api.student.getStudent(sid)
+      .done(function (data) {
+        if (data.status === 0) {
+          student_list = [data.data];
+          fill_student_list();
+        } else {
+          g.fetch_err(data);
+        }
+      }).fail(g.net_err)
   }
 
 

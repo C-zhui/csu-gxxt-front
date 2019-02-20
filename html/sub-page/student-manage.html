@@ -1,462 +1,457 @@
 <div id="body">
-	<link rel="stylesheet" href="../../css/spec/student-manage.css">
+  <link rel="stylesheet" href="../../css/spec/student-manage.css">
 
-	<!-- 模板代码 -->
-	<div id="templates" class="d-none">
+  <!-- 模板代码 -->
+  <div id="templates" class="d-none">
 
-		<ul id="semester_data">
-			<li class="group semester_data">
-				<div class="group-summury">
-					<button class="toggle-btn btn btn-manage semester_name">hhh</button>
-					<button class="btn btn-sm delete_semester_entry right"><img class="row-image-lg" src="../../icon/delete.svg"></button>
-					<button class="btn btn-sm edit_semester_entry right"><img class="row-image-lg" src="../../icon/edit.svg"></button>
-					<button class="btn btn-sm new_batch_entry right"><img class="row-image-lg" src="../../icon/add.svg"></button>
-				</div>
-				<ul class="group-detail d-none">
-				</ul>
-			</li>
-		</ul>
+    <ul id="semester_data">
+      <li class="group semester_data">
+        <div class="group-summury">
+          <button class="toggle-btn btn btn-manage semester_name">hhh</button>
+          <button class="btn btn-sm delete_semester_entry right"><img class="row-image-lg"
+              src="../../icon/delete.svg"></button>
+          <button class="btn btn-sm edit_semester_entry right"><img class="row-image-lg"
+              src="../../icon/edit.svg"></button>
+          <button class="btn btn-sm new_batch_entry right"><img class="row-image-lg" src="../../icon/add.svg"></button>
+        </div>
+        <ul class="group-detail d-none">
+        </ul>
+      </li>
+    </ul>
 
-		<ul id="batch_data">
-			<li class="batch_data">
-				<button class="btn batch_name" disabled>hhh</button>
-				<button class="btn btn-sm edit_batch_entry"><img src="../../icon/edit.svg" class="row-image-sm"></button>
-				<button class="btn btn-sm delete_batch_entry"><img src="../../icon/delete.svg" class="row-image-sm"></button>
-			</li>
-		</ul>
+    <ul id="batch_data">
+      <li class="batch_data">
+        <button class="btn batch_name" disabled>hhh</button>
+        <button class="btn btn-sm edit_batch_entry"><img src="../../icon/edit.svg" class="row-image-sm"></button>
+        <button class="btn btn-sm delete_batch_entry"><img src="../../icon/delete.svg" class="row-image-sm"></button>
+      </li>
+    </ul>
 
-		<table>
-			<tbody id="student_list_item_data">
-				<tr class="student_list_item_data">
-					
-					<td class="sid"></td>
-					<td class="sname"> </td>
-					<td class="clazz"> </td>
-					<td class="batch_name"> </td>
-					<td class="operations" style="width: 182px">
-						<button class="btn btn-sm edit_stud_entry"><img src="../../icon/edit.svg" class="row-image-sm"></button>
-						<button class="btn btn-sm del_stud_entry"><img src="../../icon/delete.svg" class="row-image-sm"></button>
-						<button class="btn btn-sm reset_stud_entry"><img src="../../icon/reset.svg" class="row-image-sm">重置密码</button>
-					</td>
-					<td style="width: 50px" class="center"><input type="checkbox" class="batch-op"></td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
+    <table>
+      <tbody id="student_list_item_data">
+        <tr class="student_list_item_data">
 
-	<!-- 主要页面结构 -->
-	<!-- 实习批次管理 -->
-	<div class="content-card">
-		<header>
-			<div class="header-title">
-				实习批次管理
-			</div>
-		</header>
+          <td class="sid"></td>
+          <td class="sname"> </td>
+          <td class="clazz"> </td>
+          <td class="batch_name"> </td>
+          <td class="operations" style="width: 182px">
+            <button class="btn btn-sm edit_stud_entry"><img src="../../icon/edit.svg" class="row-image-sm"></button>
+            <button class="btn btn-sm del_stud_entry"><img src="../../icon/delete.svg" class="row-image-sm"></button>
+            <button class="btn btn-sm reset_stud_entry"><img src="../../icon/reset.svg"
+                class="row-image-sm">重置密码</button>
+          </td>
+          <td style="width: 50px" class="center"><input type="checkbox" class="batch-op"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-		<main>
-			<div class="content-body">
-				<span class="tip right">注意：删除某一批次，将会删除此批次内的所有学生信息</span>
+  <!-- 主要页面结构 -->
+  <!-- 实习批次管理 -->
+  <div class="content-card">
+    <header>
+      <div class="header-title">
+        实习批次管理
+      </div>
+    </header>
 
-				<span class="clearfix"></span>
+    <main>
+      <div class="content-body">
+        <span class="tip right">注意：删除某一批次，将会删除此批次内的所有学生信息</span>
 
-				<!-- 学期与批次列表 -->
-				<ul class="grouper stu-manage-list" id="batch_list">
-				</ul>
-				<!-- 学期与批次列表结束 -->
-				<button class="btn btn-sm btn-background3 btn-single" data-toggle="modal" data-target="#new_semester_modal">添加新学期</button>
-			</div>
+        <span class="clearfix"></span>
 
-		</main>
+        <!-- 学期与批次列表 -->
+        <ul class="grouper stu-manage-list" id="batch_list">
+        </ul>
+        <!-- 学期与批次列表结束 -->
+        <button class="btn btn-sm btn-background3 btn-single" data-toggle="modal"
+          data-target="#new_semester_modal">添加新学期</button>
+      </div>
 
-	</div>
-	<!-- 实习批次管理结束 -->
+    </main>
 
-	<!-- 学生信息导入 -->
-	<div class="content-card">
-		<header>
-			<div class="header-title">
-				学生信息导入
-			</div>
-		</header>
-		<main>
-			<div class="content-body">
-				<div class="manage-operate">
-					<span class="download-tip">从Excel文件导入:</span>
-					<button id="download_template" class="btn btn-manage btn-sm btn-single">标准模版下载</button>
-					<div class="clearfix"></div>
-				</div>
-				<div class="choose-line manage-operate no-margin">
-					<span class="download-tip">学生信息批量导入:</span>
-					<form class="form" enctype="multipart/form-data" role="form" id="tf">
+  </div>
+  <!-- 实习批次管理结束 -->
 
-						<div class="custom-file custom-file-sm left">
-							<input type="file" name="file" id="uploadfiles" onchange="$('#file_name').text($('#uploadfiles').val())" style="display: none">
-							<label class="custom-file-label" for="uploadfiles" id="file_name">选择文件</label>
-						</div>
+  <!-- 学生信息导入 -->
+  <div class="content-card">
+    <header>
+      <div class="header-title">
+        学生信息导入
+      </div>
+    </header>
+    <main>
+      <div class="content-body">
+        <div class="manage-operate">
+          <span class="download-tip">从Excel文件导入:</span>
+          <button id="download_template" class="btn btn-manage btn-sm btn-single">标准模版下载</button>
+          <div class="clearfix"></div>
+        </div>
+        <div class="choose-line manage-operate no-margin">
+          <span class="download-tip">学生信息批量导入:</span>
+          <form class="form" enctype="multipart/form-data" role="form" id="tf">
 
-						<select class="custom-select custom-select-sm batch_selector left batch-select" name="batchName"
-								id='importStudents_select'>
-						</select>
-					</form>
-					<input type="button" class="btn btn-background3 btn-sm btn-sm btn-single right" value="开始导入" id="import_btn">
-					<div class="clearfix"></div>
+            <div class="custom-file custom-file-sm left">
+              <input type="file" name="file" id="uploadfiles" onchange="$('#file_name').text($('#uploadfiles').val())"
+                style="display: none">
+              <label class="custom-file-label" for="uploadfiles" id="file_name">选择文件</label>
+            </div>
 
-				</div>
-				<div class="clearfix"></div>
-			</div>
-		</main>
-	</div>
-	<!-- 学生信息导入结束 -->
+            <select class="custom-select custom-select-sm batch_selector left batch-select" name="batchName"
+              id='importStudents_select'>
+            </select>
+          </form>
+          <input type="button" class="btn btn-background3 btn-sm btn-sm btn-single right" value="开始导入" id="import_btn">
+          <div class="clearfix"></div>
 
-	<!-- 学生列表 -->
-	<div class="content-card">
-		<header>
-			<div class="header-title">
-				学生列表
-			</div>
-		</header>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </main>
+  </div>
+  <!-- 学生信息导入结束 -->
 
-		<main>
-			<div class="content-body">
-				<div class="operate-manage">
-					<span>批次：</span>
-					<select class="custom-select custom-select-sm select batch_selector batch-select" id="stu_list_batch_name">
-					</select>
+  <!-- 学生列表 -->
+  <div class="content-card">
+    <header>
+      <div class="header-title">
+        学生列表
+      </div>
+    </header>
 
-					<button class="btn btn-sm btn-outline btn-multi" id="query_student_list_by_batch">查 询</button>
-					<button class="add btn btn-background3 btn-sm btn-multi" data-toggle="modal" data-target="#add_student_modal">添 加</button>
-					<span class="tip">注意：重置密码后密码为 123456 </span>
-				</div>
+    <main>
+      <div class="content-body">
+        <div class="operate-manage">
+          <span>批次：</span>
+          <select class="custom-select custom-select-sm select batch_selector batch-select" id="stu_list_batch_name">
+          </select>
 
-				<!--<div class="container">-->
-				<table class="table table-bordered" id="student_table">
-					<thead>
-					<tr>
-						<th>学号</th>
-						<th>姓名</th>
-						<th>班级</th>
-						<th>批次</th>
-						<th>操作</th>
-						<th></th>
-					</tr>
-					</thead>
-					<tbody id="student_list_body">
-					</tbody>
-				</table>
+          <button class="btn btn-sm btn-outline btn-multi" id="query_student_list_by_batch">查 询</button>
+          <button class="add btn btn-background3 btn-sm btn-multi" data-toggle="modal"
+            data-target="#add_student_modal">添 加</button>
+          <span class="tip">注意：重置密码后密码为 123456 </span>
+        </div>
+        <div class="form-group mt-2 row align-items-center">
+          <label for="" class="form-control-plaintext  col-1"> 学号</label>
+          <input type="text" class="form-control form-control-sm col-2" placeholder="输入学号" id="input_sid">
+          <button class="ml-2 btn btn-sm btn-outline btn-multi form-control form-control-sm col-1" id="query_student_list_by_sid">查 询</button>
+        </div>
 
-				<!--</div>-->
+        <!--<div class="container">-->
+        <table class="table table-bordered" id="student_table">
+          <thead>
+            <tr>
+              <th>学号</th>
+              <th>姓名</th>
+              <th>班级</th>
+              <th>批次</th>
+              <th>操作</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="student_list_body">
+          </tbody>
+        </table>
 
-				<!-- 分页功能部分 -->
-				<button class="btn btn-sm btn-background3 btn-single right" id="delete_selected_stud">删除</button>
-				<div class="clearfix"></div>
-			</div>
-		</main>
-		<!-- 主要页面结构结束 -->
+        <!--</div>-->
 
-		<!-- 存放所有modal -->
-		<div id="modals">
+        <!-- 分页功能部分 -->
+        <button class="btn btn-sm btn-background3 btn-single right" id="delete_selected_stud">删除</button>
+        <div class="clearfix"></div>
+      </div>
+    </main>
+    <!-- 主要页面结构结束 -->
 
-			<!-- 添加新学期 Modal -->
-			<div class="modal fade" id="new_semester_modal" tabindex="-1" role="dialog"
-				aria-labelledby="add_semester_ModalTitle" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered" role="document" style="width: 620px">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="add_semester_ModalTitle">添加新学期</h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-							<form>
-								<div class="form-group row">
-									<label class="col-sm-2 col-form-label" for="new_semester_name">学期名</label>
-									<div class="col-sm-10">
-										<input type="text" class="form-control" placeholder="学期名"
-											id="new_semester_name">
-									</div>
-								</div>
+    <!-- 存放所有modal -->
+    <div id="modals">
 
-								<div class="form-group row">
-									<label class="col-sm-2 col-form-label" for="new_semester_beginDate">起始时间</label>
-									<div class="col-sm-10">
-										<input type="text" class="date-plugin form-control" placeholder=""
-											id="new_semester_beginDate">
-									</div>
-								</div>
-								<h6 class="text-info left">编辑说明：</h6>
-								<ul class="list">
-									<li>起始时间请设置为第一周的星期一</li>
-								</ul>
-								<div class="clearfix"></div>
-							</form>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-sm btn-outline btn-multi" data-dismiss="modal">关闭</button>
-							<button type="button" class="btn btn-sm btn-background3 btn-multi" id="addNewSemester-btn"
-								data-dismiss="modal">确定</button>
-						</div>
-					</div>
-				</div>
-			</div>
+      <!-- 添加新学期 Modal -->
+      <div class="modal fade" id="new_semester_modal" tabindex="-1" role="dialog"
+        aria-labelledby="add_semester_ModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="width: 620px">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="add_semester_ModalTitle">添加新学期</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label" for="new_semester_name">学期名</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" placeholder="学期名" id="new_semester_name">
+                  </div>
+                </div>
 
-
-
-			<!-- 添加新批次 Modal -->
-			<div class="modal fade" id="add_semester_batchModal" tabindex="-1" role="dialog"
-				aria-labelledby="add_semester_batchModalTitle" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered" role="document" style="width: 550px">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="add_semester_batchModalTitle">添加新批次</h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-							<form>
-								<div class="form-group row">
-									<label class="col-sm-2 col-form-label" for="addNewBatch_semester">学期名</label>
-									<div class="col-sm-10">
-										<input type="text" class="form-control" id="addNewBatch_semester"
-											placeholder="学期名" disabled>
-									</div>
-								</div>
-								<div class="form-group row">
-									<label class="col-sm-2 col-form-label" for="addNewBatch_batch">批次名</label>
-									<div class="col-sm-10">
-										<input type="text" class="form-control" placeholder="批次名"
-											id="addNewBatch_batch">
-									</div>
-								</div>
-								<div class="form-group row">
-									<label class="col-sm-2 col-form-label" for="addNewBatch_credit">学分</label>
-									<div class="col-sm-10">
-										<input type="text" class="form-control" placeholder="学分"
-											id="addNewBatch_credit">
-									</div>
-								</div>
-								<div class="form-group row d-none">
-									<label class="col-sm-2 col-form-label" for="addNewBatch_beginDate">起始时间</label>
-									<div class="col-sm-10">
-										<input type="text" class="form-control date-plugin" placeholder=""
-											id="addNewBatch_beginDate">
-									</div>
-								</div>
-								<h6 class="text-info left">注意：</h6>
-								<ul class="list">
-									<li>批次名请使用数字及英文大写字母的组合形式，具体为 年份+季节缩写+学分+序号，如 2018S101 代表 2018年
-										秋季学期
-										1学分培养方案 批次1</li>
-								</ul>
-								<div class="clearfix"></div>
-							</form>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-sm btn-outline btn-multi" data-dismiss="modal">关闭</button>
-							<button type="button" class="btn btn-sm btn-background3 btn-multi" id="add-new-batch"
-								data-dismiss="modal">确定</button>
-						</div>
-					</div>
-				</div>
-			</div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label" for="new_semester_beginDate">起始时间</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="date-plugin form-control" placeholder="" id="new_semester_beginDate">
+                  </div>
+                </div>
+                <h6 class="text-info left">编辑说明：</h6>
+                <ul class="list">
+                  <li>起始时间请设置为第一周的星期一</li>
+                </ul>
+                <div class="clearfix"></div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-sm btn-outline btn-multi" data-dismiss="modal">关闭</button>
+              <button type="button" class="btn btn-sm btn-background3 btn-multi" id="addNewSemester-btn"
+                data-dismiss="modal">确定</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
 
 
-			<!-- 编辑批次 Modal -->
-			<div class="modal fade" id="editOneBatchModal" tabindex="-1" role="dialog"
-				aria-labelledby="editOneBatchModalTitle" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered" role="document" style="width: 550px">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="editOneBatchModalTitle">修改批次信息</h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-							<form>
-								<div class="form-group row">
-									<label class="col-sm-2 col-form-label" for="editOneBatchSemesterName">学期名</label>
-									<div class="col-sm-10">
-										<input type="text" class="form-control" id="editOneBatchSemesterName" disabled> 
-									</div>
-								</div>
-								<div class="form-group row">
-									<label class="col-sm-2 col-form-label" for="editOneBatchName">批次名</label>
-									<div class="col-sm-10">
-										<input type="text" class="form-control" disabled id="editOneBatchName">
-									</div>
-								</div>
-								<div class="form-group row">
-									<label class="col-sm-2 col-form-label" for="editOneBatchCredit">学分</label>
-									<div class="col-sm-10">
-										<input type="text" class="form-control" id="editOneBatchCredit">
-									</div>
-								</div>
-								<div class="form-group row d-none">
-									<label class="col-sm-2 col-form-label" for="editOneBatchBeginDate">起始时间</label>
-									<div class="col-sm-10">
-										<input type="text" class="form-control date-plugin" placeholder=""
-											id="editOneBatchBeginDate">
-									</div>
-								</div>
-								<h6 class="text-info left">注意：</h6>
-								<ul class="list">
-									<li>批次名请使用数字及英文大写字母的组合形式，具体为 年份+季节缩写+学分+序号，如 2018S101 代表 2018年
-										秋季学期
-										1学分培养方案 批次1</li>
-								</ul>
-								<div class="clearfix"></div>
-							</form>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-sm btn-outline btn-multi" data-dismiss="modal">关闭</button>
-							<button type="button" class="btn btn-sm btn-default btn-multi" id="editOneBatchCommit"
-								data-dismiss="modal">确定</button>
-						</div>
-					</div>
-				</div>
-			</div>
+      <!-- 添加新批次 Modal -->
+      <div class="modal fade" id="add_semester_batchModal" tabindex="-1" role="dialog"
+        aria-labelledby="add_semester_batchModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="width: 550px">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="add_semester_batchModalTitle">添加新批次</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label" for="addNewBatch_semester">学期名</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="addNewBatch_semester" placeholder="学期名" disabled>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label" for="addNewBatch_batch">批次名</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" placeholder="批次名" id="addNewBatch_batch">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label" for="addNewBatch_credit">学分</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" placeholder="学分" id="addNewBatch_credit">
+                  </div>
+                </div>
+                <div class="form-group row d-none">
+                  <label class="col-sm-2 col-form-label" for="addNewBatch_beginDate">起始时间</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control date-plugin" placeholder="" id="addNewBatch_beginDate">
+                  </div>
+                </div>
+                <h6 class="text-info left">注意：</h6>
+                <ul class="list">
+                  <li>批次名请使用数字及英文大写字母的组合形式，具体为 年份+季节缩写+学分+序号，如 2018S101 代表 2018年
+                    秋季学期
+                    1学分培养方案 批次1</li>
+                </ul>
+                <div class="clearfix"></div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-sm btn-outline btn-multi" data-dismiss="modal">关闭</button>
+              <button type="button" class="btn btn-sm btn-background3 btn-multi" id="add-new-batch"
+                data-dismiss="modal">确定</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- 编辑批次 Modal -->
+      <div class="modal fade" id="editOneBatchModal" tabindex="-1" role="dialog"
+        aria-labelledby="editOneBatchModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="width: 550px">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="editOneBatchModalTitle">修改批次信息</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label" for="editOneBatchSemesterName">学期名</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="editOneBatchSemesterName" disabled>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label" for="editOneBatchName">批次名</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" disabled id="editOneBatchName">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label" for="editOneBatchCredit">学分</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="editOneBatchCredit">
+                  </div>
+                </div>
+                <div class="form-group row d-none">
+                  <label class="col-sm-2 col-form-label" for="editOneBatchBeginDate">起始时间</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control date-plugin" placeholder="" id="editOneBatchBeginDate">
+                  </div>
+                </div>
+                <h6 class="text-info left">注意：</h6>
+                <ul class="list">
+                  <li>批次名请使用数字及英文大写字母的组合形式，具体为 年份+季节缩写+学分+序号，如 2018S101 代表 2018年
+                    秋季学期
+                    1学分培养方案 批次1</li>
+                </ul>
+                <div class="clearfix"></div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-sm btn-outline btn-multi" data-dismiss="modal">关闭</button>
+              <button type="button" class="btn btn-sm btn-default btn-multi" id="editOneBatchCommit"
+                data-dismiss="modal">确定</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
 
 
 
-			<!-- 编辑学期 Modal -->
-			<div class="modal fade" id="edit_semester_modal" tabindex="-1" role="dialog"
-				aria-labelledby="edit_semester_modalTitle" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered" role="document" style="width: 620px">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="edit_semester_modalTitle">修改学期信息</h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-							<form>
-								<div class="form-group row">
-									<label class="col-sm-2 col-form-label" for="editSemesterName_old">原学期名</label>
-									<div class="col-sm-10">
-										<input type="text" disabled class="form-control" id="editSemesterName_old">
-									</div>
-								</div>
-								<div class="form-group row">
-									<label class="col-sm-2 col-form-label" for="editSemesterName_new">新学期名</label>
-									<div class="col-sm-10">
-										<input type="text" class="form-control" placeholder="新学期名"
-											id="editSemesterName_new">
-									</div>
-								</div>
-								<div class="form-group row">
-									<label class="col-sm-2 col-form-label" for="editSemesterBeginDate">起始时间</label>
-									<div class="col-sm-10">
-										<input type="text" class="form-control date-plugin" placeholder=""
-											id="editSemesterBeginDate">
-									</div>
-								</div>
-							</form>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-sm btn-outline btn-multi" data-dismiss="modal">关闭</button>
-							<button type="button" class="btn btn-sm btn-default btn-multi" id="edit_semester_ensure"
-								data-dismiss="modal">确定</button>
-						</div>
-					</div>
-				</div>
-			</div>
+      <!-- 编辑学期 Modal -->
+      <div class="modal fade" id="edit_semester_modal" tabindex="-1" role="dialog"
+        aria-labelledby="edit_semester_modalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="width: 620px">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="edit_semester_modalTitle">修改学期信息</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label" for="editSemesterName_old">原学期名</label>
+                  <div class="col-sm-10">
+                    <input type="text" disabled class="form-control" id="editSemesterName_old">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label" for="editSemesterName_new">新学期名</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" placeholder="新学期名" id="editSemesterName_new">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label" for="editSemesterBeginDate">起始时间</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control date-plugin" placeholder="" id="editSemesterBeginDate">
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-sm btn-outline btn-multi" data-dismiss="modal">关闭</button>
+              <button type="button" class="btn btn-sm btn-default btn-multi" id="edit_semester_ensure"
+                data-dismiss="modal">确定</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
 
 
-			<!-- 添加学生 Modal -->
-			<div class="modal fade" id="add_student_modal" tabindex="-1" role="dialog"
-				aria-labelledby="add_student_modalTitle" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered" role="document" style="width: 550px">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="add_student_modalTitle">添加学生</h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-							<div class="container-fluid">
-								<div class="row">
-									<input type="text" class="form-control col-md-5" id="stu-number-add"
-										placeholder="学号">
-									<span class="col-md-2"></span>
-									<input type="text" class="form-control col-md-5" id="stu-name-add" placeholder="姓名">
-								</div>
-								<br>
-								<div class="row">
-									<input type="text" class="form-control col-md-5" id="stu-classes-add"
-										placeholder="班级">
-									<span class="col-md-2"></span>
-									<select class="form-control custom-select col-md-5 batch_selector"
-										id="addStudentSelecetBatch">
-									</select>
-								</div>
-							</div>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-sm btn-outline btn-multi" data-dismiss="modal">关闭</button>
-							<button type="button" class="btn btn-sm btn-default btn-multi"  id="add_a_student"
-								data-dismiss="modal">确定</button>
-						</div>
-					</div>
-				</div>
-			</div>
+      <!-- 添加学生 Modal -->
+      <div class="modal fade" id="add_student_modal" tabindex="-1" role="dialog"
+        aria-labelledby="add_student_modalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="width: 550px">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="add_student_modalTitle">添加学生</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="container-fluid">
+                <div class="row">
+                  <input type="text" class="form-control col-md-5" id="stu-number-add" placeholder="学号">
+                  <span class="col-md-2"></span>
+                  <input type="text" class="form-control col-md-5" id="stu-name-add" placeholder="姓名">
+                </div>
+                <br>
+                <div class="row">
+                  <input type="text" class="form-control col-md-5" id="stu-classes-add" placeholder="班级">
+                  <span class="col-md-2"></span>
+                  <select class="form-control custom-select col-md-5 batch_selector" id="addStudentSelecetBatch">
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-sm btn-outline btn-multi" data-dismiss="modal">关闭</button>
+              <button type="button" class="btn btn-sm btn-default btn-multi" id="add_a_student"
+                data-dismiss="modal">确定</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
-		
 
-			<!-- stu_list_tbody中编辑的 modal  -->
-			<div class="modal fade" id="edit_stud_modal" tabindex="-1" role="dialog"
-				aria-labelledby="edit_stud_modalTitle" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered" role="document" style="width: 550px">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="edit_stud_modalTitle">学生信息修改</h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-							<div class="container-fluid">
-								<div class="row">
-									<input type="text" class="form-control col-md-5" disabled id="stu-number-edit"
-										placeholder="学号">
-									<span class="col-md-2"></span>
-									<input type="text" class="form-control col-md-5" id="stu-name-edit"
-										placeholder="姓名">
-								</div>
-								<br>
-								<div class="row">
-									<input type="text" class="form-control col-md-5" id="stu-class-edit"
-										placeholder="班级">
-									<span class="col-md-2"></span>
-									<select class="form-control custom-select col-md-5 batch_selector"
-										id="stu-batch-edit">
-									</select>
-								</div>
-							</div>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-sm btn-outline btn-multi" data-dismiss="modal">关闭</button>
-							<button type="button" class="btn btn-sm btn-default btn-multi" id="edit_stud_ensure"
-								data-dismiss="modal">确定</button>
-						</div>
-					</div>
-				</div>
-			</div>
 
-		</div>
-	</div>
+      <!-- stu_list_tbody中编辑的 modal  -->
+      <div class="modal fade" id="edit_stud_modal" tabindex="-1" role="dialog" aria-labelledby="edit_stud_modalTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="width: 550px">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="edit_stud_modalTitle">学生信息修改</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="container-fluid">
+                <div class="row">
+                  <input type="text" class="form-control col-md-5" disabled id="stu-number-edit" placeholder="学号">
+                  <span class="col-md-2"></span>
+                  <input type="text" class="form-control col-md-5" id="stu-name-edit" placeholder="姓名">
+                </div>
+                <br>
+                <div class="row">
+                  <input type="text" class="form-control col-md-5" id="stu-class-edit" placeholder="班级">
+                  <span class="col-md-2"></span>
+                  <select class="form-control custom-select col-md-5 batch_selector" id="stu-batch-edit">
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-sm btn-outline btn-multi" data-dismiss="modal">关闭</button>
+              <button type="button" class="btn btn-sm btn-default btn-multi" id="edit_stud_ensure"
+                data-dismiss="modal">确定</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
-	<!-- 学生列表结束 -->
-	<!-- 主体部分结束 -->
-	<script src="../js/spec/student-manage.js"></script>
-	<!-- 分页开始 -->
-	<script src="../js/util/cut_page.js"></script>
-	<!-- <link rel="stylesheet" type="text/css" href="../css/cut_page.css"> -->
-	<!-- 分页结束 -->
+    </div>
+  </div>
+
+  <!-- 学生列表结束 -->
+  <!-- 主体部分结束 -->
+  <script src="../js/spec/student-manage.js"></script>
+  <!-- 分页开始 -->
+  <script src="../js/util/cut_page.js"></script>
+  <!-- <link rel="stylesheet" type="text/css" href="../css/cut_page.css"> -->
+  <!-- 分页结束 -->
 </div>
