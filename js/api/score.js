@@ -47,11 +47,13 @@ define(['api/apiobj', 'config/global'], function (api, g) {
             return g.post_json('/score/getInputInfo',post_data);
         },
         //查询特殊学生成绩
-        getSpScore:function (templateName,sid='', sname='') {
+        getSpScore: function (templateName = '', sid = '', sname = '') {
+            if (templateName !== '') {
+                return g.post_query('/score/getSpScore?templateName=' + templateName);
+            }
             let post_data={
                 sid:sid,
                 sname:sname,
-                templateName:templateName
             };
             return g.post_query('/score/getSpScore',post_data);
         },
