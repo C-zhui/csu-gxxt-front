@@ -1097,8 +1097,10 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
         }
 
 //根据权重模板获取特殊学生成绩列表
-        $('#weight-template-list').change(function () {
-            let templateName = $(this).val();
+        $('#weight-template-list').change(getSpScoreTemplateName);
+
+        function getSpScoreTemplateName() {
+            let templateName = $('#weight-template-list').val();
             if (templateName === '请选权重模板') {
                 return;
             }
@@ -1115,9 +1117,9 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
                     api.score.getSpScore(templateName).done(getSpScoreSuccess);
                 }
             });
-        });
+        }
 
-// 根据学号查询该学生需要做的工序
+// 根据学号查询该学生需要做的工序并设置表格
         function getSpProName() {
             let sid = $('#spStu_sname').val();
             return api.student.getSpProName(sid).done(function (data) {
@@ -1127,6 +1129,17 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
                 }
             });
         }
+
+        //根据学号查询特殊学生成绩
+        $('#get_special_score_list').click(getSpScoreSid);
+
+        function getSpScoreSid() {
+            getSpProName().done(function () {
+                let sid = $('#spStu_sname').val();
+                api.score.getSpScore('', sid).done(getSpScoreSuccess);
+            });
+        }
+
 
 //获取特殊学生成绩列表成功回调函数
         function getSpScoreSuccess(data) {
@@ -1163,13 +1176,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
             }
         }
 
-        $('#get_special_score_list').click(function () {
-            getSpProName().done(function () {
-                let sid = $('#spStu_sname').val();
-                api.score.getSpScore('', sid).done(getSpScoreSuccess);
-            });
-        });
-
+        //构建修改特殊学生成绩模态框
         function updateSpScore(index) {
             let columns = special_score_list_table_config.columns;
             let tableHead = $('#edit_special_score_table thead tr').empty();
@@ -1200,6 +1207,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
             $('#special-edit-state').val('');
         }
 
+        //提交特殊学生成绩修改
         $('#submit-special-student-score').click(function () {
             let selectData = special_score_list_table_config.data[0];
             let tds = $('#edit_special_score_table tbody tr td');
@@ -1258,6 +1266,12 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
             sids += selections[selections.length - 1].sid;
             api.score.releaseSpScore(sids).done(function (data) {
                 if (data.status === 0) {
+                    let templateName = $('#weight-template-list').val();
+                    if (templateName !== '请选权重模板') {
+                        getSpScoreTemplateName();
+                    } else {
+                        getSpScoreSid();
+                    }
                     swal(
                         '成功',
                         '发布成绩成功',
