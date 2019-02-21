@@ -1,7 +1,7 @@
 require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_page3', 'api/batch', 'api/proced', 'api/student', 'api/teacher', 'api/score', 'bootstrapTable', 'flatpickr'], function ($, swal, _, api, g, CutPage) {
     require(['bootstrapTableFixedColumns'], function () {
-
         const pageSize = 5; //设置分页单页条数
+        //===========================================成绩列表全局数据开始
         //批次对应的工序列表
         let processes = [];
 //成绩列表表格前段固定列
@@ -61,7 +61,9 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
 //权重模板信息
         let weights = {};
 //修改时选择的row的index
-        let score_row_index = null;
+        let score_row_index = 0;
+        //=========================================成绩列表全局数据结束
+        //=========================================成绩提交列表全局数据开始
 //成绩提交列表 bootstrap table 配置信息
         let submit_list_table_config = {
             columns: [
@@ -84,7 +86,8 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
             ],
             data: [],
         };
-
+        //==========================================成绩提交列表全局数据结束
+        //==========================================成绩修改列表全局数据开始
 //成绩修改列表 bootstrap table 配置信息
         let update_list_table_config = {
             columns: [
@@ -113,6 +116,8 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
             ],
             data: [],
         };
+        //==========================================成绩修改列表全局数据结束
+        //==========================================成绩录入列表全局数据开始
 //成绩录入记录表格设置
         let entry_table_config = {
             columns: [
@@ -141,6 +146,8 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
             ],
             data: [],
         };
+        //==========================================成绩录入列表全局数据结束
+        //==========================================特殊学生成绩列表全局数据开始
 //特殊学生工序
         let special_processes = [];
 //特殊学生成绩列表前段固定列
@@ -196,6 +203,8 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
             // fixedColumns: true,
             fixedNumber: score_list_columns_front.length
         };
+        let special_score_row_index = 0;
+        //==========================================成绩修改列表全局数据结束
         let user = JSON.parse(localStorage.user);//用户信息
 ////////////////////////////////////全局数据定义结束
 
@@ -1168,6 +1177,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
 
         //构建修改特殊学生成绩模态框
         function updateSpScore(index) {
+            special_score_row_index = index;
             let columns = special_score_list_table_config.columns;
             let tableHead = $('#edit_special_score_table thead tr').empty();
             for (let i = 1; i < columns.length - 1; i++) {
@@ -1199,9 +1209,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
 
         //提交特殊学生成绩修改
         $('#submit-special-student-score').click(function () {
-            let selectData = special_score_list_table_config.data[0];
-            let tds = $('#edit_special_score_table tbody tr td');
-            let sid = $(tds[1]).text();
+            let selectData = special_score_list_table_config.data[special_score_row_index];
             let post_data = {};
             $('#edit_special_score_table tbody input').each(function () {
                 let item = $(this);
@@ -1213,13 +1221,15 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
                     post_data[field] = number;
                     selectData[field] = number;
                 }
-                let degree = $('#scorelistEditModal table tbody select').val();
-                if (degree !== '自动') {
-                    post_data['等级'] = degree;
-                    selectData['degree'] = degree;
-                }
-                post_data['reason'] = $('#special-edit-state').val();
             });
+            let tds = $('#edit_special_score_table tbody tr td');
+            let sid = $(tds[1]).text();
+            let degree = $('#edit_special_score_table tbody select').val();
+            if (degree !== '自动') {
+                post_data['等级'] = degree;
+                selectData['degree'] = degree;
+            }
+            post_data['reason'] = $('#special-edit-state').val();
             return api.score.updateSpScore(sid, post_data).done(function (data) {
                 if (data.status === 0) {
                     swal(
