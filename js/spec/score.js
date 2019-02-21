@@ -381,6 +381,102 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
             }
         }
 
+        // 改变批次时做成响应
+        $('#score_list_select_batch').change(function () {
+            let batch_name = $('#score_list_select_batch').val();
+            if (batch_name === '实习批次选择') {
+                return;
+            }
+            let post_data = {
+                batch_name: batch_name,
+                s_group_id: 'all',
+                pro_name: 'all',
+                sId: 'all',
+                sName: 'all'
+            };
+
+            // 根据批次名获取工序后根据条件查询成绩列表
+            getProcedByBatchName(batch_name).done(function () {
+                getScoreList(post_data);
+            });
+            getGroupByBatch(batch_name, '#score_list_select_group_number')
+        });
+
+//对表格进行筛选
+        function filterScoreTable() {
+            let process = $('#score_list_select_process').val();
+            let group = $('#score_list_select_group_number').val();
+            let filterTableConfig = {
+                columns: score_list_table_config.columns,
+                data: [],
+                pagination: true,
+                pageList: [10, 20, 50],
+                fixedColumns: process === '选择工种',
+                fixedNumber: score_list_columns_front.length
+            };
+            if (group !== '组号') {
+                let regex = new RegExp(group + '$');
+                _.forEach(score_list_table_config.data, function (value) {
+                    if (regex.test(value.batchAndGroup)) {
+                        filterTableConfig.data.push(value);
+                    }
+                });
+            } else {
+                filterTableConfig.data = score_list_table_config.data;
+            }
+            let table = $('#score_list_table');
+            table.bootstrapTable('destroy').bootstrapTable(filterTableConfig);
+            CutPage.cutPage('score_list_table', pageSize);
+            if (!filterTableConfig.fixedColumns) {
+                _.forEach(processes, function (value) {
+                    if (value !== process) {
+                        table.bootstrapTable('hideColumn', value);
+                        CutPage.cutPage('score_list_table', pageSize);
+                    }
+                })
+
+            }
+        }
+
+//改变工种时做出响应
+        $('#score_list_select_process').change(filterScoreTable);
+
+//改变分组时做出响应
+        $('#score_list_select_group_number').change(filterScoreTable);
+//点击查询按钮时做出响应
+        $('#get_score_list').click(function () {
+            let sId = $('#score_list_stu_number').val().trim();
+            let sName = $('#score_list_stu_name').val().trim();
+            if (sId === '' && sName === '') {
+                swal(
+                    '条件错误',
+                    '请输入姓名或者学号进行查询',
+                    'warning'
+                );
+                return;
+            }
+            if (sId === '') {
+                sId = 'all'
+            }
+            if (sName === '') {
+                sName = 'all'
+            }
+            let post_data = {
+                batch_name: 'all',
+                s_group_id: 'all',
+                pro_name: 'all',
+                sId: sId,
+                sName: sName
+            };
+            api.score.getScore(post_data).done(function (data) {
+                let data_arr = data.data;
+                let batch_name = data_arr[0].batch_name;
+                getProcedByBatchName(batch_name).done(function () {
+                    fillTable(data);
+                })
+            })
+        });
+
 // 核算总成绩
         $('#execute-score').click(function () {
             let batch_name = $('#score_list_select_batch').val();
@@ -637,102 +733,6 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
             });
             $('#scorelistEditModal').modal('hide');
         }
-
-// 改变批次时做成响应
-        $('#score_list_select_batch').change(function () {
-            let batch_name = $('#score_list_select_batch').val();
-            if (batch_name === '实习批次选择') {
-                return;
-            }
-            let post_data = {
-                batch_name: batch_name,
-                s_group_id: 'all',
-                pro_name: 'all',
-                sId: 'all',
-                sName: 'all'
-            };
-
-            // 根据批次名获取工序后根据条件查询成绩列表
-            getProcedByBatchName(batch_name).done(function () {
-                getScoreList(post_data);
-            });
-            getGroupByBatch(batch_name, '#score_list_select_group_number')
-        });
-
-//对表格进行筛选
-        function filterScoreTable() {
-            let process = $('#score_list_select_process').val();
-            let group = $('#score_list_select_group_number').val();
-            let filterTableConfig = {
-                columns: score_list_table_config.columns,
-                data: [],
-                pagination: true,
-                pageList: [10, 20, 50],
-                fixedColumns: process === '选择工种',
-                fixedNumber: score_list_columns_front.length
-            };
-            if (group !== '组号') {
-                let regex = new RegExp(group + '$');
-                _.forEach(score_list_table_config.data, function (value) {
-                    if (regex.test(value.batchAndGroup)) {
-                        filterTableConfig.data.push(value);
-                    }
-                });
-            } else {
-                filterTableConfig.data = score_list_table_config.data;
-            }
-            let table = $('#score_list_table');
-            table.bootstrapTable('destroy').bootstrapTable(filterTableConfig);
-            CutPage.cutPage('score_list_table', pageSize);
-            if (!filterTableConfig.fixedColumns) {
-                _.forEach(processes, function (value) {
-                    if (value !== process) {
-                        table.bootstrapTable('hideColumn', value);
-                        CutPage.cutPage('score_list_table', pageSize);
-                    }
-                })
-
-            }
-        }
-
-//改变工种时做出响应
-        $('#score_list_select_process').change(filterScoreTable);
-
-//改变分组时做出响应
-        $('#score_list_select_group_number').change(filterScoreTable);
-//点击查询按钮时做出响应
-        $('#get_score_list').click(function () {
-            let sId = $('#score_list_stu_number').val().trim();
-            let sName = $('#score_list_stu_name').val().trim();
-            if (sId === '' && sName === '') {
-                swal(
-                    '条件错误',
-                    '请输入姓名或者学号进行查询',
-                    'warning'
-                );
-                return;
-            }
-            if (sId === '') {
-                sId = 'all'
-            }
-            if (sName === '') {
-                sName = 'all'
-            }
-            let post_data = {
-                batch_name: 'all',
-                s_group_id: 'all',
-                pro_name: 'all',
-                sId: sId,
-                sName: sName
-            };
-            api.score.getScore(post_data).done(function (data) {
-                let data_arr = data.data;
-                let batch_name = data_arr[0].batch_name;
-                getProcedByBatchName(batch_name).done(function () {
-                    fillTable(data);
-                })
-            })
-        });
 
 // 发布某个批次的总成绩
         $('#publish-score').click(function () {
