@@ -123,18 +123,22 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/group'
             return api.overwork.getOverworkApplyByTime(start_time, end_time, process).done(function (data) {
                 if (data.status === 0) {
                     let data_arr = data.data;
+                    _.forEach(data_arr, function (value) {
+                        value.time = new Date(value.apply_time);
+                    });
+                    data_arr = _.orderBy(data_arr, 'time', 'desc');
                     let tableBody = $('#stu_extra_work_tbody').empty();
-                    for (let i = 0; i < data_arr.length; i++) {
+                    _.forEach(data_arr, function (value) {
                         let tr = $('<tr></tr>');
-                        $('<td></td>').text(chGMT(data_arr[i].apply_time)).appendTo(tr);
-                        $('<td></td>').text(data_arr[i].sname).appendTo(tr);
-                        $('<td></td>').text(data_arr[i].clazz).appendTo(tr);
-                        $('<td></td>').text(data_arr[i].pro_name).appendTo(tr);
-                        $('<td></td>').text(chGMT(data_arr[i].overwork_time)).appendTo(tr);
-                        $('<td></td>').text((getGMThour(data_arr[i].overwork_time_end) - getGMThour(data_arr[i].overwork_time)) + 'h').appendTo(tr);
-                        $('<td></td>').text(data_arr[i].reason).appendTo(tr);
+                        $('<td></td>').text(chGMT(value.apply_time)).appendTo(tr);
+                        $('<td></td>').text(value.sname).appendTo(tr);
+                        $('<td></td>').text(value.clazz).appendTo(tr);
+                        $('<td></td>').text(value.pro_name).appendTo(tr);
+                        $('<td></td>').text(chGMT(value.overwork_time)).appendTo(tr);
+                        $('<td></td>').text((getGMThour(value.overwork_time_end) - getGMThour(value.overwork_time)) + 'h').appendTo(tr);
+                        $('<td></td>').text(value.reason).appendTo(tr);
                         tableBody.append(tr);
-                    }
+                    });
                 }
                 CutPage.cutPage('student-open-apply-table', 5);
             });
@@ -198,7 +202,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/group'
                         $('<td></td>').text(chGMT(data_arr[i].overwork_time)).appendTo(tr);
                         $('<td></td>').text(data_arr[i].tname).appendTo(tr);
                         $('<td></td>').text(data_arr[i].pro_name).appendTo(tr);
-                        $('<td></td>').text(last_time).appendTo(tr);
+                        $('<td></td>').text(last_time + 'h').appendTo(tr);
                         $('<td></td>').text(data_arr[i].reason).appendTo(tr);
                         //如果没有加班权限则不显示编辑和删除按钮
                         if (user['角色'] === '管理员' || user['加班权限'] === '1') {
