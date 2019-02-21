@@ -10,13 +10,15 @@ define(['jquery', 'swal', 'lodash', 'spec/set-height'], function ($, swal, _, se
     role_to_nav = {
         'admin': 'manager-nav.json',
         'teacher': 'teacher-nav.json',
-        'student': 'student-nav.json'
+        'student': 'student-nav.json',
+        'spStudent': 'student-nav.json'
     }
 
     role_to_end = {
         'admin': '管理员',
         'teacher': '教师端',
-        'student': '学生端'
+        'student': '学生端',
+        'spStudent': '学生端'
     }
 
     $("#content_body").bind('resize', function(e) {
