@@ -54,8 +54,6 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
         let score_list_table_config = {
             columns: [],
             data: [],
-            pagination: true,
-            pageList: [10, 20, 50],
             //TODO 解决fixed columns问题
             fixedColumns: false,
             fixedNumber: score_list_columns_front.length
@@ -85,8 +83,6 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
                 }
             ],
             data: [],
-            pagination: true,
-            pageList: [10, 20, 50],
         };
 
 //成绩修改列表 bootstrap table 配置信息
@@ -116,8 +112,6 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
                 }
             ],
             data: [],
-            pagination: true,
-            pageList: [10, 20, 50],
         };
 //成绩录入记录表格设置
         let entry_table_config = {
@@ -146,8 +140,6 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
                 },
             ],
             data: [],
-            pagination: true,
-            pageList: [10, 20, 50],
         };
 //特殊学生工序
         let special_processes = [];
@@ -200,8 +192,6 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
         let special_score_list_table_config = {
             columns: [],
             data: [],
-            pagination: true,
-            pageList: [10, 20, 50],
             //TODO 解决fixed columns问题
             // fixedColumns: true,
             fixedNumber: score_list_columns_front.length
