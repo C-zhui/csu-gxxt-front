@@ -340,11 +340,20 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
       success: function (data) {
         // window.clearInterval(timer);
         // console.log("over..");
-        swal(
-          '导入成功！',
-          '导入学生信息成功！',
-          'success'
-        );
+          if (data.status === 0) {
+              swal(
+                  '导入成功！',
+                  '导入学生信息成功！',
+                  'success'
+              );
+          } else {
+              swal(
+                  '导入失败',
+                  data.message,
+                  'warning'
+              )
+          }
+
         // $('#tf').empty();
         // getAllBatch_StuList();
         // window.location.href = "./student-manage.js";
