@@ -39,8 +39,12 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
                 field: 'score',
                 title: '分数',
                 formatter: function (value, row, index) {
+                    let input = '<input type="text" value="' + value + '" size="8px;" style="text-align: center;"> ';
+                    if (value !== '无') {
+                        input = '<input type="text" value="' + value + '" size="8px;" style="text-align: center;" disabled="disabled"> ';
+                    }
                     return [
-                        '<input type="text" value="' + value + '" size="8px;" style="text-align: center;"> '
+                        input
                     ]
                 }
             }
