@@ -1,4 +1,4 @@
-require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_page3', 'util/date_format_transform', 'config/config-course-schedule', 'api/experiment', 'api/batch', 'api/proced', 'api/studentGroup', 'api/student', 'api/specialScore'], function ($, _, swal, api, g, CutPage, dft, ccs) {
+require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_page3', 'util/date_format_transform', 'config/config-course-schedule', 'api/experiment', 'api/batch', 'api/proced', 'api/studentGroup', 'api/student', 'api/specialScore', 'api/user', 'util/md5'], function ($, _, swal, api, g, CutPage, dft, ccs) {
 
   const pageSize = 5;//设置分页页数
   $(document).ready(function () {
@@ -341,7 +341,6 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
       })
         .then(function (ok) {
           if (ok) {
-            // todo 把 data_group_by_ctime 打包发回去
             var data = []
             _.each(data_group_by_ctime, function (group, ctime) {
               var time_quant = '';
@@ -815,8 +814,8 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
     $tr.appendTo($tbody);
   }
 
+  // 添加特殊学生
   $('#add-to-special-stud').click(addToSpecialStud)
-
   function addToSpecialStud() {
     var temp_name = $('#score-template-selector').val()
     if (!temp_name || temp_name == '权重模版选择') return;
@@ -834,6 +833,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
     }
   }
 
+  // 查询特殊学生
   $('#query-spec-stud-id-button').click(function () {
     // console.log("$('#query-spec-stud-id-button').click")
     var stud_id = $('#query-spec-stud-id').val().trim();
@@ -854,7 +854,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
       api.student.getSpStudentById(stud_id)
         .done(function (data) {
           if (data.status === 0) {
-            fillSpStudentRecords([data.data]) // todo check api
+            fillSpStudentRecords([data.data])
           } else {
             g.fetch_err(data);
           }
@@ -872,24 +872,51 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
       $('<td></td>').text(val.clazz).appendTo($tr);
       $('<td></td>').text(val.template_name).appendTo($tr);
       $('<td><div class="operate-center">' +
-        '<img src="../icon/edit.svg" class="row-image lookup-course">' +
-        '<img src="../icon/delete.svg" class="row-image delete-sp-stud no-padding"> ' +
-        '<div class="clearfix"></div> ' +
+        '<img src="../icon/edit.svg" class="row-image lookup_course">' +
+        '<img src="../icon/delete.svg" class="row-image delete_sp_stud"> ' +
+        '<img src="../icon/reset.svg" class="row-image reset_sp_pwd no-padding"> ' +
         '</div>' +
         '</td></tr>').appendTo($tr);
-
-      // $('<td><input type="button" class="btn btn-sm btn-success lookup-course" value="查看&编辑" ><input type="button" class="btn btn-sm btn-danger delete-sp-stud" name="" value="删除"></td>').appendTo($tr)
       $('<td class="center"><input type="checkbox" class="batch_op"></td>').appendTo($tr);
       $tr.appendTo($table);
     });
     CutPage.cutPage('special-table', pageSize);
   }
 
+  // 重置密码
+  $('#query-spstudent-result').on('click', 'img.reset_sp_pwd', function () {
+    var $this = $(this);
+    var tr = $this.parents('tr');
+    var sid = tr.attr('data-sid');
+    swal({
+      title: '请确认',
+      text: '将用户' + sid + '密码重置为123456',
+      icon: 'warning',
+      buttons: ["取消", '确定'],
+      dangerMode: true
+    }).then(function (ensure) {
+      if (!ensure) return;
+      api.user.changePwd(sid, hex_md5('123456'))
+        .done(function (data) {
+          if (data.status === 0) {
+            swal(
+              '通知',
+              data.message,
+              'success'
+            );
+          } else {
+            g.fetch_err(data)
+          }
+        })
+        .fail(g.net_err)
+    });
+  })
+
   // 删除一个特殊学生
-  $('#query-spstudent-result').on('click', 'img.delete-sp-stud', function () {
+  $('#query-spstudent-result').on('click', 'img.delete_sp_stud', function () {
     //console.log(this)
-    var input = $(this);
-    var tr = $(input).parents('tr')
+    var $this = $(this);
+    var tr = $this.parents('tr');
     var sid = tr.attr('data-sid');
     //console.log(sid)
     swal({
@@ -955,7 +982,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
 
 
   // 查看、编辑课表
-  $('#query-spstudent-result').on('click', 'img.lookup-course', function () {
+  $('#query-spstudent-result').on('click', 'img.lookup_course', function () {
     //console.log(this)
     var input = $(this);
     var tr = $(input).parents('tr')
