@@ -1134,32 +1134,36 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
         function getSpScoreSuccess(data) {
             if (data.status === 0) {
                 let data_arr = data.data;
-                let tableRow = {
-                    name: data_arr[0]['姓名'],
-                    sid: data_arr[0]['学号'],
+                let tableData = [];
+                _.forEach(data_arr, function (value) {
+                    let tableRow = {
+                        name: value['姓名'],
+                        sid: value['学号'],
 
-                };
-                _.forEach(special_processes, function (value) {
-                    if (!_.isNil(data_arr[0][value]) && !isNaN(Number(data_arr[0][value]))) {
-                        tableRow[value] = Number(data_arr[0][value]);
+                    };
+                    _.forEach(special_processes, function (proced) {
+                        if (!_.isNil(value[proced]) && !isNaN(Number(value[proced]))) {
+                            tableRow[proced] = Number(value[proced]);
+                        } else {
+                            tableRow[proced] = '无';
+                        }
+                    });
+                    if (!_.isNil(value['总成绩']) && !isNaN(Number(value['总成绩']))) {
+                        tableRow['scoreSum'] = Number(value['总成绩']);
                     } else {
-                        tableRow[value] = '无';
+                        tableRow['scoreSum'] = '无';
                     }
+                    if (!_.isNil(value['等级'])) {
+                        tableRow['degree'] = value['等级'];
+                    } else {
+                        tableRow['degree'] = '无';
+                    }
+                    if (!_.isNil(value['发布情况'])) {
+                        tableRow['publishStatus'] = value['发布情况'];
+                    }
+                    tableData.push(tableRow);
                 });
-                if (!_.isNil(data_arr[0]['总成绩']) && !isNaN(Number(data_arr[0]['总成绩']))) {
-                    tableRow['scoreSum'] = Number(data_arr[0]['总成绩']);
-                } else {
-                    tableRow['scoreSum'] = '无';
-                }
-                if (!_.isNil(data_arr[0]['等级'])) {
-                    tableRow['degree'] = data_arr[0]['等级'];
-                } else {
-                    tableRow['degree'] = '无';
-                }
-                if (!_.isNil(data_arr[0]['发布情况'])) {
-                    tableRow['publishStatus'] = data_arr[0]['发布情况'];
-                }
-                special_score_list_table_config.data = [tableRow];
+                special_score_list_table_config.data = tableData;
                 $('#special_score_list_table').bootstrapTable('load', special_score_list_table_config.data);
                 CutPage.cutPage('special_score_list_table', pageSize);
             }
@@ -1192,7 +1196,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
             let select = $('<select class="custom-select custom-select-sm"><option>自动</option><option>优</option><option>良</option><option>中</option><option>及格</option><option>不及格</option></select>').val('自动');
             tableBody.append($('<td></td>').append(select));
             tableBody.append($('<td></td>').text(selectData[columns[columns.length - 2].field]));
-            console.log(selectData);
+            // console.log(selectData);
             //清空备注
             $('#special-edit-state').val('');
         }
