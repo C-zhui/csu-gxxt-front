@@ -47,6 +47,9 @@ require(['jquery', 'swal', 'api/apiobj', 'util/cut_page3', 'api/material', 'flat
                     }
                     //设置分页
                     CutPage.cutPage('material-record-table', pageSize);
+                    let content = $("#material-record-tablebarcon1").html();
+                    let text = content.split(",");
+                    $("#material-record-tablebarcon1").html(text[1]);
 
                 }
             })
