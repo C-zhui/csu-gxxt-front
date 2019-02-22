@@ -53,6 +53,9 @@ define(['jquery'], function ($) {
     }
     this.currentPage = targetPage;
     let tempStr = "共" + this.totalRows + "条记录," + "第" + "<span class='text-page'>" + targetPage + "</span>/" + "<span class='text-page'>" + this.totalPage + "</span>页，跳转到";
+    if(this.tableID==="material-record-table"){
+      tempStr = "第" + "<span class='text-page'>" + targetPage + "</span>/" + "<span class='text-page'>" + this.totalPage + "</span>页，跳转到";
+    }
     $('#' + this.tableID + 'barcon1').html(tempStr);
 
     $("#" + this.tableID + "jumpWhere").val(targetPage);       // 设置“跳转”按钮的值
