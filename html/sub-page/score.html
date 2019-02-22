@@ -49,6 +49,9 @@
                                     <option>组号</option>
                                 </select>
                             </div>
+                            <div class="col-xs-3 col-sm-3">
+                                <button class="btn btn-sm btn-outline btn-multi" id="get_score_list">查询</button>
+                            </div>
                         </div>
                         <div class="row select-top title">
                             <div class="col-xs-3 col-sm-3">学生学号：</div>
@@ -64,7 +67,8 @@
                                        id="score_list_stu_name">
                             </div>
                             <div class="col-xs-6 col-sm-6 no-padding">
-                                <button class="btn btn-sm btn-outline btn-multi" id="get_score_list">查询</button>
+                                <button class="btn btn-sm btn-outline btn-multi" id="get_score_list_by_name_or_id">查询
+                                </button>
                                 <button class="btn btn-sm btn-background1 btn-multi" id="execute-score" onclick="executeScore()">核算总成绩</button>
                                 <button class="btn btn-sm btn-background2 btn-multi" data-toggle="modal"
                                         data-target="#score-grade-test">等级评定
