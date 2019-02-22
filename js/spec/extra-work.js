@@ -111,6 +111,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/group'
             let start_time = $('#stu_extra_work_start_time').val();
             let end_time = $('#stu_extra_work_end_time').val();
             let process = $('#stu_extra_select_process').val();
+            let stu_submit_time = $('#stu_submit_time').val();
             if (start_time === "") {
                 start_time = "1999";
             }
@@ -120,9 +121,21 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'util/cut_page3', 'api/group'
             if (process === "选择教师组") {
                 process = "%";
             }
+
             return api.overwork.getOverworkApplyByTime(start_time, end_time, process).done(function (data) {
                 if (data.status === 0) {
-                    let data_arr = data.data;
+                    let data_arr = [];
+                    if (stu_submit_time !== '') {
+                        let regex = new RegExp('^' + stu_submit_time);
+                        _.forEach(data.data, function (value) {
+                            if (regex.test(value.apply_time)) {
+                                data_arr.push(value);
+                            }
+                        })
+                    } else {
+                        data_arr = data.data;
+                    }
+                    // let data_arr = data.data;
                     _.forEach(data_arr, function (value) {
                         value.time = new Date(value.apply_time);
                     });
