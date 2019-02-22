@@ -12,12 +12,12 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
                 sortable: true
             },
             {
-                field: 'name',
-                title: '姓名'
-            },
-            {
                 field: 'sid',
                 title: '学号'
+            },
+            {
+                field: 'name',
+                title: '姓名'
             }
         ];
 //成绩列表后段固定列
@@ -826,49 +826,53 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
                 let data_arr = data.data;
                 let tableData = [];
                 let studentAjaxArray = [];
-                let teacherAjaxArray = [];
+                // let teacherAjaxArray = [];
                 _.forEach(data_arr, function (value) {
                     tableData.push({
                         sid: value.sid,
-                        process: value.pro_name,
+                        name: value.sname,
+                        process: value.proced,
                         score: value.pro_score,
-                        entryTime: chGMT(value.time)
+                        entryTime: chGMT(value.time),
+                        entryMan: value.tname,
                     });
                     studentAjaxArray.push(api.student.getStudent(value.sid));
-                    teacherAjaxArray.push(api.teacher.getTeacher(value.tid));
+                    // teacherAjaxArray.push(api.teacher.getTeacher(value.tid));
                 });
                 let studentAjaxGroup = $.when.apply($, studentAjaxArray).done(function () {
                     for (let i = 0; i < arguments.length; i++) {
                         let data = arguments[i][0];
                         try {
                             if (data.status === 0) {
-                                tableData[i].name = data.data.sname;
+                                // tableData[i].name = data.data.sname;
                                 tableData[i].batchNameAndGroup = batch_name + '/' + data.data.s_group_id;
                             }
                         } catch (e) {
                             console.log(e);
                         }
                     }
-                });
-                let teacherAjaxGroup = $.when.apply($, teacherAjaxArray).done(function () {
-                    for (let i = 0; i < arguments.length; i++) {
-                        let data = arguments[i][0];
-                        try {
-                            if (data.status === 0) {
-                                tableData[i].entryMan = data.data.tname;
-                            }
-                        } catch (e) {
-                            console.log(e);
-                        }
-                    }
-                });
-                $.when(studentAjaxGroup, teacherAjaxGroup).always(function () {
+
                     tableData = _.sortBy(tableData, 'batchNameAndGroup');
                     entry_table_config.data = tableData;
                     $('#entry-list-table').bootstrapTable('destroy').bootstrapTable(entry_table_config);
                     CutPage.cutPage('entry-list-table', pageSize);
-
-                })
+                });
+                // let teacherAjaxGroup = $.when.apply($, teacherAjaxArray).done(function () {
+                //     for (let i = 0; i < arguments.length; i++) {
+                //         let data = arguments[i][0];
+                //         try {
+                //             if (data.status === 0) {
+                //                 tableData[i].entryMan = data.data.tname;
+                //             }
+                //         } catch (e) {
+                //             console.log(e);
+                //         }
+                //     }
+                // });
+                // $.when(studentAjaxGroup, teacherAjaxGroup).always(function () {
+                //
+                //
+                // })
             }
 
         }
