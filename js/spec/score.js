@@ -95,11 +95,11 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
                     field: 'update_time',
                     title: '修改时间'
                 }, {
-                    field: 'sname',
-                    title: '学生姓名'
-                }, {
                     field: 'sid',
                     title: '学号'
+                }, {
+                    field: 'sname',
+                    title: '学生姓名'
                 }, {
                     field: 'clazz',
                     title: '班级'
@@ -477,6 +477,11 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
             //查询录入记录
             $('#get_entry_list').click(getEntryList);
             $('#get_entry_list_by_id_or_name').click(getEntryListByIdOrName);
+            //================================6.特殊学生成绩列表
+            //根据权重模板获取特殊学生成绩列表
+            $('#get_special_score_list').click(getSpScoreTemplateName);
+            //根据学号查询特殊学生成绩
+            $('#get_special_score_list_by_id').click(getSpScoreSid);
         });
 
         // 初始化数据
@@ -1086,9 +1091,6 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
             CutPage.cutPage('special_score_list_table', pageSize);
         }
 
-//根据权重模板获取特殊学生成绩列表
-        $('#weight-template-list').change(getSpScoreTemplateName);
-
         function getSpScoreTemplateName() {
             let templateName = $('#weight-template-list').val();
             if (templateName === '请选权重模板') {
@@ -1119,9 +1121,6 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
                 }
             });
         }
-
-        //根据学号查询特殊学生成绩
-        $('#get_special_score_list').click(getSpScoreSid);
 
         function getSpScoreSid() {
             getSpProName().done(function () {
