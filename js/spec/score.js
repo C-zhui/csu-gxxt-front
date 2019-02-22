@@ -464,6 +464,19 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
                     }
                 });
             });
+            //================================2. 成绩录入记录
+            //根据批次变化查询工序和组号
+            $('#entry-list-select-batch').change(function () {
+                let batch_name = $('#entry-list-select-batch').val();
+                if (batch_name === '实习批次选择') {
+                    return;
+                }
+                getProcessByBatch(batch_name, '#entry-list-select-process');
+                getGroupByBatch(batch_name, '#entry-list-select-group');
+            });
+            //查询录入记录
+            $('#get_entry_list').click(getEntryList);
+            $('#get_entry_list_by_id_or_name').click(getEntryListByIdOrName);
         });
 
         // 初始化数据
@@ -815,7 +828,24 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
 
 //3、成绩录入记录
 //=========================================================================
-        function fillEntryTable(data) {
+        //获取录入记录
+        function getEntryList() {
+            let batch_name = $('#entry-list-select-batch').val();
+            if (batch_name === '实习批次选择') {
+                swal(
+                    '错误',
+                    '请选择实习批次后进行查询',
+                    'error'
+                );
+                return;
+            }
+            api.score.getInputInfo(batch_name).done(function (data) {
+                getEntryListSuccessCallback(data).done(filterEntryTable);
+            });
+        }
+
+        //获取数据成功回调函数
+        function getEntryListSuccessCallback(data) {
             let batch_name = $('#entry-list-select-batch').val();
             if (data.status === 0) {
                 let data_arr = data.data;
@@ -834,7 +864,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
                     studentAjaxArray.push(api.student.getStudent(value.sid));
                     // teacherAjaxArray.push(api.teacher.getTeacher(value.tid));
                 });
-                let studentAjaxGroup = $.when.apply($, studentAjaxArray).done(function () {
+                return $.when.apply($, studentAjaxArray).done(function () {
                     for (let i = 0; i < arguments.length; i++) {
                         let data = arguments[i][0];
                         try {
@@ -846,11 +876,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
                             console.log(e);
                         }
                     }
-
-                    tableData = _.sortBy(tableData, 'batchNameAndGroup');
                     entry_table_config.data = tableData;
-                    $('#entry-list-table').bootstrapTable('destroy').bootstrapTable(entry_table_config);
-                    CutPage.cutPage('entry-list-table', pageSize);
                 });
                 // let teacherAjaxGroup = $.when.apply($, teacherAjaxArray).done(function () {
                 //     for (let i = 0; i < arguments.length; i++) {
@@ -872,62 +898,24 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
 
         }
 
-        $('#entry-list-select-batch').change(function () {
-            let batch_name = $('#entry-list-select-batch').val();
-            if (batch_name === '实习批次选择') {
-                return;
-            }
-            getProcessByBatch(batch_name, '#entry-list-select-process');
-            getGroupByBatch(batch_name, '#entry-list-select-group');
-            api.score.getInputInfo(batch_name).done(fillEntryTable)
-        });
-
+        //根据条件对数据进行筛选并生成表格
         function filterEntryTable() {
             let process = $('#entry-list-select-process').val();
             let group = $('#entry-list-select-group').val();
             let regex = new RegExp(group + '$');
-            let tableData = entry_table_config.data;
-            let filterTableConfig = {
-                columns: [
-                    {
-                        title: '批次/组',
-                        field: 'batchNameAndGroup'
-                    }, {
-                        title: '学号',
-                        field: 'sid'
-                    }, {
-                        title: '姓名',
-                        field: 'name'
-                    }, {
-                        title: '打分项',
-                        field: 'process'
-                    }, {
-                        title: '分数',
-                        field: 'score'
-                    }, {
-                        title: '录入时间',
-                        field: 'entryTime'
-                    }, {
-                        title: '录入人',
-                        field: 'entryMan'
-                    },
-                ],
-                data: [],
-                pagination: true,
-                pageList: [10, 20, 50],
-            };
-            _.forEach(tableData, function (value) {
+            let filterTableData = [];
+            _.forEach(entry_table_config.data, function (value) {
                 if ((process === '选择工种' || process === value.process) && (group === '组号' || regex.test(value.batchNameAndGroup))) {
-                    filterTableConfig.data.push(value);
+                    filterTableData.push(value);
                 }
             });
-            $('#entry-list-table').bootstrapTable('destroy').bootstrapTable(filterTableConfig);
+            entry_table_config.data = _.sortBy(filterTableData, 'batchNameAndGroup');
+            $('#entry-list-table').bootstrapTable('destroy').bootstrapTable(entry_table_config);
             CutPage.cutPage('entry-list-table', pageSize);
         }
 
-        $('#entry-list-select-process').change(filterEntryTable);
-        $('#entry-list-select-group').change(filterEntryTable);
-        $('#get_entry_list').click(function () {
+        //根据学号或者姓名获取录入记录
+        function getEntryListByIdOrName() {
             let sid = $('#entry_list_stu_number').val().trim();
             let sName = $('#entry_list_stu_name').val().trim();
             if (sid === '' && sName === '') {
@@ -944,8 +932,12 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
             if (sName === '') {
                 sName = 'all';
             }
-            api.score.getInputInfo('all', 'all', 'all', sid, sName).done(fillEntryTable)
-        });
+            api.score.getInputInfo('all', 'all', 'all', sid, sName).done(function (data) {
+                getEntryListSuccessCallback(data);
+                $('#entry-list-table').bootstrapTable('destroy').bootstrapTable(entry_table_config);
+                CutPage.cutPage('entry-list-table', pageSize);
+            })
+        }
 
 
 // ========================================================================
