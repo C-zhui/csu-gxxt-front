@@ -49,6 +49,9 @@
                                     <option>组号</option>
                                 </select>
                             </div>
+                            <div class="col-xs-3 col-sm-3">
+                                <button class="btn btn-sm btn-outline btn-multi" id="get_score_list">查询</button>
+                            </div>
                         </div>
                         <div class="row select-top title">
                             <div class="col-xs-3 col-sm-3">学生学号：</div>
@@ -64,7 +67,8 @@
                                        id="score_list_stu_name">
                             </div>
                             <div class="col-xs-6 col-sm-6 no-padding">
-                                <button class="btn btn-sm btn-outline btn-multi" id="get_score_list">查询</button>
+                                <button class="btn btn-sm btn-outline btn-multi" id="get_score_list_by_name_or_id">查询
+                                </button>
                                 <button class="btn btn-sm btn-background1 btn-multi" id="execute-score" onclick="executeScore()">核算总成绩</button>
                                 <button class="btn btn-sm btn-background2 btn-multi" data-toggle="modal"
                                         data-target="#score-grade-test">等级评定
@@ -237,6 +241,10 @@
                                     <option>选择工种</option>
                                 </select>
                             </div>
+                            <div class="col-xs-3 col-sm-3">
+                                <button class="btn btn-sm btn-outline btn-single float-right" id="get_entry_list">查询
+                                </button>
+                            </div>
                         </div>
                         <div class="row select-top title">
                             <div class="col-xs-3 col-sm-3">学生学号：</div>
@@ -252,7 +260,8 @@
                                        id="entry_list_stu_name">
                             </div>
                             <div class="col-xs-3 col-sm-3">
-                                <button class="btn btn-sm btn-outline btn-single float-right" id="get_entry_list">查询
+                                <button class="btn btn-sm btn-outline btn-single float-right"
+                                        id="get_entry_list_by_id_or_name">查询
                                 </button>
                             </div>
                         </div>
@@ -374,6 +383,11 @@
                                     <option>请选择权重模板</option>
                                 </select>
                             </div>
+                            <div class="col-xs-6 col-sm-6 no-padding">
+                                <button class="btn btn-sm btn-outline btn-single float-right"
+                                        id="get_special_score_list">查询
+                                </button>
+                            </div>
                         </div>
                         <div class="row select-top title">
                             <div class="col-xs-3 col-sm-3">学号：</div>
@@ -385,11 +399,13 @@
                             </div>
                             <div class="col-xs-6 col-sm-6 no-padding">
                                 <button class="btn btn-sm btn-outline btn-single float-right"
-                                        id="get_special_score_list">查询
+                                        id="get_special_score_list_by_id">查询
                                 </button>
                             </div>
                         </div>
-                        <table id="special_score_list_table"></table>
+                        <div>
+                            <table id="special_score_list_table"></table>
+                        </div>
                         <div class="modal fade" id="specialListEditModal" tabindex="-1" role="dialog"
                              aria-labelledby="specialListEditModalTitle" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="width: 1160px">
@@ -430,9 +446,6 @@
                             </div>
                         </div><!-- /.modal -->
 
-                        <!--<div class="row float-right tips">-->
-                        <!--<p>注意：总成绩发布后将不可修改该批次成绩</p>-->
-                        <!--</div>-->
                     </div>
                     <hr/>
                     <input type="button" class="btn btn-sm btn-single btn-background3 left" value="发布总成绩" id="publish-special-score">

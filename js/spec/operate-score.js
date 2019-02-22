@@ -245,7 +245,10 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
                     postData[tableData[i].proced] = val;
                     postData['tName'] = user['姓名'];
                     ajaxArray.push(api.score.updateScore2(postData));
-                    changeRow.push(tableData[i]);
+                    changeRow.push({
+                        data: tableData[i],
+                        input: inputs[i]
+                    });
                 }
             }
             $.when.apply($, ajaxArray).done(function () {
@@ -258,8 +261,13 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
                         try {
                             if (data.status !== 0) {
                                 flag = false;
-                                failSid = failSid + ',' + changeRow[i].sId;
+                                failSid = failSid + ',' + changeRow[i].data.sId;
                                 failMessage = data.message;
+                            } else {
+                                let input = $(changeRow[i].input);
+                                input.prop('disabled', true);
+                                //更新分数
+                                changeRow[i].data.score = input.val();
                             }
                         } catch (e) {
                             console.log(e);
@@ -270,8 +278,13 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
                     try {
                         if (data.status !== 0) {
                             flag = false;
-                            failSid = failSid + ',' + changeRow[0].sId;
+                            failSid = failSid + ',' + changeRow[0].data.sId;
                             failMessage = data.message;
+                        } else {
+                            let input = $(changeRow[0].input);
+                            input.prop('disabled', true);
+                            //更新分数
+                            changeRow[0].data.score = input.val();
                         }
                     } catch (e) {
                         console.log(e);
