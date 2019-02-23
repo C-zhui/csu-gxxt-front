@@ -156,12 +156,12 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
                 checkbox: true
             },
             {
-                field: 'name',
-                title: '姓名'
-            },
-            {
                 field: 'sid',
                 title: '学号'
+            },
+            {
+                field: 'name',
+                title: '姓名'
             }
         ];
 //特殊学生成绩列表后段固定列
@@ -782,7 +782,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
             let post_data = {};
             let select_data = score_list_table_config.data[score_row_index];
             let tds = $('#scorelistEditModal table tbody tr td');
-            post_data['sid'] = $(tds[2]).text();
+            post_data['sid'] = $(tds[1]).text();
             post_data['reason'] = $('#edit-state').val();
             let score_sum = 0;
             $('#scorelistEditModal table tbody tr td input').each(function () {
@@ -862,7 +862,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
                         sid: value.sid,
                         name: value.sname,
                         process: value.proced,
-                        score: value.pro_score,
+                        score: value.score,
                         entryTime: chGMT(value.time),
                         entryMan: value.tname,
                     });
@@ -1217,7 +1217,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
                 }
             });
             let tds = $('#edit_special_score_table tbody tr td');
-            let sid = $(tds[1]).text();
+            let sid = $(tds[0]).text();
             let degree = $('#edit_special_score_table tbody select').val();
             if (degree !== '自动') {
                 post_data['等级'] = degree;
