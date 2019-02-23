@@ -273,6 +273,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
 
     //根据条件获取成绩列表
     function getScore() {
+        let batchName = $('#student-list-batch').val();
         let postData = {
             batch_name: batchName,
             s_group_id: 'all',
@@ -287,8 +288,8 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
     }
 
     function getScoreByIdOrName() {
-        let sId = $('#sid').val();
-        let sName = $('#sname').val();
+        let sId = $('#sid').val().trim();
+        let sName = $('#sname').val().trim();
         if (sId === '' && sName === '') {
             swal(
                 '条件错误',
