@@ -62,38 +62,7 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
             console.log('init operate-score.js');
         }
 
-        function getProcess() {
-            let teacherGroup = user['教师组'].split(',');
-            process = [];
-            for (let i = 0; i < teacherGroup.length; i++) {
-                api.group.getProcedByGroup(teacherGroup[i])
-                    .done(function (data) {
-                        if (data.status === 0) {
-                            process = _.concat(process, data.data);
-                        } else {
-                            console.log(data.message);
-                        }
-                    })
-            }
-        }
-
-        //获取并设置所有批次
-        function getAllBatch() {
-            api.batch.getAllBatch().done(function (data) {
-                if (data.status === 0) {
-                    let studentListSelect = $('#student-list-batch').empty().append('<option>选择批次</option>');
-                    let scoreImportSelect = $('#score-import-batch').empty().append('<option>选择批次</option>');
-                    _.forEach(data.data, function (value) {
-                        let option = $('<option></option>').text(value.batch_name);
-                        studentListSelect.append(option);
-                        scoreImportSelect.append(option.clone());
-                    })
-                }
-            })
-        }
-
-
-        //根据批次变化获取成绩列表并获取设置组号
+        //根据批次变化设置组号，工种，计算共同工种（共同工种为当前批次工种与老师工种的交集）
         $('#student-list-batch').change(function () {
             let batchName = $(this).val();
 
@@ -121,14 +90,6 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
                             for (let i = 0; i < commonProcess.length; i++) {
                                 procedSelect.append($('<option></option>').text(commonProcess[i]));
                             }
-                            let postData = {
-                                batch_name: batchName,
-                                s_group_id: 'all',
-                                pro_name: 'all',
-                                sId: 'all',
-                                sName: 'all'
-                            };
-                            api.score.getScore(postData).done(getScoreSuccess);
                         }
                     })
 
@@ -138,85 +99,9 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
             })
         });
 
-        //根据分组变化进行筛选
-        $('#student-list-group').change(scoreFilter);
-        //根据工种变化进行筛选
-        $('#student-list-proced').change(scoreFilter);
-
-        //成绩筛选函数
-        function scoreFilter() {
-            let proced = $('#student-list-proced').val();
-            let group = $('#student-list-group').val();
-            let tableData = [];
-            let index = 0;
-            _.forEach(student_list_table_config.data, function (value) {
-                if ((proced === '选择工种' || proced === value.proced) && (group === '选择组号' || group === value.group)) {
-                    let copyValue = _.cloneDeep(value);
-                    copyValue.index = index;
-                    tableData.push(copyValue);
-                    ++index;
-                }
-            });
-            student_list_table_config.data = tableData;
-            $('#student-list-table').bootstrapTable('load', tableData);
-            CutPage.cutPage('student-list-table', pageSize);
-        }
-
         //获取学生成绩列表
-        $('#get-score').click(function () {
-            let batchName = $('#student-list-batch').val();
-            if (batchName === '选择批次') {
-                swal(
-                    '错误',
-                    '请选择批次',
-                    'error'
-                );
-                return;
-            }
-            let postData = {
-                batch_name: batchName,
-                s_group_id: gropu,
-                pro_name: 'all',
-                sId: $('#sid').val(),
-                sName: $('#sname').val()
-            };
-            api.score.getScore(postData).done(getScoreSuccess);
-        });
-
-        function getScoreSuccess(data) {
-            if (data.status === 0) {
-                let tableData = [];
-                let batchName = $('#student-list-batch').val();
-                let index = 0;
-                _.forEach(data.data, function (value) {
-                    _.forEach(commonProcess, function (proced) {
-                        let row = {
-                            sId: value.sid,
-                            sName: value.sname,
-                            clazz: value.clazz,
-                            batch: batchName,
-                            proced: proced,
-                            group: value.s_group_id,
-                            index: index
-                        };
-                        if (!_.isNil(value[proced] && !isNaN(Number(value[proced])))) {
-                            row.score = value[proced];
-                        } else {
-                            row.score = '无';
-                        }
-                        tableData.push(row);
-                        ++index;
-                    })
-                });
-                student_list_table_config.data = tableData;
-                // oldData = _.cloneDeep(tableData);
-                $('#student-list-table').bootstrapTable('destroy').bootstrapTable(student_list_table_config);
-                CutPage.cutPage('student-list-table', pageSize);
-            } else {
-                console.log(data.message);
-            }
-        }
-
+        $('#get-score').click(getScore);
+        $('#get-score-by-id-or-name').click(getScoreByIdOrName);
         //批量设置表格中的学生成绩
         $('#set-score').click(function () {
             let score = $('#score').val();
@@ -228,7 +113,6 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
                 // student_list_table_config.data[value.index].score = score;
             });
         });
-
         //提交修改成绩
         $('#submit-score').click(function () {
             let ajaxArray = [];
@@ -355,4 +239,131 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
             });
         })
     })
+
+    //获取并设置所有批次
+    function getAllBatch() {
+        api.batch.getAllBatch().done(function (data) {
+            if (data.status === 0) {
+                let studentListSelect = $('#student-list-batch').empty().append('<option>选择批次</option>');
+                let scoreImportSelect = $('#score-import-batch').empty().append('<option>选择批次</option>');
+                _.forEach(data.data, function (value) {
+                    let option = $('<option></option>').text(value.batch_name);
+                    studentListSelect.append(option);
+                    scoreImportSelect.append(option.clone());
+                })
+            }
+        })
+    }
+
+    //获取当前教师可以打分的所以工序
+    function getProcess() {
+        let teacherGroup = user['教师组'].split(',');
+        process = [];
+        for (let i = 0; i < teacherGroup.length; i++) {
+            api.group.getProcedByGroup(teacherGroup[i])
+                .done(function (data) {
+                    if (data.status === 0) {
+                        process = _.concat(process, data.data);
+                    } else {
+                        console.log(data.message);
+                    }
+                })
+        }
+    }
+
+    //根据条件获取成绩列表
+    function getScore() {
+        let postData = {
+            batch_name: batchName,
+            s_group_id: 'all',
+            pro_name: 'all',
+            sId: 'all',
+            sName: 'all'
+        };
+        api.score.getScore(postData).done(function (data) {
+            getScoreSuccessCallback(data);
+            filterScoreList();
+        });
+    }
+
+    function getScoreByIdOrName() {
+        let sId = $('#sid').val();
+        let sName = $('#sname').val();
+        if (sId === '' && sName === '') {
+            swal(
+                '条件错误',
+                '请输入姓名或者学号进行查询',
+                'warning'
+            );
+            return;
+        }
+        if (sId === '') {
+            sId = 'all'
+        }
+        if (sName === '') {
+            sName = 'all'
+        }
+        let postData = {
+            batch_name: 'all',
+            s_group_id: 'all',
+            pro_name: 'all',
+            sId: sId,
+            sName: sName
+        };
+        api.score.getScore(postData).done(getScoreSuccessCallback);
+    }
+
+    //成绩列表筛选函数
+    function filterScoreList() {
+        let proced = $('#student-list-proced').val();
+        let group = $('#student-list-group').val();
+        let tableData = [];
+        let index = 0;
+        _.forEach(student_list_table_config.data, function (value) {
+            if ((proced === '选择工种' || proced === value.proced) && (group === '选择组号' || group === value.group)) {
+                let copyValue = _.cloneDeep(value);
+                copyValue.index = index;
+                tableData.push(copyValue);
+                ++index;
+            }
+        });
+        student_list_table_config.data = tableData;
+        $('#student-list-table').bootstrapTable('load', tableData);
+        CutPage.cutPage('student-list-table', pageSize);
+    }
+
+    function getScoreSuccessCallback(data) {
+        if (data.status === 0) {
+            let tableData = [];
+            let batchName = $('#student-list-batch').val();
+            let index = 0;
+            _.forEach(data.data, function (value) {
+                _.forEach(commonProcess, function (proced) {
+                    let row = {
+                        sId: value.sid,
+                        sName: value.sname,
+                        clazz: value.clazz,
+                        batch: batchName,
+                        proced: proced,
+                        group: value.s_group_id,
+                        index: index
+                    };
+                    if (!_.isNil(value[proced] && !isNaN(Number(value[proced])))) {
+                        row.score = value[proced];
+                    } else {
+                        row.score = '无';
+                    }
+                    tableData.push(row);
+                    ++index;
+                })
+            });
+            student_list_table_config.data = tableData;
+            // oldData = _.cloneDeep(tableData);
+            $('#student-list-table').bootstrapTable('destroy').bootstrapTable(student_list_table_config);
+            CutPage.cutPage('student-list-table', pageSize);
+        } else {
+            console.log(data.message);
+        }
+    }
+
 });
