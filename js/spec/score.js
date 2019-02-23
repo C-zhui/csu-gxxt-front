@@ -863,7 +863,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
                         name: value.sname,
                         process: value.proced,
                         score: value.score,
-                        entryTime: chGMT(value.time),
+                        entryTime: chGMT(value.enterTime),
                         entryMan: value.tname,
                     });
                     studentAjaxArray.push(api.student.getStudent(value.sid));
