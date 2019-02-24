@@ -873,8 +873,8 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
       $('<td></td>').text(val.template_name).appendTo($tr);
       $('<td><div class="operate-center">' +
         '<img src="../icon/edit.svg" class="row-image lookup_course">' +
-        '<img src="../icon/delete.svg" class="row-image delete_sp_stud"> ' +
-        '<img src="../icon/reset.svg" class="row-image reset_sp_pwd no-padding"> ' +
+        '<img src="../icon/delete.svg" class="row-image delete_sp_stud"> ' + 
+        '<img src="../icon/reset.svg" class="row-image reset_sp_pwd no-padding" title="重置密码"> ' +
         '</div>' +
         '</td></tr>').appendTo($tr);
       $('<td class="center"><input type="checkbox" class="batch_op"></td>').appendTo($tr);
