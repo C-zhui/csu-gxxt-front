@@ -1,201 +1,150 @@
 <div id="body">
-	<link rel="stylesheet" type="text/css" href="../../css/spec/teach-schedule.css">
+  <link rel="stylesheet" type="text/css" href="../../css/spec/teach-schedule.css">
 
 
-	<!-- 模板代码 -->
-	<div id="templates" class="d-none">
-		<table>
-			<tbody id="student_data">
-				<tr class="student_data">
-					<td class="sid"></td>
-					<td class="sname"></td>
-					<td class="clazz"></td>
-					<td class="batch_name"></td>
-					<td class="s_group_id"></td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
+  <!-- 模板代码 -->
+  <div id="templates" class="d-none">
+    <table>
+      <tbody id="student_data">
+        <tr class="student_data">
+          <td class="sid"></td>
+          <td class="sname"></td>
+          <td class="clazz"></td>
+          <td class="batch_name"></td>
+          <td class="s_group_id"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-	<!-- 小组排课查询 -->
-	<div class="content-card">
-		<header>
-			<div class="header-title">
-				小组排课查询
-			</div>
-		</header>
-		<main>
-			<div class="content-body clearfix">
-				<div class="row select-top title">
-					<div class="col-xs-3 col-sm-3">学期：</div>
-					<div class="col-xs-3 col-sm-3">工种：</div>
-					<div class="col-xs-3 col-sm-3 offset-3 no-padding">周次：</div>
-				</div>
-				<div class="row select-top">
-					<div class="col-sm-3 col-xs-3">
-						<select class="custom-select custom-select-sm" id="semester_selector">
-							<option>学期</option>
-						</select>
-					</div>
-					<div class="col-sm-3 col-xs-3">
-						<select class="custom-select custom-select-sm" id="proced_selector">
-							<option>工种</option>
-							<option>钳工</option>
-							<option>铣工</option>
-						</select>
-					</div>
-					<div class="col-sm-3 col-xs-3">
-						<input type="button" name="" id="query_class_table" class="btn btn-sm btn-outline btn-single" value="查询">
-					</div>
-					<div class="col-xs-3 col-sm-3 no-padding">
-						<select class="custom-select custom-select-sm" id="week_selector">
-							<option>周数选择</option>
-						</select>
-					</div>
-				</div>
+  <!-- 小组排课查询 -->
+  <div class="content-card">
+    <header>
+      <div class="header-title">
+        小组排课查询
+      </div>
+    </header>
+    <main>
+      <div class="content-body clearfix">
+        <div class="row select-top title">
+          <div class="col-xs-3 col-sm-3">学期：</div>
+          <div class="col-xs-3 col-sm-3">工种：</div>
+          <div class="col-xs-3 col-sm-3 offset-3 no-padding">周次：</div>
+        </div>
+        <div class="row select-top">
+          <div class="col-sm-3 col-xs-3">
+            <select class="custom-select custom-select-sm" id="semester_selector">
+              <option>学期</option>
+            </select>
+          </div>
+          <div class="col-sm-3 col-xs-3">
+            <select class="custom-select custom-select-sm" id="proced_selector">
+              <option>工种</option>
+              <option>钳工</option>
+              <option>铣工</option>
+            </select>
+          </div>
+          <div class="col-sm-3 col-xs-3">
+            <input type="button"  id="query_class_table" class="btn btn-sm btn-outline btn-single" value="查询">
+          </div>
+          <div class="col-xs-3 col-sm-3 no-padding">
+            <select class="custom-select custom-select-sm" id="week_selector">
+              <option>周数选择</option>
+            </select>
+          </div>
+        </div>
 
-				<table class="table table-bordered distribute-table" id="class_table">
-					<thead>
-					<tr>
-						<th></th>
-						<th>周一</th>
-						<th>周二</th>
-						<th>周三</th>
-						<th>周四</th>
-						<th>周五</th>
-						<th>周六</th>
-						<th>周日</th>
-					</tr>
-					</thead>
-					<tbody>
-					<tr>
-						<td>1、2</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td>3、4</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td>5、6</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td>7、8</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td>9、10</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					</tbody>
-				</table>
+        <table class="table table-bordered distribute-table" id="class_table">
+          <thead>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
 
-			</div>
+      </div>
 
-		</main>
-	</div>
-	<!-- 小组排课查询结束 -->
+    </main>
+  </div>
+  <!-- 小组排课查询结束 -->
 
-		<!-- 学生分组查询 -->
-	<div class="content-card">
-		<header>
-			<div class="header-title">
-				学生分组查询
-			</div>
-		</header>
+  <!-- 学生分组查询 -->
+  <div class="content-card">
+    <header>
+      <div class="header-title">
+        学生分组查询
+      </div>
+    </header>
 
-		<main>
-			<div class="content-body clearfix">
-				<div class="row select-top title">
-					<div class="col-xs-3 col-sm-3">实习批次：</div>
-					<div class="col-xs-3 col-sm-3">组数：</div>
-					<div class="col-xs-3 col-sm-3">学号：</div>
-					<div class="col-xs-3 col-sm-3">姓名：</div>
-				</div>
-				<div class="row select-top">
-					<div class="col-sm-3 col-xs-3">
-						<select class="custom-select custom-select-sm stu-divide-search" id="batch_selector">
-							<option>选择批次</option>
-						</select>
-					</div>
-					<div class="col-sm-3 col-xs-3">
-						<select class="custom-select custom-select-sm stu-divide-search"
-								id="stud_group_selector">
-							<option>选择组数</option>
-						</select>
-					</div>
-					<div class="col-sm-3 col-xs-3">
-						<input type="text" name="" class="form-control form-control-sm stu-divide-search"
-							   placeholder="请输入学号">
-					</div>
-					<div class="col-xs-3 col-sm-3 no-padding">
-						<input type="text" name="" class="form-control form-control-sm stu-divide-search"
-							   placeholder="请输入姓名">
-					</div>
-				</div>
-				<input type="button" name="" value="查 询" id="query_student"
-					   class="btn btn-sm btn-outline btn-single right stu-divide-search">
+    <main>
+      <div class="content-body clearfix">
+        <div class="row select-top title">
+          <div class="col-xs-3 col-sm-3">实习批次：</div>
+          <div class="col-xs-3 col-sm-3">分组：</div>
+          <!-- <div class="col-xs-3 col-sm-3">学号：</div> -->
+          <!-- <div class="col-xs-3 col-sm-3">姓名：</div> -->
+        </div>
+        <div class="row select-top">
+          <div class="col-sm-3 col-xs-3">
+            <select class="custom-select custom-select-sm stu-divide-search" id="batch_selector">
+              <option>选择批次</option>
+            </select>
+          </div>
+          <div class="col-sm-3 col-xs-3">
+            <select class="custom-select custom-select-sm stu-divide-search" id="stud_group_selector">
+              <option>选择组数</option>
+            </select>
+          </div>
+          <input type="button"  value="查 询" id="query_student"
+            class="btn btn-sm btn-outline btn-single  stu-divide-search">
+        </div>
 
-				<div class="clearfix"></div>
-				<table class="table" id="student_datas_table">
-					<thead>
-					<tr>
-						<th>学号</th>
-						<th>姓名</th>
-						<th>班级</th>
-						<th>实习批次</th>
-						<th>组数</th>
-					</tr>
-					</thead>
+        <div class="my-1 row">
+          <div class="col-3 pl-0">
+            <input type="text"  id="stud_id" class="form-control form-control-sm stu-divide-search" placeholder="请输入学号">
+          </div>
+          <div class="col-3">
+            <input type="button" id="query_by_stud_id" value="查 询" id="" class="btn btn-sm btn-outline btn-single  ">
+          </div>
+        </div>
 
-					<tbody id="student_datas_tbody">
+        <!-- <div class="my-1 row">
+          <div class="col-3 pl-0">
+            <input type="text"  class="form-control form-control-sm stu-divide-search" placeholder="请输入姓名">
+          </div>
+          <div class="col-3">
+            <input type="button"  value="查 询" id="" class="btn btn-sm btn-outline btn-single  ">
+          </div>
+        </div> -->
 
-					</tbody>
-				</table>
-				<!--<div class="clearfix"></div>-->
-				<input type="button" id="export_table" value="导出excel" class="btn btn-sm btn-outline btn-single right">
+        <div>
 
-			</div>
-		</main>
-	</div>
-	<!-- 学生分组查询结束 -->
-	<!-- 主体部分结束 -->
+        </div>
+        <table class="table" id="student_datas_table">
+          <thead>
+            <tr>
+              <th>学号</th>
+              <th>姓名</th>
+              <th>班级</th>
+              <th>实习批次</th>
+              <th>分组</th>
+            </tr>
+          </thead>
 
-	<!-- 分页开始 -->
-	<script src="../js/spec/teach-schedule.js"></script>
-	<script type="text/javascript" src="../js/util/cut_page.js"></script>
-	<!-- <link rel="stylesheet" type="text/css" href="../css/cut_page.css"> -->
-	<!-- 分页结束 -->
+          <tbody id="student_datas_tbody">
+
+          </tbody>
+        </table>
+        <input type="button" id="export_table" value="导出excel" class="btn btn-sm btn-outline btn-single right">
+      </div>
+    </main>
+  </div>
+  <!-- 学生分组查询结束 -->
+  <!-- 主体部分结束 -->
+
+  <!-- 分页开始 -->
+  <script src="../js/spec/teach-schedule.js"></script>
+  <script type="text/javascript" src="../js/util/cut_page.js"></script>
+  <!-- <link rel="stylesheet" type="text/css" href="../css/cut_page.css"> -->
+  <!-- 分页结束 -->
 
 </div>
