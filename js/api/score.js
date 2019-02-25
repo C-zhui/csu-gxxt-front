@@ -76,6 +76,12 @@ define(['api/apiobj', 'config/global'], function (api, g) {
         //教师端修改学生成绩
         updateScore2: function (postData) {
             return g.post_json('/score/updateScore2', postData);
+        },
+        //核算特殊学生总成绩
+        executeSpScore: function (templateName) {
+            return g.post_query('/score/executeSpScore', {
+                templateName: templateName
+            });
         }
     };
 });

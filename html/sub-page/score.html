@@ -59,17 +59,19 @@
                         </div>
                         <div class="row select-top">
                             <div class="col-xs-3 col-sm-3">
-                                <input type="text" name="stu-num" placeholder="学生学号" class="form-control form-control-sm"
+                                <input type="text" name="stu-num" placeholder="学生学号"
+                                       class="form-control form-control-sm"
                                        id="score_list_stu_number">
                             </div>
                             <div class="col-xs-3 col-sm-3">
-                                <input type="text" name="stu-name" placeholder="学生姓名" class="form-control form-control-sm"
+                                <input type="text" name="stu-name" placeholder="学生姓名"
+                                       class="form-control form-control-sm"
                                        id="score_list_stu_name">
                             </div>
                             <div class="col-xs-6 col-sm-6 no-padding">
                                 <button class="btn btn-sm btn-outline btn-multi" id="get_score_list_by_name_or_id">查询
                                 </button>
-                                <button class="btn btn-sm btn-background1 btn-multi" id="execute-score" onclick="executeScore()">核算总成绩</button>
+                                <button class="btn btn-sm btn-background1 btn-multi" id="execute-score">核算总成绩</button>
                                 <button class="btn btn-sm btn-background2 btn-multi" data-toggle="modal"
                                         data-target="#score-grade-test">等级评定
                                 </button>
@@ -108,7 +110,8 @@
                                     <button type="button" class="btn btn-sm btn-outline btn-multi" data-dismiss="modal"
                                             id="addNewPlan-close">关闭
                                     </button>
-                                    <button type="button" class="btn btn-sm btn-background3 btn-multi" id="addNewPlan-ensure" data-dismiss="modal">确定
+                                    <button type="button" class="btn btn-sm btn-background3 btn-multi"
+                                            id="addNewPlan-ensure" data-dismiss="modal">确定
                                     </button>
                                 </div>
                             </div>
@@ -145,8 +148,12 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-sm btn-outline btn-multi" data-dismiss="modal">关闭</button>
-                                    <button type="button" class="btn btn-sm btn-background3 btn-multi" id="edit-score">确定</button>
+                                    <button type="button" class="btn btn-sm btn-outline btn-multi" data-dismiss="modal">
+                                        关闭
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-background3 btn-multi" id="edit-score">
+                                        确定
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -186,7 +193,8 @@
                             <form class="form form-inline" role="form">
                                 <!--<input type="file" class="form-control-file" id="tf">-->
                                 <div class="custom-file custom-file-sm left">
-                                    <input type="file" name="file" class="custom-file-input" id="tf" onchange="$('#file_name').text($('#tf').val())">
+                                    <input type="file" name="file" class="custom-file-input" id="tf"
+                                           onchange="$('#file_name').text($('#tf').val())">
                                     <label class="custom-file-label" for="tf" id="file_name"></label>
                                 </div>
                             </form>
@@ -201,12 +209,13 @@
                             <select class="custom-select custom-select-sm select" id="input_score_select_scoreitem">
                                 <option>选择工种</option>
                             </select>
-                            <button type="button" class="btn btn-sm btn-background3 btn-single right" id="import-students-score" onclick="importStudentsScore()">开始导入
+                            <button type="button" class="btn btn-sm btn-background3 btn-single right"
+                                    id="import-students-score" onclick="importStudentsScore()">开始导入
                             </button>
                         </div>
                     </div>
                     <!--<h5 class="card-title">-->
-                        <!--<small class="download-excel"><button class="btn btn-primary" id="download-score-file">标准模板下载</button> </small>-->
+                    <!--<small class="download-excel"><button class="btn btn-primary" id="download-score-file">标准模板下载</button> </small>-->
                     <!--</h5>-->
                 </main>
             </div>
@@ -252,11 +261,13 @@
                         </div>
                         <div class="row select-top">
                             <div class="col-xs-3 col-sm-3">
-                                <input type="text" name="stu-num" placeholder="学生学号" class="form-control form-control-sm"
+                                <input type="text" name="stu-num" placeholder="学生学号"
+                                       class="form-control form-control-sm"
                                        id="entry_list_stu_number">
                             </div>
                             <div class="col-xs-3 col-sm-3">
-                                <input type="text" name="stu-name" placeholder="学生姓名" class="form-control form-control-sm"
+                                <input type="text" name="stu-name" placeholder="学生姓名"
+                                       class="form-control form-control-sm"
                                        id="entry_list_stu_name">
                             </div>
                             <div class="col-xs-3 col-sm-3">
@@ -330,14 +341,16 @@
                             </div>
                             <div class="col-xs-5 col-sm-5 row no-padding">
                                 <div class="col-xs-5 col-sm-5 no-padding">
-                                    <input class="flatpickr mycalendar form-control form-control-sm" placeholder="修改开始日期" name="start-time"
+                                    <input class="flatpickr mycalendar form-control form-control-sm"
+                                           placeholder="修改开始日期" name="start-time"
                                            id="score_edithistory_begin_time">
                                 </div>
                                 <div class="col-xs-1 col-sm-1 no-padding" style="text-align: center">
                                     至
                                 </div>
                                 <div class="col-xs-5 col-sm-5 no-padding">
-                                    <input class="flatpickr mycalendar form-control form-control-sm" placeholder="修改结束时间" name="end-time"
+                                    <input class="flatpickr mycalendar form-control form-control-sm"
+                                           placeholder="修改结束时间" name="end-time"
                                            id="score_edithistory_end_time">
                                 </div>
                             </div>
@@ -383,10 +396,14 @@
                                     <option>请选择权重模板</option>
                                 </select>
                             </div>
+
                             <div class="col-xs-6 col-sm-6 no-padding">
                                 <button class="btn btn-sm btn-outline btn-single float-right"
                                         id="get_special_score_list">查询
                                 </button>
+                                <button class="btn btn-sm btn-background1 btn-multi" id="execute-special-score">核算总成绩
+                                </button>
+
                             </div>
                         </div>
                         <div class="row select-top title">
@@ -408,7 +425,8 @@
                         </div>
                         <div class="modal fade" id="specialListEditModal" tabindex="-1" role="dialog"
                              aria-labelledby="specialListEditModalTitle" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="width: 1160px">
+                            <div class="modal-dialog modal-dialog-centered modal-lg" role="document"
+                                 style="width: 1160px">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="specialListEditModalTitle">学生信息修改</h5>
@@ -440,7 +458,9 @@
                                         <button type="button" class="btn btn-sm btn-outline btn-multi"
                                                 data-dismiss="modal">关闭
                                         </button>
-                                        <button type="button" class="btn btn-sm btn-background3 btn-multi" id="submit-special-student-score">确定</button>
+                                        <button type="button" class="btn btn-sm btn-background3 btn-multi"
+                                                id="submit-special-student-score">确定
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -448,7 +468,8 @@
 
                     </div>
                     <hr/>
-                    <input type="button" class="btn btn-sm btn-single btn-background3 left" value="发布总成绩" id="publish-special-score">
+                    <input type="button" class="btn btn-sm btn-single btn-background3 left" value="发布总成绩"
+                           id="publish-special-score">
                     <h6 class="text-info left">注意：</h6>
 
                     <ul class="list">

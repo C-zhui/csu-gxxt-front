@@ -482,6 +482,8 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
             $('#get_special_score_list').click(getSpScoreTemplateName);
             //根据学号查询特殊学生成绩
             $('#get_special_score_list_by_id').click(getSpScoreSid);
+            //核算特殊学生总成绩
+            $('#execute-special-score').click(executeSpecialScore);
         });
 
         // 初始化数据
@@ -1129,7 +1131,6 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
             });
         }
 
-
 //获取特殊学生成绩列表成功回调函数
         function getSpScoreSuccess(data) {
             if (data.status === 0) {
@@ -1199,6 +1200,35 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
             // console.log(selectData);
             //清空备注
             $('#special-edit-state').val('');
+        }
+
+        //根据权重模板核算特殊学生总成绩
+        function executeSpecialScore() {
+            let templateName = $('#weight-template-list').val();
+            if (templateName === '请选择权重模板') {
+                swal(
+                    '错误',
+                    '请选择权重模板后核算总成绩',
+                    'error'
+                );
+                return;
+            }
+            api.score.executeSpScore(templateName).done(function (data) {
+                if (data.status === 0) {
+                    swal(
+                        '成功',
+                        '核算总成绩成功',
+                        'success'
+                    );
+                    getSpScoreTemplateName();
+                } else {
+                    swal(
+                        '失败',
+                        data.message,
+                        'error'
+                    );
+                }
+            })
         }
 
         //提交特殊学生成绩修改
