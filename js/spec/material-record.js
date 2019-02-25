@@ -1,4 +1,4 @@
-require(['jquery', 'swal', 'api/apiobj', 'util/cut_page3', 'api/material', 'flatpickr'], function ($, swal, api, CutPage) {
+require(['jquery', 'swal', 'api/apiobj', 'util/cut_page3', 'api/material','api/experiment', 'flatpickr'], function ($, swal, api, CutPage) {
     'use strict';
 
     //分页每页的行数
@@ -6,6 +6,7 @@ require(['jquery', 'swal', 'api/apiobj', 'util/cut_page3', 'api/material', 'flat
 
     $(function () {
         $(".mycalendar").flatpickr();
+        // let userInfo = {"角色":"管理员","物料权限":"1"}
         let userInfo = JSON.parse(localStorage.getItem('user'));
         if(userInfo["角色"]==="管理员"){
             $(".outNumber-card").css("display","block");
@@ -117,6 +118,29 @@ require(['jquery', 'swal', 'api/apiobj', 'util/cut_page3', 'api/material', 'flat
             })
         }
 
+//导出领取记录excel
+        $("#export-excel").click(exportRecord);
+
+        function exportRecord() {
+            var $table = $('#receive-materiel-table');
+            var $trs = $('tr', $table);
+            var data = []
+
+            $trs.each(function (i) {
+                var row = []
+                if (i !== 0) {
+                    $('td', this).each(function () {
+                        row.push($(this).text());
+                    });
+                } else {
+                    $('th', this).each(function (i) {
+                        row.push($(this).text())
+                    })
+                }
+                data.push(row)
+            });
+            api.experiment.send_download_excel(data);
+        }
 
 // ========================================================================
 // 6、其他函数
