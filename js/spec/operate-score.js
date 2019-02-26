@@ -55,13 +55,6 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
 
     $(function () {
         Init();
-
-        function Init() {
-            getAllBatch();
-            getProcess();
-            console.log('init operate-score.js');
-        }
-
         //根据批次变化设置组号，工种，计算共同工种（共同工种为当前批次工种与老师工种的交集）
         $('#student-list-batch').change(function () {
             let batchName = $(this).val();
@@ -71,7 +64,6 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
                 $('#student-list-proced').empty().append('<option>选择工种</option>');
                 return;
             }
-
             api.batch.getAllSGroup(batchName).done(function (data) {
                 if (data.status === 0) {
                     let groupSelect = $('#student-list-group').empty().append('<option>选择组号</option>');
@@ -191,23 +183,29 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
         });
         //下载标准模板
         $('#download-file').click(function () {
-            // 创建a标签，设置属性，并触发点击下载
-            let a = $("<a>");
-            a.attr("href", g.base_url + '/admin/downloadScore');
-            $("body").append(a);
-            a[0].click();
-            a.remove();
+            g.downloads('/admin/downloadScore', 'GET', {});
         });
 
         //根据导入批次变化获取打分项
         $('#score-import-batch').change(function () {
             let batchName = $(this).val();
+            let porcedSelect = $('#score-import-proced');
+
+            if (batchName === '选择批次') {
+                porcedSelect.empty().append('<option>选择打分项</option>');
+                return;
+            }
             api.proced.getBatchProced(batchName).done(function (data) {
                 if (data.status === 0) {
-                    let porcedSelect = $('#score-import-proced').empty().append('<option>选择打分项</option>');
+                    let batchProced = [];
                     _.forEach(data.data, function (value) {
-                        porcedSelect.append($('<option></option>').text(value.proid.pro_name));
-                    })
+                        batchProced.push(value.proid.pro_name);
+                    });
+                    let teacherProced = _.intersection(process, batchProced);
+                    porcedSelect.empty().append('<option>选择打分项</option>');
+                    _.forEach(teacherProced, function (proced) {
+                        porcedSelect.append($('<option></option>').text(proced));
+                    });
                 }
             })
         });
@@ -238,7 +236,13 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
                 }
             });
         })
-    })
+    });
+
+    function Init() {
+        getAllBatch();
+        getProcess();
+        console.log('init operate-score.js');
+    }
 
     //获取并设置所有批次
     function getAllBatch() {
@@ -366,5 +370,4 @@ require(['jquery', 'lodash', 'swal', 'api/apiobj', 'config/global', 'util/cut_pa
             console.log(data.message);
         }
     }
-
 });
