@@ -9,7 +9,7 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
             {
                 field: 'batchAndGroup',
                 title: '批次/组',
-                sortable: true
+                // sortable: true
             },
             {
                 field: 'sid',
@@ -384,6 +384,8 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
             });
             //修改学生成绩
             $('#edit-score').click(editScore);
+            //导出学生成绩为excel表格
+            $('#export-score-excel').click(exportScoreExcel);
             // 发布某个批次的总成绩
             $('#publish-score').click(function () {
                 let batch_name = $('#score_list_select_batch2').val();
@@ -828,6 +830,39 @@ require(['jquery', 'swal', 'lodash', 'api/apiobj', 'config/global', 'util/cut_pa
                 }
             });
             $('#scorelistEditModal').modal('hide');
+        }
+
+        //根据筛选条件导出excel表格
+        function exportScoreExcel() {
+            let proced = $('#score_list_select_process').val();
+            let columns = score_list_table_config.columns;
+            let table = [];
+            let tableHead = [];
+            //生成表格列头
+            if (proced === '选择工种') {
+                for (let i = 0; i < columns.length - 1; i++) {
+                    tableHead.push(columns[i].title);
+                }
+            } else {
+                _.forEach(score_list_columns_front, function (value) {
+                    tableHead.push(value.title);
+                });
+                tableHead.push(proced);
+                for (let i = 0; i < score_list_columns_end.length - 1; i++) {
+                    tableHead.push(score_list_columns_end[i].title);
+                }
+            }
+            table.push(tableHead);
+            let tableTr = $('#score_list_table tbody tr');
+            _.forEach(tableTr, function (tr) {
+                let tds = $(tr).find('td');
+                let tableData = [];
+                for (let i = 0; i < tds.length - 1; i++) {
+                    tableData.push($(tds[i]).text());
+                }
+                table.push(tableData);
+            });
+            g.downloads('/score/scoreExcel', 'POST', JSON.stringify(table));
         }
 
 // ========================================================================
