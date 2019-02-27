@@ -103,12 +103,12 @@ require(['jquery', 'swal', 'api/apiobj', 'util/cut_page3', 'api/material','api/e
                     let tableBody = $('#receive-materiel-table-body').empty();
                     for (let i = 0; i < data_arr.length; i++) {
                         let tr = $('<tr></tr>');
-                        $('<td></td>').text(chGMT(data_arr[i].apply_time)).appendTo(tr);
+                        $('<td></td>').text(data_arr[i].apply_time.substr(0,16)).appendTo(tr);
                         $('<td></td>').text(data_arr[i].sname).appendTo(tr);
                         $('<td></td>').text(data_arr[i].sid).appendTo(tr);
                         $('<td></td>').text(data_arr[i].clazz).appendTo(tr);
                         $('<td></td>').text(data_arr[i].num).appendTo(tr);
-                        $('<td></td>').text(data_arr[i].tid).appendTo(tr);
+                        $('<td></td>').text(data_arr[i].tname).appendTo(tr);
                         tableBody.append(tr);
                     }
                     CutPage.cutPage('receive-materiel-table', pageSize);
